@@ -1,0 +1,6 @@
+Have a look at the vendor-provided material in $(TOP)/doc.
+
+If you are NOT using the EPICS debian packages 
+(see http://epics.nsls2.bnl.gov/debian/ for details), you will naturally
+need to add the appropriate lib+dbd locations in configure/RELEASE. The 
+i404 application depends on asyn,stream device, and scalcout (calcSupport).
