@@ -1,6 +1,6 @@
-#!../../bin/linux-x86/stream
+#!../../bin/linux-x86/i404
 
-## You may have to change stream to something else
+## You may have to change i404 to something else
 ## everywhere it appears in this file
 
 < envPaths
@@ -8,14 +8,23 @@
 cd ${TOP}
 
 ## Register all support components
-dbLoadDatabase "dbd/stream.dbd"
-stream_registerRecordDeviceDriver pdbbase
+dbLoadDatabase("dbd/i404.dbd")
+i404_registerRecordDeviceDriver(pdbbase)
 
-## Load record instances
-#dbLoadRecords("db/xxx.db","user=steveHost")
+# Initialise test
+epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
+###drvAsynIPPortConfigure("terminal", "localhost:40000")
+drvAsynSerialPortConfigure("COM1", "/dev/ttyS0")
+asynOctetSetInputEos("COM1",0,"\r\n")
+asynOctetSetOutputEos("COM1",0,"\r\n")
+asynSetOption("COM1", 0, "baud", "115200")
+asynSetOption("COM1", 0, "bits", "8")
+asynSetOption ("COM1", 0, "parity", "none")
+asynSetOption ("COM1", 0, "stop", "1")
+asynSetOption ("COM1", 0, "clocal", "Y")
+asynSetOption ("COM1", 0, "crtscts", "N")
 
-cd ${TOP}/iocBoot/${IOC}
-iocInit
+# Load record instances
+dbLoadTemplate("db/I404.substitutions")
 
-## Start any sequence programs
-#seq sncxxx,"user=steveHost"
+iocInit()
