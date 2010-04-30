@@ -1,0 +1,11 @@
+file I404.template
+# Macro - Description
+# DEVICE - Device name
+# port - Serial port
+# CAP0 - Value for capacitor 0 (normally 100pF)
+# CAP1 - Value for capacitor 1 (normally 3300pF)
+#
+{
+pattern { DEVICE           , port, CAP0 , CAP1   }
+        { DDSSS-TT-CCCCC-NN, COM1, 100pF, 3300pF }
+}

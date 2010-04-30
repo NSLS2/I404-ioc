@@ -1,0 +1,123 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 24
+y 632
+w 520
+h 45
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+endScreenProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 12
+y 6
+w 120
+h 25
+controlPv "$(DEVICE):IC1"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 45
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 139
+y 6
+w 120
+h 25
+controlPv "$(DEVICE):IC2"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 26
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 266
+y 6
+w 120
+h 25
+controlPv "$(DEVICE):IC3"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 33
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 393
+y 6
+w 120
+h 25
+controlPv "$(DEVICE):IC4"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 37
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
