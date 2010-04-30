@@ -1,4 +1,4 @@
-file I404.template
+file db/I404.template
 # Macro - Description
 # DEVICE - Device name
 # port - Serial port
