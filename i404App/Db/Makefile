@@ -13,6 +13,8 @@ include $(TOP)/configure/CONFIG
 DB += I404.substitutions
 DB += I404.template
 
+REQ += I404.req
+REQ += modules_I404.req
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>
