@@ -13,18 +13,19 @@ i404_registerRecordDeviceDriver(pdbbase)
 
 # Initialise test
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
-###drvAsynIPPortConfigure("terminal", "localhost:40000")
-drvAsynSerialPortConfigure("COM1", "/dev/ttyS0")
+drvAsynIPPortConfigure("COM1", "172.16.1.4:4006")
+#drvAsynSerialPortConfigure("COM1", "/dev/ttyS0")
 asynOctetSetInputEos("COM1",0,"\r\n")
 asynOctetSetOutputEos("COM1",0,"\r\n")
-asynSetOption("COM1", 0, "baud", "115200")
-asynSetOption("COM1", 0, "bits", "8")
-asynSetOption ("COM1", 0, "parity", "none")
-asynSetOption ("COM1", 0, "stop", "1")
-asynSetOption ("COM1", 0, "clocal", "Y")
-asynSetOption ("COM1", 0, "crtscts", "N")
+#asynSetOption("COM1", 0, "baud", "115200")
+#asynSetOption("COM1", 0, "bits", "8")
+#asynSetOption ("COM1", 0, "parity", "none")
+#asynSetOption ("COM1", 0, "stop", "1")
+#asynSetOption ("COM1", 0, "clocal", "Y")
+#asynSetOption ("COM1", 0, "crtscts", "N")
 
 # Load record instances
 dbLoadTemplate("db/I404.substitutions")
 
 iocInit()
+

@@ -7,5 +7,5 @@ file db/I404.template
 #
 {
 pattern { DEVICE           , port, CAP0 , CAP1   }
-        { DDSSS-TT-CCCCC-NN, COM1, 100pF, 3300pF }
+        { "lsx16a:i404", COM1, 100pF, 3300pF }
 }
