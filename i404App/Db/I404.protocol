@@ -45,8 +45,8 @@ recallCalib { out "CALIB:RCL"; in "CALIB:RCL\10%*c";}
 #
 # Set/Query capacitor, by default 0 = 100pF and 1 = 3300pF
 #
-setCap {out "CONF:CAP %{0|1}"; in "CONF:CAP %d\10%*c";}
-getCap {out "CONF:CAP?"; in "CONF:CAP?\10%*c%d,%(\$1.VAL)e F"; InTerminator = CR LF;}
+setCap {out "CONF:CAP %{0|1}"; in "CONF:CAP %d\10%*4c";}
+getCap {out "CONF:CAP?"; in "CONF:CAP?\10%*c,%(\$1.VAL)e F"; InTerminator = CR LF;}
 #
 # Set/Query Maximum External High Voltage in Volts (Password Protected)
 #
@@ -81,14 +81,14 @@ getPass {out "SYST:PASS?"; in "SYST:PASS?\10%*c%s"; InTerminator = CR LF;}
 #
 # Set/Query current Range
 #
-setRange {out "CONF:RANGE %e"; in "CONF:RANGE %e\10%*c";}
-getRange {out "CONF:RANGE?"; in "CONF:RANGE?\10%*c%e A"; InTerminator = CR LF;}
+setRange {out "CONF:RANGE %e"; in "CONF:RANGE %e\10%*4c";}
+getRange {out "CONF:RANGE?"; in "CONF:RANGE?%*1c%e A"; InTerminator = CR LF;}
 #
 # Set/Query Position Function; 1 = None, 2 = Quadrant, 3 = Split Mode
 #
-setMode {out "CONF:MON %i"; in "CONF:MON %d\10%*c";}
+setMode {out "CONF:MON %i"; in "CONF:MON %d%*5c";}
 getMode {out "CONF:MON?"; in "CONF:MON?\10%*c%d"; InTerminator = CR LF;}
 #
 # Get Error Message, returns a quoted string.
 #
-getErr {out "SYST:ERR?"; in "SYST:ERR?\10%*c%*d,\34%[^,\34]\34"; InTerminator = CR LF;}
+getErr {out "SYST:ERR?"; in "SYST:ERR?%*1c%*d,\34%[^,\34]\34"; InTerminator = CR LF;}

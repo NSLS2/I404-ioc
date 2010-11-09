@@ -363,7 +363,7 @@ record(ao, "$(DEVICE):INITMODE") {
   field(DESC, "INIT POSITION MODE")
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(VAL, "2")
+  field(VAL, "1") #{1|2|3}
   field(OUT, "@I404.protocol setMode() $(port) 0")
 }
 
