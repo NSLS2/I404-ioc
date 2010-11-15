@@ -31,16 +31,16 @@ dbLoadTemplate("db/I404.substitutions")
 dbLoadRecords("db/asyn.db","DEVICE=lsx16a:i404,PORT=COM1,ADDR=0")
 
 # autosave/restore mechanisms
-#save_restoreSet_Debug(0)
-#save_restoreSet_IncompleteSetsOk(1)
-#save_restoreSet_DatedBackupFiles(1)
+save_restoreSet_Debug(0)
+save_restoreSet_IncompleteSetsOk(1)
+save_restoreSet_DatedBackupFiles(1)
 
-#set_savefile_path("${TOP}/as","/save")
-#set_requestfile_path("${TOP}/as","/req")
+set_savefile_path("${TOP}/as","/save")
+set_requestfile_path("${TOP}/as","/req")
 
-#set_pass1_restoreFile("modules_I404.sav")
+set_pass1_restoreFile("modules_I404.sav")
 
-#cd ${TOP}/iocBoot/${IOC}
+cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
-#create_monitor_set("modules_I404.req", 15 , "")
+create_monitor_set("modules_I404.req", 15 , "")
