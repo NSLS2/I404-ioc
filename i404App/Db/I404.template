@@ -277,6 +277,7 @@ record(ao, "$(DEVICE):EXECSR") {
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setRange() $(port) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
+  field(FLNK, "$(DEVICE):RANGEIN")
 }
 
 record(stringout, "$(DEVICE):PASSWORD") {
@@ -367,11 +368,11 @@ record(mbbo, "$(DEVICE):INITMODE") {
   field(DESC, "INIT POSITION MODE")
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(INP, "1") #{1|2|3}
   field(ONST,"None")
   field(TWST,"Quadrant")
   field(THST,"Split")
   field(OUT, "@I404.protocol setMode() $(port) 0")
+  field(FLNK,"$(DEVICE):MODE_I")
 }
 
 record(mbbi,"$(DEVICE):MODE_I") {
@@ -384,21 +385,23 @@ record(mbbi,"$(DEVICE):MODE_I") {
 }
 
 record(mbbo,"$(DEVICE):FREQ") {
-  record(DESC,"Current-to-Freq Mapping")
-  record(DTYP,"stream")
+  field(DESC,"Current-to-Freq Mapping")
+  field(PINI,"1")
+  field(DTYP,"stream")
   field(ONST,"Absolute")
-  field(TWST,"Positive Only")
-  field(THST,"Negative Only")
-  field(INP,"@I404.protocol getFreq() $(port) 0")
+  field(TWST,"Positive")
+  field(THST,"Negative")
+  field(OUT,"@I404.protocol setFreq() $(port) 0")
+  field(FLNK,"$(DEVICE):FREQ_I")
 }
 
-record(mbbo,"$(DEVICE):FREQ_I") {
-  record(DESC,"Current-to-Freq Mapping")
-  record(DTYP,"stream")
+record(mbbi,"$(DEVICE):FREQ_I") {
+  field(DESC,"Current-to-Freq Mapping")
+  field(DTYP,"stream")
   field(ONST,"Absolute")
-  field(TWST,"Positive Only")
-  field(THST,"Negative Only")
-  field(OUT,"@I404.protocol setFreq() $(port) 0")
+  field(TWST,"Positive")
+  field(THST,"Negative")
+  field(INP,"@I404.protocol getFreq() $(port) 0")
 }
 
 record(bi, "$(DEVICE):HVSTAT") {
@@ -767,17 +770,19 @@ record(bo, "$(DEVICE):ENBHVRCHK") {
 }
 
 record(ao,"$(DEVICE):INT_PERIOD") {
-  record(DESC,"Integration time setpoint")
-  record(DTYP,"stream")
-  record(OUT,"@I404.protocol setPeriod() $(port) 0")
-  record(EGU,"s")
+  field(DESC,"Integration time setpoint")
+  field(PINI,"1")
+  field(DTYP,"stream")
+  field(OUT,"@I404.protocol setPeriod() $(port) 0")
+  field(EGU,"s")
+  field(FLNK,"$(DEVICE):INT_PERIOD_I")
 }
 
-record(ai,"$(DEVICE):INT_PERIOD") {
-  record(DESC,"Integration time readback")
-  record(DTYP,"stream")
-  record(INP,"@I404.protocol getPeriod() $(port) 0")
-  record(EGU,"s")
+record(ai,"$(DEVICE):INT_PERIOD_I") {
+  field(DESC,"Integration time readback")
+  field(DTYP,"stream")
+  field(INP,"@I404.protocol getPeriod() $(port) 0")
+  field(EGU,"s")
 }
 
 #! Further lines contain data used by VisualDCT

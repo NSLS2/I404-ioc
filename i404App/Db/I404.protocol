@@ -57,7 +57,7 @@ getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10%*c%d"; InTerminator = CR LF;
 #
 setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %d\10%*c";}
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
-getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%*c%d\13\10";}
+getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
 checkHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10%{\7|\6}"; @init { getHV; }}
 checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}"; ExtraInput = IGNORE;}
 #
@@ -86,8 +86,8 @@ getRange {out "CONF:RANGE?"; in "CONF:RANGE?%*1c%e A"; InTerminator = CR LF;}
 #
 # Set/Query Position Function; 1 = None, 2 = Quadrant, 3 = Split Mode
 #
-setMode {out "CONF:MON %{1|2|3}"; in "CONF:MON %d%*5c";}
-getMode {out "CONF:MON?"; in "CONF:MON?\10%*c%d"; InTerminator = CR LF;}
+setMode {out "CONF:MON %d"; in "CONF:MON %d%*5c";}
+getMode {out "CONF:MON?"; in "CONF:MON?%*1c%d"; InTerminator = CR LF;}
 #
 # Get Error Message, returns a quoted string.
 #
@@ -96,11 +96,11 @@ getErr {out "SYST:ERR?"; in "SYST:ERR?%*1c%*d,\34%[^,\34]\34"; InTerminator = CR
 #
 # Set/Query Current-to-Frequency Mapping
 #
-setFreq {out "CONF:FREQ %{0|1|2}"; in "CONF:FREQ %d%*5c";}
-getFreq {out "CONF:FREQ?"; in "CONF:FREQ?%*1c%d; InTerminator = CR LF;}
+setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %d%*5c";}
+getFreq {out "CONF:FREQ?"; in "CONF:FREQ?%*1c%d"; InTerminator = CR LF;}
 
 #
 # Set/Query Integration Period [seconds]
 #
-getPeriod {out "CONF:PER %e"; in "CONF:PER %e%*5c";}
-setPeriod {out "CONF:PER?"; in "CONF:PER?%*1c%e S"; InTerminator = CR LF;}
+setPeriod {out "CONF:PER %e"; in "CONF:PER %e%*5c";}
+getPeriod {out "CONF:PER?"; in "CONF:PER?%*1c%e S"; InTerminator = CR LF;}

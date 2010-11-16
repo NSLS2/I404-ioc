@@ -3,10 +3,10 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 76
-y 327
-w 752
-h 600
+x 119
+y 75
+w 500
+h 500
 font "helvetica-medium-r-18.0"
 ctlFont "helvetica-medium-r-18.0"
 btnFont "helvetica-medium-r-18.0"
@@ -21,107 +21,8 @@ topShadowColor index 0
 botShadowColor index 14
 title "I404 Basic Panel"
 showGrid
+disableScroll
 endScreenProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 255
-y 336
-w 120
-h 25
-controlPv "$(DEVICE):C4"
-format "exponential"
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 129
-y 336
-w 120
-h 25
-controlPv "$(DEVICE):C3"
-format "exponential"
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 255
-y 309
-w 120
-h 25
-controlPv "$(DEVICE):C2"
-format "exponential"
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 129
-y 309
-w 120
-h 25
-controlPv "$(DEVICE):C1"
-format "exponential"
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-newPos
-objType "monitors"
-endObjectProperties
 
 # (Button)
 object activeButtonClass
@@ -147,152 +48,6 @@ buttonType "push"
 3d
 font "helvetica-medium-r-18.0"
 objType "controls"
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 292
-y 241
-w 174
-h 22
-
-beginGroup
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 420
-y 241
-w 48
-h 22
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "Amps"
-}
-autoSize
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 325
-y 242
-w 84
-h 21
-controlPv "$(DEVICE):RANGEIN"
-format "exponential"
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-precision 2
-nullColor index 0
-useHexPrefix
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 292
-y 242
-w 22
-h 22
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "=>"
-}
-autoSize
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Button)
-object activeButtonClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 233
-y 235
-w 50
-h 34
-fgColor index 14
-onColor index 3
-offColor index 3
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
-controlPv "$(DEVICE):SET_RANGE"
-onLabel "Set"
-offLabel "Set"
-labelType "literal"
-buttonType "push"
-3d
-font "helvetica-medium-r-18.0"
-objType "controls"
-endObjectProperties
-
-# (Menu Button)
-object activeMenuButtonClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 133
-y 234
-w 92
-h 36
-fgColor index 14
-bgColor index 3
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
-controlPv "$(DEVICE):RANGE"
-font "helvetica-medium-r-18.0"
-endObjectProperties
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 7
-y 242
-w 120
-h 22
-font "helvetica-medium-r-18.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "Current Range"
-}
-autoSize
 endObjectProperties
 
 # (Group)
@@ -361,8 +116,8 @@ minor 1
 release 0
 x 7
 y 185
-w 101
-h 22
+w 102
+h 21
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -377,28 +132,106 @@ endGroup
 
 endObjectProperties
 
-# (Text Control)
-object activeXTextDspClass
+# (Group)
+object activeGroupClass
 beginObjectProperties
 major 4
-minor 5
+minor 0
 release 0
-x 4
-y 417
-w 416
-h 25
-controlPv "$(DEVICE):ERR"
+x 27
+y 111
+w 193
+h 44
+
+beginGroup
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 120
+y 111
+w 100
+h 44
+fgColor index 14
+bgColor index 3
+inconsistentColor index 21
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):INITMODE"
+indicatorPv "$(DEVICE):MODE_I"
 font "helvetica-medium-r-18.0"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 27
+y 112
+w 62
+h 42
+font "helvetica-medium-r-18.0"
+fontAlign "center"
 fgColor index 14
 bgColor index 0
 useDisplayBg
-autoHeight
-motifWidget
-limitsFromDb
-nullColor index 0
-useHexPrefix
-newPos
-objType "controls"
+value {
+  "Current"
+  "Mode"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 120
+y 47
+w 100
+h 44
+fgColor index 14
+bgColor index 3
+inconsistentColor index 21
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):FREQ"
+indicatorPv "$(DEVICE):FREQ_I"
+font "helvetica-medium-r-18.0"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 19
+y 37
+w 72
+h 63
+font "helvetica-medium-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Freq."
+  "Mapping"
+  "Mode"
+}
+autoSize
 endObjectProperties
 
 # (Group)
@@ -407,12 +240,238 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 81
-y 456
-w 247
-h 34
+x 7
+y 240
+w 389
+h 25
 
 beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 384
+y 241
+w 12
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "A"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 7
+y 240
+w 366
+h 25
+
+beginGroup
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 289
+y 240
+w 84
+h 25
+controlPv "$(DEVICE):RANGEIN"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+precision 2
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 7
+y 240
+w 265
+h 25
+
+beginGroup
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 145
+y 240
+w 127
+h 25
+controlPv "$(DEVICE):EXECSR"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fontAlign "center"
+fgColor index 14
+fgAlarm
+bgColor index 0
+useDisplayBg
+editable
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+useAlarmBorder
+newPos
+inputFocusUpdates
+objType "controls"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 7
+y 242
+w 119
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Current Range"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 382
+y 275
+w 9
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "s"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 287
+y 274
+w 84
+h 21
+controlPv "$(DEVICE):INT_PERIOD_I"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+precision 2
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 148
+y 274
+w 127
+h 25
+controlPv "$(DEVICE):INT_PERIOD"
+font "helvetica-medium-r-18.0"
+fontAlign "center"
+fgColor index 14
+fgAlarm
+bgColor index 0
+useDisplayBg
+editable
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+useAlarmBorder
+newPos
+inputFocusUpdates
+objType "controls"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 5
+y 276
+w 134
+h 21
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Integration Time"
+}
+autoSize
+endObjectProperties
 
 # (Button)
 object activeButtonClass
@@ -431,6 +490,8 @@ inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
 controlPv "$(DEVICE):OVRERR"
+onLabel "Enable Error"
+offLabel "Disable Error"
 3d
 font "helvetica-medium-r-18.0"
 objType "controls"
@@ -460,6 +521,184 @@ buttonType "push"
 3d
 font "helvetica-medium-r-18.0"
 objType "controls"
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 9
+y 404
+w 460
+h 44
+fgColor index 14
+onColor index 20
+offColor index 15
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):STATUS"
+buttonType "push"
+font "helvetica-medium-r-18.0"
+objType "controls"
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 19
+y 414
+w 440
+h 25
+controlPv "$(DEVICE):ERR"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "controls"
+endObjectProperties
+
+# (Menu Button)
+object activeMenuButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 9
+y 355
+w 108
+h 31
+fgColor index 14
+bgColor index 3
+inconsistentColor index 20
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):GETCS.SCAN"
+font "helvetica-medium-r-18.0"
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 129
+y 326
+w 246
+h 52
+
+beginGroup
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 129
+y 353
+w 120
+h 25
+controlPv "$(DEVICE):C3"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 255
+y 353
+w 120
+h 25
+controlPv "$(DEVICE):C4"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 255
+y 326
+w 120
+h 25
+controlPv "$(DEVICE):C2"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 129
+y 326
+w 120
+h 25
+controlPv "$(DEVICE):C1"
+format "exponential"
+font "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
 endObjectProperties
 
 endGroup
