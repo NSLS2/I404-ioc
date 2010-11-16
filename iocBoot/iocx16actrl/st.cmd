@@ -40,7 +40,7 @@ set_requestfile_path("${TOP}/as","/req")
 
 set_pass1_restoreFile("modules_I404.sav")
 
-cd ${TOP}/iocBoot/${IOC}
+#cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
 create_monitor_set("modules_I404.req", 15 , "")
