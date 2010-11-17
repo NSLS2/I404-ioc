@@ -818,6 +818,7 @@ record(ai,"$(DEVICE):SuppressFreq-I") {
 record(stringin,"$(DEVICE):Identity") {
   field(DESC,"Identification string")
   field(DTYP,"stream")
+  field(PINI,"1")
   field(INP,"@I404.protocol getId() $(port) 0")
 }
 
