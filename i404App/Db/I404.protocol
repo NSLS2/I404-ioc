@@ -104,3 +104,21 @@ getFreq {out "CONF:FREQ?"; in "CONF:FREQ?%*1c%d"; InTerminator = CR LF;}
 #
 setPeriod {out "CONF:PER %e"; in "CONF:PER %e%*5c";}
 getPeriod {out "CONF:PER?"; in "CONF:PER?%*1c%e S"; InTerminator = CR LF;}
+
+#
+# Set/Query Resolution (# of bits in [16-20])
+#
+getRes {out "CONF:RES?"; in "CONF:RES?%*1c%d"; InTerminator = CR LF;}
+setRes {out "CONF:RES %d"; in "CONF:RES %d%*5c";}
+
+#
+# Set/Query Suppression Frequency [Hz]
+#
+getSuppressFreq {out "SYST:FREQ?"; in "SYST:FREQ?%*1c%f"; InTerminator = CR LF;}
+setSuppressFreq {out "SYST:FREQ %f"; in "SYST:FREQ %f%*5c";}
+
+#
+# Query Identification string (*IDN)
+#
+getId {out "*IDN?"; in "*IDN? %[a-zA-Z0-9\ \.\,\-]"; InTerminator = CR LF;}
+ 
