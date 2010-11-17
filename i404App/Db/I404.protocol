@@ -120,5 +120,5 @@ setSuppressFreq {out "SYST:FREQ %f"; in "SYST:FREQ %f%*5c";}
 #
 # Query Identification string (*IDN)
 #
-getId {out "*IDN?"; in "*IDN? %[a-zA-Z0-9\ \.\,\-]"; InTerminator = CR LF;}
+getId {out "*IDN?"; in "*IDN?%*1c%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
  

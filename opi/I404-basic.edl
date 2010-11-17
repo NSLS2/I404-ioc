@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 691
-y 193
+x 18
+y 228
 w 360
 h 550
 font "helvetica-medium-r-14.0"
@@ -243,64 +243,6 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 14
-y 6
-w 320
-h 28
-
-beginGroup
-
-# (Rectangle)
-object activeRectangleClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 14
-y 6
-w 320
-h 28
-lineColor index 14
-fill
-fillColor index 2
-endObjectProperties
-
-# (Text Control)
-object activeXTextDspClass
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 30
-y 12
-w 285
-h 17
-controlPv "$(DEVICE):Identity"
-font "helvetica-medium-r-10.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-limitsFromDb
-nullColor index 0
-fastUpdate
-useHexPrefix
-newPos
-objType "controls"
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
 x 3
 y 242
 w 336
@@ -447,100 +389,6 @@ value {
   "Capacitance"
 }
 autoSize
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 4
-y 146
-w 336
-h 21
-
-beginGroup
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 4
-y 146
-w 99
-h 17
-font "helvetica-medium-r-14.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "Suppress Freq."
-}
-autoSize
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 122
-y 146
-w 104
-h 21
-controlPv "$(DEVICE):SuppressFreq"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 2
-nullColor index 0
-useHexPrefix
-showUnits
-useAlarmBorder
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Control)
-object activeXTextDspClass
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 241
-y 146
-w 99
-h 21
-controlPv "$(DEVICE):SuppressFreq-I"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-fgAlarm
-bgColor index 0
-editable
-autoHeight
-motifWidget
-limitsFromDb
-nullColor index 0
-fastUpdate
-useHexPrefix
-useAlarmBorder
-newPos
-inputFocusUpdates
-objType "controls"
 endObjectProperties
 
 endGroup
@@ -749,163 +597,6 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 3
-y 276
-w 222
-h 21
-
-beginGroup
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 3
-y 276
-w 104
-h 17
-font "helvetica-medium-r-14.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "Integration Time"
-}
-autoSize
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 121
-y 276
-w 104
-h 21
-controlPv "$(DEVICE):IntPeriod-I"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 2
-nullColor index 0
-useHexPrefix
-showUnits
-useAlarmBorder
-newPos
-objType "monitors"
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 4
-y 178
-w 336
-h 21
-
-beginGroup
-
-# (Static Text)
-object activeXTextClass
-beginObjectProperties
-major 4
-minor 1
-release 0
-x 4
-y 178
-w 68
-h 17
-font "helvetica-medium-r-14.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-value {
-  "Resolution"
-}
-autoSize
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 122
-y 178
-w 104
-h 21
-controlPv "$(DEVICE):Resolution-I"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 2
-nullColor index 0
-useHexPrefix
-showUnits
-useAlarmBorder
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Control)
-object activeXTextDspClass
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 241
-y 178
-w 99
-h 21
-controlPv "$(DEVICE):Resolution"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-fgAlarm
-bgColor index 0
-editable
-autoHeight
-motifWidget
-limitsFromDb
-nullColor index 0
-fastUpdate
-useHexPrefix
-useAlarmBorder
-newPos
-inputFocusUpdates
-objType "controls"
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
 x 6
 y 62
 w 328
@@ -1029,6 +720,295 @@ endObjectProperties
 
 endGroup
 
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 14
+y 6
+w 320
+h 28
+lineColor index 14
+fill
+fillColor index 2
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 30
+y 12
+w 285
+h 17
+controlPv "$(DEVICE):Identity"
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "controls"
+characterMode
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 3
+y 276
+w 222
+h 21
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 3
+y 276
+w 104
+h 17
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Integration Time"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 121
+y 276
+w 104
+h 21
+controlPv "$(DEVICE):IntPeriod-I"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 4
+nullColor index 0
+smartRefresh
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 4
+y 146
+w 336
+h 21
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 4
+y 146
+w 99
+h 17
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Suppress Freq."
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 122
+y 146
+w 104
+h 21
+controlPv "$(DEVICE):SuppressFreq-I"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 2
+nullColor index 0
+useHexPrefix
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 241
+y 146
+w 99
+h 21
+controlPv "$(DEVICE):SuppressFreq"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+fgAlarm
+bgColor index 0
+editable
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+useAlarmBorder
+newPos
+inputFocusUpdates
+objType "controls"
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 4
+y 178
+w 336
+h 21
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 4
+y 178
+w 68
+h 17
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Resolution"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 122
+y 178
+w 104
+h 21
+controlPv "$(DEVICE):Resolution-I"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 2
+nullColor index 0
+useHexPrefix
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 241
+y 178
+w 99
+h 21
+controlPv "$(DEVICE):Resolution"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+fgAlarm
+bgColor index 0
+editable
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+useAlarmBorder
+newPos
+inputFocusUpdates
+objType "controls"
 endObjectProperties
 
 endGroup

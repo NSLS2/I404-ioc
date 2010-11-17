@@ -811,17 +811,20 @@ record(ao,"$(DEVICE):SuppressFreq") {
 record(ai,"$(DEVICE):SuppressFreq-I") {
   field(DESC,"Suppression frequency readback")
   field(DTYP,"stream")
+  field(PINI,"1")
   field(INP,"@I404.protocol getSuppressFreq() $(port) 0")
   field(EGU,"Hz")
 }
 
-record(stringin,"$(DEVICE):Identity") {
+# ID string is > 40 chars. Thus the waveform here.
+record(waveform,"$(DEVICE):Identity") {
   field(DESC,"Identification string")
   field(DTYP,"stream")
   field(PINI,"1")
+  field(FTVL,"CHAR")
+  field(NELM,"60")
   field(INP,"@I404.protocol getId() $(port) 0")
 }
-
 record(longout,"$(DEVICE):Resolution") {
   field(DESC,"Resolution setpoint")
   field(DTYP,"stream")
