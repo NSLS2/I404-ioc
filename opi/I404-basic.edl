@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 18
-y 228
+x 20
+y 255
 w 360
 h 550
 font "helvetica-medium-r-14.0"
@@ -23,6 +23,25 @@ title "I404 Basic Panel"
 showGrid
 disableScroll
 endScreenProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 106
+y 497
+w 129
+h 49
+lineColor index 77
+lineAlarm
+fill
+fillColor index 77
+fillAlarm
+lineWidth 2
+alarmPv "$(DEVICE):Reset-I"
+endObjectProperties
 
 # (Group)
 object activeGroupClass
@@ -315,8 +334,8 @@ minor 1
 release 0
 x 3
 y 242
-w 96
-h 17
+w 93
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -379,8 +398,8 @@ minor 1
 release 0
 x 3
 y 209
-w 80
-h 17
+w 81
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -403,8 +422,8 @@ minor 1
 release 0
 x 137
 y 119
-w 65
-h 17
+w 64
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -423,8 +442,8 @@ minor 1
 release 0
 x 259
 y 119
-w 53
-h 17
+w 52
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -502,95 +521,6 @@ endGroup
 
 endObjectProperties
 
-# (Button)
-object activeButtonClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 114
-y 501
-w 110
-h 34
-fgColor index 14
-onColor index 3
-offColor index 3
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
-controlPv "$(DEVICE):RESET"
-onLabel "Reset"
-offLabel "Reset"
-labelType "literal"
-buttonType "push"
-3d
-font "helvetica-medium-r-14.0"
-objType "controls"
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 7
-y 399
-w 346
-h 44
-
-beginGroup
-
-# (Button)
-object activeButtonClass
-beginObjectProperties
-major 4
-minor 0
-release 0
-x 7
-y 399
-w 346
-h 44
-fgColor index 14
-onColor index 20
-offColor index 15
-inconsistentColor index 14
-topShadowColor index 0
-botShadowColor index 14
-controlPv "$(DEVICE):STATUS"
-buttonType "push"
-font "helvetica-medium-r-14.0"
-objType "controls"
-endObjectProperties
-
-# (Text Control)
-object activeXTextDspClass
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 17
-y 409
-w 323
-h 25
-controlPv "$(DEVICE):ERR"
-font "helvetica-medium-r-14.0"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-autoHeight
-motifWidget
-limitsFromDb
-nullColor index 0
-useHexPrefix
-newPos
-objType "controls"
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
 # (Group)
 object activeGroupClass
 beginObjectProperties
@@ -625,8 +555,8 @@ minor 1
 release 0
 x 185
 y 62
-w 49
-h 34
+w 48
+h 32
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -685,7 +615,7 @@ release 0
 x 6
 y 62
 w 66
-h 34
+h 32
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -790,7 +720,7 @@ release 0
 x 3
 y 276
 w 104
-h 17
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -853,7 +783,7 @@ release 0
 x 4
 y 146
 w 99
-h 17
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -944,8 +874,8 @@ minor 1
 release 0
 x 4
 y 178
-w 68
-h 17
+w 67
+h 16
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -1013,5 +943,77 @@ endObjectProperties
 
 endGroup
 
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 7
+y 399
+w 346
+h 44
+fgColor index 14
+onColor index 20
+offColor index 15
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):STATUS"
+buttonType "push"
+font "helvetica-medium-r-14.0"
+objType "controls"
+endObjectProperties
+
+# (Text Control)
+object activeXTextDspClass
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 17
+y 409
+w 323
+h 25
+controlPv "$(DEVICE):ERR"
+font "helvetica-medium-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+autoHeight
+motifWidget
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "controls"
+endObjectProperties
+
+# (Button)
+object activeButtonClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 114
+y 506
+w 110
+h 34
+fgColor index 14
+onColor index 3
+offColor index 3
+inconsistentColor index 14
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(DEVICE):Reset-Cmd"
+onLabel "Reset"
+offLabel "Reset"
+labelType "literal"
+buttonType "push"
+3d
+font "helvetica-medium-r-14.0"
+objType "controls"
 endObjectProperties
 

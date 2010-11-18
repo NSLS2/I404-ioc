@@ -22,26 +22,36 @@ locktimeout = 60000;
 # State commands
 #
 # Save current state in EEPROM
-save {out "*SAV"; in "*SAV\10%*c";}
+save {out "*SAV"; in "*SAV%*5c";}
 # Recall state from EEPROM
-recall {out "*RCL"; in "*RCL\10%*c";}
+recall {out "*RCL"; in "*RCL%*5c";}
 # Return I404 to default conditions
-reset {out "*RST"; in "*RST\10%*c";}
+reset {out "*RST"; in "*RST%*5c";}
 # Clear I404 event registers and error queue
 clear {out "*CLS"; in "*CLS\10%*c";}
 #
 # Initiate readings on valid trigger
 #
-init {out "INIT"; in "INIT\10%*c";}
+init {out "INIT"; in "INIT%*5c";}
 #
 # I404 Calibration
 #
 # Initiate calibration
-doCalib {out "CALIB:GAI"; in "CALIB:GAI\10%*c";}
+doCalib {out "CALIB:GAI"; in "CALIB:GAI%*5c";}
 # Save calibration
-saveCalib {out "CALIB:SAV"; in "CALIB:SAV\10%*c";}
+saveCalib {out "CALIB:SAV"; in "CALIB:SAV*5c";}
 # Recall calibration (needed after reset)
-recallCalib { out "CALIB:RCL"; in "CALIB:RCL\10%*c";}
+recallCalib { out "CALIB:RCL"; in "CALIB:RCL%*5c";}
+# Query calibration gains
+getCalib {
+  out "CALIB:GAIN?";
+  
+  extraInput=Ignore;
+  in "CALIB:GAIN?%*1c%d";
+  InTerminator= CR LF;
+}
+
+
 #
 # Set/Query capacitor, by default 0 = 100pF and 1 = 3300pF
 #

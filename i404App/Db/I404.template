@@ -126,18 +126,18 @@ record(bo, "$(DEVICE):EXECUTE_CALIB") {
   field(DESC, "Calibrate device")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol doCalib() $(port) 0")
-  field(VAL, "0")
-  field(DISV, "0")
+#  field(VAL, "0")
+#  field(DISV, "0")
 }
 
 record(bo, "$(DEVICE):CALIB") {
   field(FLNK, "$(DEVICE):EXECUTE_CALIB")
-  field(OUT, "$(DEVICE):EXECUTE_CALIB.DISA")
+#  field(OUT, "$(DEVICE):EXECUTE_CALIB.DISA")
 }
 
 record(bo, "$(DEVICE):RESET") {
   field(FLNK, "$(DEVICE):RESET_SEQ")
-  field(OUT, "$(DEVICE):RESET_SEQ.DISA")
+#  field(OUT, "$(DEVICE):RESET_SEQ.DISA")
 }
 
 record(bo, "$(DEVICE):EXECUTE_SAVE") {
@@ -167,6 +167,63 @@ record(seq, "$(DEVICE):RESET_SEQ") {
   field(LNK3, "$(DEVICE):EXECUTE_RECALL PP")
   field(DLY4, "2.0")
   field(LNK4, "$(DEVICE):EXECUTE_INIT PP")
+}
+
+record(bo,"$(DEVICE):Reset-Cmd") {
+  field(FLNK,"$(DEVICE):Reset:Seq")
+}
+
+record(seq,"$(DEVICE):Reset:Seq") {
+  field(DLY1, "0.0")
+  field(LNK1,"$(DEVICE):Reset-I PP") #indicate reset is active
+  field(DO1, "1")
+  field(DLY2, "0.0")  
+  field(LNK2, "$(DEVICE):EXECUTE_RESET PP")
+  field(DLY3, "4.0") # let *RST take effect
+  field(LNK3, "$(DEVICE):EXECUTE_CALIB PP")
+  field(DLY4, "10.0") # let "calib:gain" take effect
+  field(LNK4, "$(DEVICE):EXECUTE_INIT PP")
+  field(DLY5, "2.0") # let "init" take effect
+  field(LNK5, "$(DEVICE):All:FOut PP") # update key indicators
+  field(DLY6, "2.0")
+  field(LNK6,"$(DEVICE):Calib-I PP")
+  field(DLY7,"0.0")
+  field(LNK7,"$(DEVICE):Reset-I PP") # indicate reset is done
+  field(DO7,"0")
+}
+
+record(bi,"$(DEVICE):Reset-I") {
+  field(DESC,"Reset In-Progress")
+  field(PINI,"1")
+  field(VAL,"0")
+  field(ZNAM,"Idle")
+  field(ONAM,"Active")
+  field(OSV,"MAJOR")
+}
+
+record(longin,"$(DEVICE):Calib-I") {
+  field(DESC,"fetch calib status only")
+  field(DTYP,"stream")
+  field(INP,"@I404.protocol getCalib() $(port) 0")
+  field(FLNK,"$(DEVICE):Calib:Status:Calc")
+}
+
+record(calc,"$(DEVICE):Calib:Status:Calc") {
+  field(INPA,"$(DEVICE):Calib-I NPP")
+  field(CALC,"A=15?1:0")
+  field(FLNK,"$(DEVICE):Calib:Status")
+}
+
+record(bi, "$(DEVICE):Calib:Status") {
+  field(INP, "$(DEVICE):Calib:Status:Calc")
+  field(ZNAM, "Error")
+  field(ONAM, "OK")
+}
+
+record(fanout,"$(DEVICE):All:FOut") {
+  field(LNK1,"$(DEVICE):Range:Fout") #int-period,cap,range,res
+  field(LNK1,"$(DEVICE):SuppressFreq-I")
+  field(LNK1,"$(DEVICE):GETCS")
 }
 
 record(bo, "$(DEVICE):EXECUTE_INIT") {
@@ -280,11 +337,11 @@ record(ao, "$(DEVICE):EXECSR") {
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setRange() $(port) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
-  field(FLNK, "$(DEVICE):FOut")
+  field(FLNK, "$(DEVICE):Range:FOut")
   field(EGU,"A")
 }
 
-record(fanout,"$(DEVICE):FOut") {
+record(fanout,"$(DEVICE):Range:FOut") {
   field(LNK1,"$(DEVICE):RANGEIN")
   field(LNK2,"$(DEVICE):IntPeriod-I")
   field(LNK3,"$(DEVICE):GETCAP")
