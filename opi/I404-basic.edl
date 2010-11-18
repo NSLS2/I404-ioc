@@ -34,10 +34,10 @@ x 106
 y 497
 w 129
 h 49
-lineColor index 77
+lineColor index 14
 lineAlarm
 fill
-fillColor index 77
+fillColor index 2
 fillAlarm
 lineWidth 2
 alarmPv "$(DEVICE):Reset-I"
