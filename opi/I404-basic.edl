@@ -3,10 +3,10 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 20
-y 255
+x 21
+y 309
 w 360
-h 550
+h 570
 font "helvetica-medium-r-14.0"
 ctlFont "helvetica-medium-r-14.0"
 btnFont "helvetica-medium-r-14.0"
@@ -33,7 +33,7 @@ release 0
 x 106
 y 497
 w 129
-h 49
+h 63
 lineColor index 14
 lineAlarm
 fill
@@ -998,7 +998,7 @@ major 4
 minor 0
 release 0
 x 114
-y 506
+y 517
 w 110
 h 34
 fgColor index 14
@@ -1015,5 +1015,29 @@ buttonType "push"
 3d
 font "helvetica-medium-r-14.0"
 objType "controls"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 129
+y 500
+w 83
+h 12
+font "helvetica-medium-r-10.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+visPv "$(DEVICE):Reset-I"
+visMin "1"
+visMax "2"
+value {
+  "Reset In Progress"
+}
+autoSize
 endObjectProperties
 

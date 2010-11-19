@@ -177,19 +177,22 @@ record(seq,"$(DEVICE):Reset:Seq") {
   field(DLY1, "0.0")
   field(LNK1,"$(DEVICE):Reset-I PP") #indicate reset is active
   field(DO1, "1")
-  field(DLY2, "0.0")  
-  field(LNK2, "$(DEVICE):EXECUTE_RESET PP")
-  field(DLY3, "4.0") # let *RST take effect
-  field(LNK3, "$(DEVICE):EXECUTE_CALIB PP")
-  field(DLY4, "10.0") # let "calib:gain" take effect
-  field(LNK4, "$(DEVICE):EXECUTE_INIT PP")
-  field(DLY5, "2.0") # let "init" take effect
-  field(LNK5, "$(DEVICE):All:FOut PP") # update key indicators
-  field(DLY6, "2.0")
-  field(LNK6,"$(DEVICE):Calib-I PP")
-  field(DLY7,"0.0")
-  field(LNK7,"$(DEVICE):Reset-I PP") # indicate reset is done
-  field(DO7,"0")
+  field(DLY2,0.0)
+  field(LNK2,"$(DEVICE):GETCS.SCAN")
+  field(DO2, "0") # set scan algorithm to "passive"
+  field(DLY3, "1.0") # let pending reads finish 
+  field(LNK3, "$(DEVICE):EXECUTE_RESET PP")
+  field(DLY4, "4.0") # let *RST take effect
+  field(LNK4, "$(DEVICE):EXECUTE_CALIB PP")
+  field(DLY5, "10.0") # let "calib:gain" take effect
+  field(LNK5, "$(DEVICE):EXECUTE_INIT PP")
+  field(DLY6, "2.0") # let "init" take effect
+  field(LNK6, "$(DEVICE):All:FOut PP") # update key indicators
+  field(DLY7, "2.0")
+  field(LNK7,"$(DEVICE):Calib-I PP")
+  field(DLY8,"0.0")
+  field(LNK8,"$(DEVICE):Reset-I PP") # indicate reset is done
+  field(DO8,"0")
 }
 
 record(bi,"$(DEVICE):Reset-I") {
