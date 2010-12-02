@@ -170,30 +170,38 @@ record(seq, "$(DEVICE):RESET_SEQ") {
 }
 
 record(bo,"$(DEVICE):Reset-Cmd") {
-  field(FLNK,"$(DEVICE):Reset:Seq")
+  field(FLNK,"$(DEVICE):Reset:Seq1")
 }
 
-record(seq,"$(DEVICE):Reset:Seq") {
-  field(DLY1, "0.0")
-  field(LNK1,"$(DEVICE):Reset-I PP") #indicate reset is active
-  field(DO1, "1")
-  field(DLY2,0.0)
-  field(LNK2,"$(DEVICE):GETCS.SCAN")
-  field(DO2, "0") # set scan algorithm to "passive"
-  field(DLY3, "1.0") # let pending reads finish 
-  field(LNK3, "$(DEVICE):EXECUTE_RESET PP")
-  field(DLY4, "4.0") # let *RST take effect
-  field(LNK4, "$(DEVICE):EXECUTE_CALIB PP")
-  field(DLY5, "10.0") # let "calib:gain" take effect
-  field(LNK5, "$(DEVICE):EXECUTE_INIT PP")
-  field(DLY6, "2.0") # let "init" take effect
-  field(LNK6, "$(DEVICE):All:FOut PP") # update key indicators
-  field(DLY7, "2.0")
-  field(LNK7,"$(DEVICE):Calib-I PP")
-  field(DLY8,"0.0")
-  field(LNK8,"$(DEVICE):Reset-I PP") # indicate reset is done
-  field(DO8,"0")
-  field(FLNK,"$(DEVICE):Identity")
+#
+# Reset:Seq1 and Seq2 are a set: do not de-couple!
+#
+record(seq,"$(DEVICE):Reset:Seq1") {
+  field(LNK1,"$(DEVICE):Reset-I PP")
+  field(DO1, "1") #indicate reset is active
+  field(DOL2, "$(DEVICE):GETCS.SCAN") #record GETCS SCAN setting in D02 field
+  field(DO3, "0")
+  field(LNK3,"$(DEVICE):GETCS.SCAN") # now set scan algorithm to "passive"
+  field(DLY4, "1.0") # let pending reads finish 
+  field(LNK4, "$(DEVICE):EXECUTE_RESET PP")
+  field(DLY5, "4.0") # let *RST take effect
+  field(LNK5, "$(DEVICE):EXECUTE_CALIB PP")
+  field(DLY6, "10.0") # let "calib:gain" take effect
+  field(LNK6, "$(DEVICE):EXECUTE_INIT PP")
+  field(FLNK, "$(DEVICE):Reset:Seq2") 
+}
+
+record(seq,"$(DEVICE):Reset:Seq2") {
+  field(DLY1, "2.0") # let "init" from Reset:Seq1 take effect
+  field(LNK1, "$(DEVICE):All:FOut PP") # update key indicators
+  field(DLY1, "2.0")
+  field(LNK1,"$(DEVICE):Calib-I PP")
+	field(LNK2, "$(DEVICE):Identity PP")
+	field(LNK3,"$(DEVICE):Range:FOut PP") #int-period,cap,range,res
+  field(LNK4,"$(DEVICE):SuppressFreq-I PP")
+	field(DOL5, "$(DEVICE):Reset:Seq1.DO2") # fetch previous SCAN setting
+	field(LNK5, "$(DEVICE):GETCS.SCAN") # restore GETCS previous SCAN setting
+  field(LNK6,"$(DEVICE):Reset-I PP") # indicate reset ops are done
 }
 
 record(bi,"$(DEVICE):Reset-I") {
@@ -222,12 +230,6 @@ record(bi, "$(DEVICE):Calib:Status") {
   field(INP, "$(DEVICE):Calib:Status:Calc")
   field(ZNAM, "Error")
   field(ONAM, "OK")
-}
-
-record(fanout,"$(DEVICE):All:FOut") {
-  field(LNK1,"$(DEVICE):Range:Fout") #int-period,cap,range,res
-  field(LNK1,"$(DEVICE):SuppressFreq-I")
-  field(LNK1,"$(DEVICE):GETCS")
 }
 
 record(bo, "$(DEVICE):EXECUTE_INIT") {
