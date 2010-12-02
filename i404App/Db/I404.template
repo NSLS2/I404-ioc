@@ -193,6 +193,7 @@ record(seq,"$(DEVICE):Reset:Seq") {
   field(DLY8,"0.0")
   field(LNK8,"$(DEVICE):Reset-I PP") # indicate reset is done
   field(DO8,"0")
+  field(FLNK,"$(DEVICE):Identity")
 }
 
 record(bi,"$(DEVICE):Reset-I") {

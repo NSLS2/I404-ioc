@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 21
-y 309
+x 1008
+y 419
 w 360
 h 570
 font "helvetica-medium-r-14.0"
@@ -139,129 +139,6 @@ beginObjectProperties
 major 4
 minor 0
 release 0
-x 129
-y 326
-w 209
-h 52
-
-beginGroup
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 129
-y 326
-w 102
-h 25
-controlPv "$(DEVICE):A"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-showUnits
-useAlarmBorder
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 129
-y 353
-w 102
-h 25
-controlPv "$(DEVICE):C"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-showUnits
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 236
-y 353
-w 102
-h 25
-controlPv "$(DEVICE):D"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-showUnits
-newPos
-objType "monitors"
-endObjectProperties
-
-# (Text Monitor)
-object activeXTextDspClass:noedit
-beginObjectProperties
-major 4
-minor 5
-release 0
-x 236
-y 326
-w 102
-h 25
-controlPv "$(DEVICE):B"
-format "exponential"
-font "helvetica-medium-r-14.0"
-fontAlign "center"
-fgColor index 14
-bgColor index 0
-useDisplayBg
-motifWidget
-precision 4
-nullColor index 0
-useHexPrefix
-showUnits
-useAlarmBorder
-newPos
-objType "monitors"
-endObjectProperties
-
-endGroup
-
-endObjectProperties
-
-# (Group)
-object activeGroupClass
-beginObjectProperties
-major 4
-minor 0
-release 0
 x 3
 y 242
 w 336
@@ -334,8 +211,8 @@ minor 1
 release 0
 x 3
 y 242
-w 93
-h 16
+w 96
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -398,8 +275,8 @@ minor 1
 release 0
 x 3
 y 209
-w 81
-h 16
+w 80
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -422,8 +299,8 @@ minor 1
 release 0
 x 137
 y 119
-w 64
-h 16
+w 65
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -442,8 +319,8 @@ minor 1
 release 0
 x 259
 y 119
-w 52
-h 16
+w 53
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -555,8 +432,8 @@ minor 1
 release 0
 x 185
 y 62
-w 48
-h 32
+w 49
+h 34
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -615,7 +492,7 @@ release 0
 x 6
 y 62
 w 66
-h 32
+h 34
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -720,7 +597,7 @@ release 0
 x 3
 y 276
 w 104
-h 16
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -783,7 +660,7 @@ release 0
 x 4
 y 146
 w 99
-h 16
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -874,8 +751,8 @@ minor 1
 release 0
 x 4
 y 178
-w 67
-h 16
+w 68
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -1025,8 +902,8 @@ minor 1
 release 0
 x 129
 y 500
-w 83
-h 12
+w 84
+h 13
 font "helvetica-medium-r-10.0"
 fontAlign "center"
 fgColor index 14
@@ -1037,6 +914,196 @@ visMin "1"
 visMax "2"
 value {
   "Reset In Progress"
+}
+autoSize
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 146
+y 326
+w 91
+h 25
+controlPv "$(DEVICE):A"
+format "exponential"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 264
+y 326
+w 91
+h 25
+controlPv "$(DEVICE):C"
+format "exponential"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+showUnits
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 264
+y 353
+w 91
+h 25
+controlPv "$(DEVICE):D"
+format "exponential"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+showUnits
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 146
+y 353
+w 91
+h 25
+controlPv "$(DEVICE):B"
+format "exponential"
+font "helvetica-medium-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+motifWidget
+precision 4
+nullColor index 0
+useHexPrefix
+showUnits
+useAlarmBorder
+newPos
+objType "monitors"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 126
+y 329
+w 15
+h 18
+font "helvetica-bold-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "A"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 126
+y 356
+w 15
+h 18
+font "helvetica-bold-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "B"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 243
+y 329
+w 13
+h 18
+font "helvetica-bold-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "C"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 243
+y 356
+w 13
+h 18
+font "helvetica-bold-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "D"
 }
 autoSize
 endObjectProperties
