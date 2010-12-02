@@ -156,7 +156,7 @@ x 129
 y 326
 w 102
 h 25
-controlPv "$(DEVICE):C1"
+controlPv "$(DEVICE):A"
 format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
@@ -183,7 +183,7 @@ x 129
 y 353
 w 102
 h 25
-controlPv "$(DEVICE):C3"
+controlPv "$(DEVICE):C"
 format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
@@ -209,7 +209,7 @@ x 236
 y 353
 w 102
 h 25
-controlPv "$(DEVICE):C4"
+controlPv "$(DEVICE):D"
 format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
@@ -235,7 +235,7 @@ x 236
 y 326
 w 102
 h 25
-controlPv "$(DEVICE):C2"
+controlPv "$(DEVICE):B"
 format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"

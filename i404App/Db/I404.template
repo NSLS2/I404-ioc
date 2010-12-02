@@ -506,28 +506,28 @@ record(bo, "$(DEVICE):OUT0") {
 
 record(bi, "$(DEVICE):GETCS") {
   field(PINI,"1")
-  field(FLNK, "$(DEVICE):C1")
+  field(FLNK, "$(DEVICE):A")
 }
 
-record(ai, "$(DEVICE):C1") {
+record(ai, "$(DEVICE):A") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(DEVICE),C2,C3,C4) $(port) 0")
+  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D) $(port) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(DEVICE):ICCALC1")
 }
 
-record(ai, "$(DEVICE):C2") {
+record(ai, "$(DEVICE):B") {
   field(DESC, "CURRENT 2")
   field(FLNK, "$(DEVICE):ICCALC2")
 }
 
-record(ai, "$(DEVICE):C3") {
+record(ai, "$(DEVICE):C") {
   field(DESC, "CURRENT 3")
   field(FLNK, "$(DEVICE):ICCALC3")
 }
 
-record(ai, "$(DEVICE):C4") {
+record(ai, "$(DEVICE):D") {
   field(DESC, "CURRENT 4")
   field(FLNK, "$(DEVICE):ICCALC4")
 }
@@ -631,7 +631,7 @@ record(ai, "$(DEVICE):IC1") {
 
 record(calcout, "$(DEVICE):ICCALC1") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):C1")
+  field(INPA, "$(DEVICE):A")
   field(INPB, "$(DEVICE):ICCALIB")
   field(OUT, "$(DEVICE):IC1 PP")
   field(OOPT, "Every Time")
@@ -639,7 +639,7 @@ record(calcout, "$(DEVICE):ICCALC1") {
 
 record(calcout, "$(DEVICE):ICCALC2") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):C2")
+  field(INPA, "$(DEVICE):B")
   field(INPB, "$(DEVICE):ICCALIB")
   field(OUT, "$(DEVICE):IC2 PP")
   field(OOPT, "Every Time")
@@ -647,7 +647,7 @@ record(calcout, "$(DEVICE):ICCALC2") {
 
 record(calcout, "$(DEVICE):ICCALC3") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):C3")
+  field(INPA, "$(DEVICE):C")
   field(INPB, "$(DEVICE):ICCALIB")
   field(OUT, "$(DEVICE):IC3 PP")
   field(OOPT, "Every Time")
@@ -655,7 +655,7 @@ record(calcout, "$(DEVICE):ICCALC3") {
 
 record(calcout, "$(DEVICE):ICCALC4") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):C4")
+  field(INPA, "$(DEVICE):D")
   field(INPB, "$(DEVICE):ICCALIB")
   field(OUT, "$(DEVICE):IC4 PP")
   field(OOPT, "Every Time")
@@ -688,7 +688,7 @@ record(bo, "$(DEVICE):ENABLE_IC_UPDATES") {
 }
 
 record(fanout, "$(DEVICE):FAN3") {
-  field(LNK1, "$(DEVICE):C1")
+  field(LNK1, "$(DEVICE):A")
   field(LNK2, "$(DEVICE):INCREMENT_XAXIS2")
   field(LNK3, "$(DEVICE):OSCILLATOR2")
 }
