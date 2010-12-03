@@ -7,3 +7,20 @@ $(DEVICE):FREQ
 $(DEVICE):GETCS.SCAN
 $(DEVICE):Resolution
 $(DEVICE):SuppressFreq
+
+$(DEVICE):MovAvg-ChA.NSAM
+$(DEVICE):MovAvg-ChB.NSAM
+$(DEVICE):MovAvg-ChC.NSAM
+$(DEVICE):MovAvg-ChD.NSAM
+
+# normally targetted at $(DEVICE):MovAvg-ChX.VAL[0]
+$(DEVICE):Gain-ChA.INPA
+$(DEVICE):Gain-ChA.INPA
+$(DEVICE):Gain-ChA.INPA
+$(DEVICE):Gain-ChA.INPA
+
+# "gains" for each channel
+$(DEVICE):Gain-ChA.B
+$(DEVICE):Gain-ChB.B
+$(DEVICE):Gain-ChC.B
+$(DEVICE):Gain-ChD.B
