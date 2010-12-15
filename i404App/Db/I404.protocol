@@ -125,7 +125,7 @@ setRes {out "CONF:RES %d"; in "CONF:RES %d%*5c";}
 # Set/Query Suppression Frequency [Hz]
 #
 getSuppressFreq {out "SYST:FREQ?"; in "SYST:FREQ?%*1c%f"; InTerminator = CR LF;}
-setSuppressFreq {out "SYST:FREQ %f"; in "SYST:FREQ %f%*5c";}
+setSuppressFreq {out "SYST:FREQ %d"; in "SYST:FREQ %f%*5c";}
 
 #
 # Query Identification string (*IDN)
