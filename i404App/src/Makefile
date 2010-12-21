@@ -24,7 +24,7 @@ i404_DBD += calcSupport.dbd
 i404_DBD += asSupport.dbd
 
 # Add all the support libraries needed by this IOC
-i404_LIBS += calc stream asyn autosave
+i404_LIBS += calc sscan stream asyn autosave
 
 # i404_registerRecordDeviceDriver.cpp derives from i404.dbd
 i404_SRCS += i404_registerRecordDeviceDriver.cpp
