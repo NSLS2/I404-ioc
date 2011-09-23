@@ -9,5 +9,4 @@ file db/I404.template
 pattern 
 {    DEVICE    ,    port, CAP0 , CAP1   }
 { "ixsrd{i404:1}", COM1, 100pF, 3300pF }
-{ "ixsrd{i404:2}", COM2, 100pF, 3300pF }
 }

@@ -26,14 +26,9 @@ asynOctetSetOutputEos("COM1",0,"\r\n")
 #asynSetTraceMask("COM1",0,"0x9")
 #asynSetTraceIOMask("COM1",0,"0x2")
 
-drvAsynIPPortConfigure("COM2", "moxa:4003")
-asynOctetSetInputEos("COM2",0,"\r\n")
-asynOctetSetOutputEos("COM2",0,"\r\n")
-
 # Load record instances
 dbLoadTemplate("db/I404.substitutions")
-dbLoadRecords("db/asyn.db","DEVICE=lsx16a{i404:1},PORT=COM1,ADDR=0")
-dbLoadRecords("db/asyn.db","DEVICE=lsx16a{i404:2},PORT=COM2,ADDR=0")
+dbLoadRecords("db/asyn.db","DEVICE=ixsrd{i404:1},PORT=COM1,ADDR=0")
 
 # autosave/restore mechanisms
 save_restoreSet_Debug(0)
