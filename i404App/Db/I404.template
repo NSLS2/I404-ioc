@@ -869,6 +869,7 @@ record(ao,"$(DEVICE):SuppressFreq") {
   field(DTYP,"stream")
   field(OUT,"@I404.protocol setSuppressFreq() $(port) 0")
   field(EGU,"Hz")
+  field(FLNK, "$(DEVICE):SuppressFreq-I")
 }
 
 record(ai,"$(DEVICE):SuppressFreq-I") {
@@ -1002,3 +1003,4 @@ record(calc,"$(DEVICE):Gain-ChD") {
   field(INPB, "1.0") # the "gain"
   field(CALC, "A*B")
 }
+
