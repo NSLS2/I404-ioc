@@ -27,7 +27,7 @@ asynOctetSetOutputEos("COM1",0,"\r\n")
 #asynSetTraceIOMask("COM1",0,"0x2")
 
 # Load record instances
-dbLoadTemplate("db/I404.substitutions")
+dbLoadRecords("db/I404.template","DEVICE=ixsrd{i404:1},port=COM1,CAP0=100pF,CAP1=3300pF")
 dbLoadRecords("db/asyn.db","DEVICE=ixsrd{i404:1},PORT=COM1,ADDR=0")
 
 # autosave/restore mechanisms
@@ -38,9 +38,9 @@ save_restoreSet_DatedBackupFiles(1)
 set_savefile_path("${TOP}/as","/save")
 set_requestfile_path("${TOP}/as","/req")
 
-set_pass1_restoreFile("modules_I404.sav")
+set_pass1_restoreFile("I404.sav")
 
 #cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
-create_monitor_set("modules_I404.req", 15 , "")
+create_monitor_set("I404.req",15,"DEVICE=ixsrd{i404:1}")
