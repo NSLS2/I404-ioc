@@ -6,7 +6,7 @@
 record(bo, "$(DEVICE):SETCAP") {
   field(DESC, "Set Capacitor")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol setCap() $(port) 0")
+  field(OUT, "@I404.protocol setCap() $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
   field(FLNK, "$(DEVICE):GETCAP")
@@ -16,7 +16,7 @@ record(bi, "$(DEVICE):GETCAP") {
   field(DESC, "Get Capacitance - Binary")
   field(DTYP, "stream")
   field(PINI,"1")
-  field(INP, "@I404.protocol getCap($(DEVICE):CAP) $(port) 0")
+  field(INP, "@I404.protocol getCap($(DEVICE):CAP) $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
   field(PINI, "YES")
@@ -47,7 +47,7 @@ record(ai, "$(DEVICE):XIN") {
   field(SCAN, "1 second")
   field(DTYP, "stream")
   field(FLNK, "$(DEVICE):FAN2")
-  field(INP, "@I404.protocol getPos($(DEVICE):YIN) $(port) 0")
+  field(INP, "@I404.protocol getPos($(DEVICE):YIN) $(PORT) 0")
 }
 
 record(ai, "$(DEVICE):YIN") {
@@ -125,7 +125,7 @@ record(bo, "$(DEVICE):ENABLE_UPDATES") {
 record(bo, "$(DEVICE):EXECUTE_CALIB") {
   field(DESC, "Calibrate device")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol doCalib() $(port) 0")
+  field(OUT, "@I404.protocol doCalib() $(PORT) 0")
 #  field(VAL, "0")
 #  field(DISV, "0")
 }
@@ -143,19 +143,19 @@ record(bo, "$(DEVICE):RESET") {
 record(bo, "$(DEVICE):EXECUTE_SAVE") {
   field(DESC, "SAVE STATE TO EEPROM")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol save() $(port) 0")
+  field(OUT, "@I404.protocol save() $(PORT) 0")
 }
 
 record(bo, "$(DEVICE):EXECUTE_RECALL") {
   field(DESC, "RECALL STATE FROM EEPROM")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol recall() $(port) 0")
+  field(OUT, "@I404.protocol recall() $(PORT) 0")
 }
 
 record(bo, "$(DEVICE):EXECUTE_RESET") {
   field(DESC, "Reset device")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol reset() $(port) 0")
+  field(OUT, "@I404.protocol reset() $(PORT) 0")
 }
 
 record(seq, "$(DEVICE):RESET_SEQ") {
@@ -216,7 +216,7 @@ record(bi,"$(DEVICE):Reset-I") {
 record(longin,"$(DEVICE):Calib-I") {
   field(DESC,"fetch calib status only")
   field(DTYP,"stream")
-  field(INP,"@I404.protocol getCalib() $(port) 0")
+  field(INP,"@I404.protocol getCalib() $(PORT) 0")
   field(FLNK,"$(DEVICE):Calib:Status:Calc")
 }
 
@@ -235,7 +235,7 @@ record(bi, "$(DEVICE):Calib:Status") {
 record(bo, "$(DEVICE):EXECUTE_INIT") {
   field(DESC, "INITIATE ON VALID TRIGGER")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol init() $(port) 0")
+  field(OUT, "@I404.protocol init() $(PORT) 0")
 }
 
 record(mbbo, "$(DEVICE):RANGE") {
@@ -259,7 +259,7 @@ record(ai, "$(DEVICE):RANGEIN") {
   field(PINI, "YES")
   field(DTYP, "stream")
   field(VAL, "0")
-  field(INP, "@I404.protocol getRange() $(port) 0")
+  field(INP, "@I404.protocol getRange() $(PORT) 0")
   field(SCAN, "Passive")
   field(EGU,"A")
 }
@@ -341,7 +341,7 @@ record(dfanout, "$(DEVICE):DFAN2") {
 record(ao, "$(DEVICE):EXECSR") {
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol setRange() $(port) 0")
+  field(OUT, "@I404.protocol setRange() $(PORT) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
   field(FLNK, "$(DEVICE):Range:FOut")
   field(EGU,"A")
@@ -357,7 +357,7 @@ record(fanout,"$(DEVICE):Range:FOut") {
 record(stringout, "$(DEVICE):PASSWORD") {
   field(DESC, "STORE AND SET PASSWORD")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol setPass() $(port) 0")
+  field(OUT, "@I404.protocol setPass() $(PORT) 0")
 }
 
 record(bo, "$(DEVICE):STATUS") {
@@ -407,7 +407,7 @@ record(stringin, "$(DEVICE):ERR") {
   field(DESC, "ERROR MESSAGE FROM I404")
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getErr() $(port) 0")
+  field(INP, "@I404.protocol getErr() $(PORT) 0")
   field(FLNK, "$(DEVICE):CHKERR")
 }
 
@@ -445,7 +445,7 @@ record(mbbo, "$(DEVICE):INITMODE") {
   field(ONST,"None")
   field(TWST,"Quadrant")
   field(THST,"Split")
-  field(OUT, "@I404.protocol setMode() $(port) 0")
+  field(OUT, "@I404.protocol setMode() $(PORT) 0")
   field(FLNK,"$(DEVICE):MODE-I")
 }
 
@@ -455,7 +455,7 @@ record(mbbi,"$(DEVICE):MODE-I") {
   field(ONST,"None")
   field(TWST,"Quadrant")
   field(THST,"Split")
-  field(INP,"@I404.protocol getMode() $(port) 0")
+  field(INP,"@I404.protocol getMode() $(PORT) 0")
 }
 
 record(mbbo,"$(DEVICE):FREQ") {
@@ -465,7 +465,7 @@ record(mbbo,"$(DEVICE):FREQ") {
   field(ONST,"Absolute")
   field(TWST,"Positive")
   field(THST,"Negative")
-  field(OUT,"@I404.protocol setFreq() $(port) 0")
+  field(OUT,"@I404.protocol setFreq() $(PORT) 0")
   field(FLNK,"$(DEVICE):FREQ-I")
 }
 
@@ -475,13 +475,13 @@ record(mbbi,"$(DEVICE):FREQ-I") {
   field(ONST,"Absolute")
   field(TWST,"Positive")
   field(THST,"Negative")
-  field(INP,"@I404.protocol getFreq() $(port) 0")
+  field(INP,"@I404.protocol getFreq() $(PORT) 0")
 }
 
 record(bi, "$(DEVICE):HVSTAT") {
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol checkHV() $(port) 0")
+  field(INP, "@I404.protocol checkHV() $(PORT) 0")
   field(ZNAM, "No HV Control")
   field(ONAM, "HV Control Present")
 }
@@ -490,7 +490,7 @@ record(stringin, "$(DEVICE):HVERR") {
   field(DESC, "ERROR MESSAGE FROM HV CHECK")
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getErr() $(port) 0")
+  field(INP, "@I404.protocol getErr() $(PORT) 0")
 }
 
 record(bo, "$(DEVICE):OUT1") {
@@ -515,7 +515,7 @@ record(bi, "$(DEVICE):GETCS") {
 record(ai, "$(DEVICE):A") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D) $(port) 0")
+  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D) $(PORT) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(DEVICE):ICCALC1")
 }
@@ -538,7 +538,7 @@ record(ai, "$(DEVICE):D") {
 record(ai, "$(DEVICE):Ka") {
   field(DESC, "COMPENSATION FACTOR A IN")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getKs($(DEVICE),Kb,Kc,Kd) $(port) 0")
+  field(INP, "@I404.protocol getKs($(DEVICE),Kb,Kc,Kd) $(PORT) 0")
   field(PINI, "YES")
   field(SCAN, "Passive")
 }
@@ -585,7 +585,7 @@ record(calcout, "$(DEVICE):KSOUT") {
   field(INPB, "$(DEVICE):KbOUT.VAL")
   field(INPC, "$(DEVICE):KcOUT.VAL")
   field(INPD, "$(DEVICE):KdOUT.VAL")
-  field(OUT, "@I404.protocol setKs() $(port) 0")
+  field(OUT, "@I404.protocol setKs() $(PORT) 0")
   field(INPA, "$(DEVICE):KaOUT.VAL")
 }
 
@@ -736,13 +736,13 @@ record(ao, "$(DEVICE):HV") {
 
 record(ao, "$(DEVICE):HV2") {
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol setHV() $(port) 0")
+  field(OUT, "@I404.protocol setHV() $(PORT) 0")
 }
 
 record(ai, "$(DEVICE):HVIN") {
   field(PINI, "YES")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getHV() $(port) 0")
+  field(INP, "@I404.protocol getHV() $(PORT) 0")
 }
 
 record(ao, "$(DEVICE):HVMAX") {
@@ -760,13 +760,13 @@ record(seq, "$(DEVICE):HVMSEQ") {
 
 record(ao, "$(DEVICE):HVMAX2") {
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol setHVM() $(port) 0")
+  field(OUT, "@I404.protocol setHVM() $(PORT) 0")
 }
 
 record(ai, "$(DEVICE):HVMAXIN") {
   field(PINI, "YES")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getHVM() $(port) 0")
+  field(INP, "@I404.protocol getHVM() $(PORT) 0")
 }
 
 record(bo, "$(DEVICE):HVACTIVE") {
@@ -789,7 +789,7 @@ record(seq, "$(DEVICE):HVSEQ1") {
 record(bo, "$(DEVICE):EXECUTE_CLEAR") {
   field(DESC, "CLEAR REGISTERS AND MESSAGES")
   field(DTYP, "stream")
-  field(OUT, "@I404.protocol clear() $(port) 0")
+  field(OUT, "@I404.protocol clear() $(PORT) 0")
 }
 
 record(dfanout, "$(DEVICE):FANOUT1") {
@@ -827,7 +827,7 @@ record(bi, "$(DEVICE):HVRCHK") {
   field(SCAN, "1 second")
   field(DTYP, "stream")
   field(FLNK, "$(DEVICE):WAIT4HIVO")
-  field(INP, "@I404.protocol checkHVR() $(port) 0")
+  field(INP, "@I404.protocol checkHVR() $(PORT) 0")
   field(ZNAM, "SETTING HIVO")
   field(ONAM, "HIVO IDLE")
 }
@@ -847,7 +847,7 @@ record(bo, "$(DEVICE):ENBHVRCHK") {
 record(ao,"$(DEVICE):IntPeriod") {
   field(DESC,"Integration time setpoint")
   field(DTYP,"stream")
-  field(OUT,"@I404.protocol setPeriod() $(port) 0")
+  field(OUT,"@I404.protocol setPeriod() $(PORT) 0")
   field(EGU,"s")
   field(DRVH,"65")
   field(DRVL,"0.0001")
@@ -858,7 +858,7 @@ record(ai,"$(DEVICE):IntPeriod-I") {
   field(DESC,"Integration time readback")
   field(DTYP,"stream")
   field(PINI,"1")
-  field(INP,"@I404.protocol getPeriod() $(port) 0")
+  field(INP,"@I404.protocol getPeriod() $(PORT) 0")
   field(EGU,"s")
   field(HOPR,"65")
   field(LOPR,"0.0001")
@@ -867,7 +867,7 @@ record(ai,"$(DEVICE):IntPeriod-I") {
 record(ao,"$(DEVICE):SuppressFreq") {
   field(DESC,"Frequency to suppress")
   field(DTYP,"stream")
-  field(OUT,"@I404.protocol setSuppressFreq() $(port) 0")
+  field(OUT,"@I404.protocol setSuppressFreq() $(PORT) 0")
   field(EGU,"Hz")
   field(FLNK, "$(DEVICE):SuppressFreq-I")
 }
@@ -876,7 +876,7 @@ record(ai,"$(DEVICE):SuppressFreq-I") {
   field(DESC,"Suppression frequency readback")
   field(DTYP,"stream")
   field(PINI,"1")
-  field(INP,"@I404.protocol getSuppressFreq() $(port) 0")
+  field(INP,"@I404.protocol getSuppressFreq() $(PORT) 0")
   field(EGU,"Hz")
 }
 
@@ -887,13 +887,13 @@ record(waveform,"$(DEVICE):Identity") {
   field(PINI,"1")
   field(FTVL,"CHAR")
   field(NELM,"60")
-  field(INP,"@I404.protocol getId() $(port) 0")
+  field(INP,"@I404.protocol getId() $(PORT) 0")
 }
 record(longout,"$(DEVICE):Resolution") {
   field(DESC,"Resolution setpoint")
   field(DTYP,"stream")
   field(EGU,"bits")
-  field(OUT,"@I404.protocol setRes() $(port) 0")
+  field(OUT,"@I404.protocol setRes() $(PORT) 0")
   field(DRVH,"20")
   field(DRVL,"16")
   field(FLNK,"$(DEVICE):Resolution-I")
@@ -904,7 +904,7 @@ record(longin,"$(DEVICE):Resolution-I") {
   field(DTYP,"stream")
   field(PINI,"1")
   field(EGU,"bits")
-  field(INP,"@I404.protocol getRes() $(port) 0")
+  field(INP,"@I404.protocol getRes() $(PORT) 0")
   field(HOPR,"20")
   field(LOPR,"16")
 }

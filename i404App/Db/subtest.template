@@ -7,7 +7,7 @@
 
 record(waveform, read) {
   field(DTYP, "stream")
-  field(INP, "@I400_DLS.protocol readCurr() $(port) 0")
+  field(INP, "@I400_DLS.protocol readCurr() $(PORT) 0")
   field(NELM, "100")
   field(FTVL, "CHAR")
   field(FLNK, "parse")

@@ -7,7 +7,7 @@
 
 cd ${TOP}
 
-## Register all support components
+## Register all supPORT components
 dbLoadDatabase "dbd/stream.dbd"
 stream_registerRecordDeviceDriver pdbbase
 

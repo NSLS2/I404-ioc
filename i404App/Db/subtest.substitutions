@@ -1,7 +1,7 @@
 file subtest.template
 # Macro - Description
 # DEVICE     - Device name
-# port  - Serial port
+# PORT  - Serial PORT
 # MAXSIG- Maximum signal voltage (either -400 or 400)
 # MAXEXT- Maximum external voltage (either -1000 or 1000)
 # CAP0  - Value for capacitor 0 (normally 10pF, but could be 100pF)
@@ -9,7 +9,7 @@ file subtest.template
 # YGAIN - Gain for Y axis
 #
 {
-pattern { DEVICE           , port   , MAXSIG, MAXEXT, CAP0, CAP1, XGAIN, YGAIN}
+pattern { DEVICE           , PORT   , MAXSIG, MAXEXT, CAP0, CAP1, XGAIN, YGAIN}
         { DDSSS-TT-CCCCC-NN, COM1   , -400  , 1000  , 10pF, 1nF , 1    , 1    }
 }
 
