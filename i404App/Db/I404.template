@@ -19,7 +19,6 @@ record(bi, "$(DEVICE):GETCAP") {
   field(INP, "@I404.protocol getCap($(DEVICE):CAP) $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
-  field(PINI, "YES")
 }
 
 record(ai, "$(DEVICE):CAP") {
@@ -432,6 +431,7 @@ record(seq, "$(DEVICE):INIT") {
   field(PINI, "YES")
   field(LNK1, "$(DEVICE):OUT1.PROC")
   field(LNK2, "$(DEVICE):HVSTAT.PROC")
+  field(DLY3, "1")
   field(LNK3, "$(DEVICE):HVERR.PROC")
   field(LNK4, "$(DEVICE):OUT0.PROC")
   field(LNK5, "$(DEVICE):INITMODE.PROC")
@@ -907,6 +907,19 @@ record(longin,"$(DEVICE):Resolution-I") {
   field(INP,"@I404.protocol getRes() $(PORT) 0")
   field(HOPR,"20")
   field(LOPR,"16")
+}
+
+record(stringin,"$(DEVICE):Password-I") {
+  field(DTYP, "stream")
+  field(PINI, "1") # this seems reqd, else "init" seq fails
+  field(INP, "@I404.protocol getPassword() $(PORT) 0")
+}
+
+record(stringout,"$(DEVICE):Password") {
+  field(DTYP, "stream")
+  field(OMSL, "closed_loop")
+  field(DOL, "$(DEVICE):Password-I PP")
+  field(OUT,"@I404.protocol setPassword() $(PORT) 0")
 }
 
 ##################################################################

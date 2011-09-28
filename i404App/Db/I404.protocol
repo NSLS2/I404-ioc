@@ -132,3 +132,9 @@ setSuppressFreq {out "SYST:FREQ %d"; in "SYST:FREQ %f%*5c";}
 #
 getId {out "*IDN?"; in "*IDN?%*1c%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
  
+#
+# Set/Query Admin password (unlocks certain functionality)
+#
+getPassword {out "SYST:PASS?"; in "SYST:PASS?%*1c%s"; InTerminator = CR LF;}
+setPassword {out "SYST:PASS %s"; extraInput=Ignore;} 
+
