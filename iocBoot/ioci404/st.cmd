@@ -28,6 +28,7 @@ asynOctetSetOutputEos("COM1",0,"\r\n")
 
 # Load record instances
 dbLoadRecords("db/I404.template","DEVICE=ixsrd{i404:1},PORT=COM1,CAP0=100pF,CAP1=3300pF")
+dbLoadRecords("db/dsp.db", "DEVICE=ixsrd{i404:1}")
 dbLoadRecords("db/asyn.db","DEVICE=ixsrd{i404:1},PORT=COM1,ADDR=0")
 
 # autosave/restore mechanisms
