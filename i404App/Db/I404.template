@@ -195,12 +195,15 @@ record(seq,"$(DEVICE):Reset:Seq2") {
   field(LNK1, "$(DEVICE):All:FOut PP") # update key indicators
   field(DLY1, "2.0")
   field(LNK1,"$(DEVICE):Calib-I PP")
-	field(LNK2, "$(DEVICE):Identity PP")
-	field(LNK3,"$(DEVICE):Range:FOut PP") #int-period,cap,range,res
-  field(LNK4,"$(DEVICE):SuppressFreq-I PP")
-	field(DOL5, "$(DEVICE):Reset:Seq1.DO2") # fetch previous SCAN setting
-	field(LNK5, "$(DEVICE):GETCS.SCAN") # restore GETCS previous SCAN setting
-  field(LNK6,"$(DEVICE):Reset-I PP") # indicate reset ops are done
+  field(LNK2, "$(DEVICE):Identity PP")
+  field(LNK3,"$(DEVICE):Range:FOut PP") #int-period,cap,range,res
+  field(LNK4,"$(DEVICE):Password.PROC PP") #some functions are locked; unlock them
+  field(DO4, "1")
+  field(DLY5, "1")
+  field(LNK5,"$(DEVICE):SuppressFreq-I PP")
+  field(DOL6, "$(DEVICE):Reset:Seq1.DO2") # fetch previous SCAN setting
+  field(LNK6, "$(DEVICE):GETCS.SCAN") # restore GETCS previous SCAN setting
+  field(LNK7,"$(DEVICE):Reset-I PP") # indicate reset ops are done
 }
 
 record(bi,"$(DEVICE):Reset-I") {
@@ -412,7 +415,7 @@ record(stringin, "$(DEVICE):ERR") {
 
 
 record(bo, "$(DEVICE):SCNERR") {
-  field(SCAN, "2 second")
+#  field(SCAN, "2 second")
   field(FLNK, "$(DEVICE):ERR")
   field(DESC, "SCAN FOR ERROR MESSAGES")
 }
@@ -435,9 +438,11 @@ record(seq, "$(DEVICE):INIT") {
   field(LNK3, "$(DEVICE):HVERR.PROC")
   field(LNK4, "$(DEVICE):OUT0.PROC")
   field(LNK5, "$(DEVICE):INITMODE.PROC")
-  field(DLY3, "1")
+  field(DLY6, "1")
+  field(DO6, "1")
+  field(LNK6, "$(DEVICE):Password.PROC PP") #unlock some cmds
 }
-
+		
 record(mbbo, "$(DEVICE):INITMODE") {
   field(DESC, "INIT POSITION MODE")
   field(SCAN, "Passive")
