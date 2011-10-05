@@ -84,11 +84,6 @@ getPos {out "READ:POS?"; in "READ:POS?\10%*c%f,%(\$1.VAL)f"; InTerminator = CR L
 setKs {out "CALIB:COMP %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:COMP %*f %*f %*f %*f\10%*c";}
 getKs {out "CALIB:COMP?"; in "CALIB:COMP?\10%*c%f,%(\$1:\$2.VAL)f,%(\$1:\$3.VAL)f,%(\$1:\$4.VAL)f"; InTerminator = CR LF;}
 #
-# Set/Query password
-#
-setPass {out "SYST:PASS %s"; in "SYST:PASS %*s\10%*c";}
-getPass {out "SYST:PASS?"; in "SYST:PASS?\10%*c%s"; InTerminator = CR LF;}
-#
 # Set/Query current Range
 #
 setRange {out "CONF:RANGE %e"; in "CONF:RANGE %e\10%*4c";}
@@ -136,5 +131,9 @@ getId {out "*IDN?"; in "*IDN?%*1c%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
 # Set/Query Admin password (unlocks certain functionality)
 #
 getPassword {out "SYST:PASS?"; in "SYST:PASS?%*1c%s"; InTerminator = CR LF;}
-setPassword {out "SYST:PASS %s"; extraInput=Ignore;} 
+setPassword {out "SYST:PASS %s"; 
+		in "SYST:PASS%*1c%s%*1c";
+		extraInput=Ignore;
+		InTerminator = CR LF;}
+
 

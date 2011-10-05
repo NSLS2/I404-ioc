@@ -356,12 +356,6 @@ record(fanout,"$(DEVICE):Range:FOut") {
   field(LNK4,"$(DEVICE):Resolution-I")
 }
 
-record(stringout, "$(DEVICE):PASSWORD") {
-  field(DESC, "STORE AND SET PASSWORD")
-  field(DTYP, "stream")
-  field(OUT, "@I404.protocol setPass() $(PORT) 0")
-}
-
 record(bo, "$(DEVICE):STATUS") {
   field(SCAN, "Passive")
   field(OUT, "$(DEVICE):ENBERR.B PP")
@@ -916,14 +910,14 @@ record(longin,"$(DEVICE):Resolution-I") {
 
 record(stringin,"$(DEVICE):Password-I") {
   field(DTYP, "stream")
-  field(PINI, "1") # this seems reqd, else "init" seq fails
   field(INP, "@I404.protocol getPassword() $(PORT) 0")
 }
 
 record(stringout,"$(DEVICE):Password") {
   field(DTYP, "stream")
-  field(OMSL, "closed_loop")
-  field(DOL, "$(DEVICE):Password-I PP")
+  field(PINI, "1") # this seems reqd, else "init" seq fails
+  field(OMSL, "supervisory")
+  field(DOL, "12345")
   field(OUT,"@I404.protocol setPassword() $(PORT) 0")
 }
 
