@@ -13,6 +13,11 @@ $(DEVICE):MovAvg-ChB.NSAM
 $(DEVICE):MovAvg-ChC.NSAM
 $(DEVICE):MovAvg-ChD.NSAM
 
+$(DEVICE):MovAvg-ChA.N
+$(DEVICE):MovAvg-ChB.N
+$(DEVICE):MovAvg-ChC.N
+$(DEVICE):MovAvg-ChD.N
+
 # normally targetted at $(DEVICE):MovAvg-ChX.VAL[0]
 $(DEVICE):Gain-ChA.INPA
 $(DEVICE):Gain-ChA.INPA
