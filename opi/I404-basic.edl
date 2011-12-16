@@ -3,8 +3,8 @@ beginScreenProperties
 major 4
 minor 0
 release 1
-x 252
-y 173
+x 721
+y 183
 w 360
 h 570
 font "helvetica-medium-r-14.0"
@@ -211,8 +211,8 @@ minor 1
 release 0
 x 3
 y 242
-w 93
-h 16
+w 96
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -275,8 +275,8 @@ minor 1
 release 0
 x 3
 y 209
-w 81
-h 16
+w 80
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -299,8 +299,8 @@ minor 1
 release 0
 x 137
 y 119
-w 64
-h 16
+w 65
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -319,8 +319,8 @@ minor 1
 release 0
 x 259
 y 119
-w 52
-h 16
+w 53
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -432,8 +432,8 @@ minor 1
 release 0
 x 185
 y 62
-w 48
-h 32
+w 49
+h 34
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -492,7 +492,7 @@ release 0
 x 6
 y 62
 w 66
-h 32
+h 34
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -597,7 +597,7 @@ release 0
 x 3
 y 276
 w 104
-h 16
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -660,7 +660,7 @@ release 0
 x 4
 y 146
 w 99
-h 16
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -751,8 +751,8 @@ minor 1
 release 0
 x 4
 y 178
-w 67
-h 16
+w 68
+h 17
 font "helvetica-medium-r-14.0"
 fgColor index 14
 bgColor index 0
@@ -902,8 +902,8 @@ minor 1
 release 0
 x 129
 y 500
-w 83
-h 12
+w 84
+h 13
 font "helvetica-medium-r-10.0"
 fontAlign "center"
 fgColor index 14
@@ -933,11 +933,13 @@ format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
+fgAlarm
 bgColor index 0
 useDisplayBg
 motifWidget
 precision 4
 nullColor index 0
+colorPv "$(DEVICE):Overflow-Sts:A"
 useHexPrefix
 showUnits
 useAlarmBorder
@@ -960,13 +962,16 @@ format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
+fgAlarm
 bgColor index 0
 useDisplayBg
 motifWidget
 precision 4
 nullColor index 0
+colorPv "$(DEVICE):Overflow-Sts:C"
 useHexPrefix
 showUnits
+useAlarmBorder
 newPos
 objType "monitors"
 endObjectProperties
@@ -986,13 +991,16 @@ format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
+fgAlarm
 bgColor index 0
 useDisplayBg
 motifWidget
 precision 4
 nullColor index 0
+colorPv "$(DEVICE):Overflow-Sts:D"
 useHexPrefix
 showUnits
+useAlarmBorder
 newPos
 objType "monitors"
 endObjectProperties
@@ -1012,11 +1020,13 @@ format "exponential"
 font "helvetica-medium-r-14.0"
 fontAlign "center"
 fgColor index 14
+fgAlarm
 bgColor index 0
 useDisplayBg
 motifWidget
 precision 4
 nullColor index 0
+colorPv "$(DEVICE):Overflow-Sts:B"
 useHexPrefix
 showUnits
 useAlarmBorder
@@ -1032,8 +1042,8 @@ minor 1
 release 0
 x 126
 y 329
-w 10
-h 16
+w 11
+h 18
 font "helvetica-bold-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -1053,8 +1063,8 @@ minor 1
 release 0
 x 126
 y 356
-w 10
-h 16
+w 11
+h 18
 font "helvetica-bold-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -1075,7 +1085,7 @@ release 0
 x 243
 y 329
 w 11
-h 16
+h 18
 font "helvetica-bold-r-14.0"
 fontAlign "center"
 fgColor index 14
@@ -1096,7 +1106,7 @@ release 0
 x 243
 y 356
 w 11
-h 16
+h 18
 font "helvetica-bold-r-14.0"
 fontAlign "center"
 fgColor index 14

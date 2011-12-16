@@ -514,7 +514,7 @@ record(bi, "$(DEVICE):GETCS") {
 record(ai, "$(DEVICE):A") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D) $(PORT) 0")
+  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D,Overflow_) $(PORT) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(DEVICE):ICCALC1")
 }
@@ -919,5 +919,65 @@ record(stringout,"$(DEVICE):Password") {
   field(OMSL, "supervisory")
   field(DOL, "12345")
   field(OUT,"@I404.protocol setPassword() $(PORT) 0")
+}
+
+# Current-overflow status
+record(longin, "$(DEVICE):Overflow_") {
+}
+
+record(calcout, "$(DEVICE):Overflow-Calc:A_") {
+	field(INPA, "$(DEVICE):Overflow_ CP")
+	field(INPB, "1") # bitmask
+	field(CALC, "A&B?1:0")
+	field(OUT, "$(DEVICE):Overflow-Sts:A PP")
+}
+
+record(calcout, "$(DEVICE):Overflow-Calc:B_") {
+	field(INPA, "$(DEVICE):Overflow_ CP")
+	field(INPB, "2") # bitmask
+	field(CALC, "A&B?1:0")
+	field(OUT, "$(DEVICE):Overflow-Sts:B PP")
+}
+
+record(calcout, "$(DEVICE):Overflow-Calc:C_") {
+	field(INPA, "$(DEVICE):Overflow_ CP")
+	field(INPB, "4") # bitmask
+	field(CALC, "A&B?1:0")
+	field(OUT, "$(DEVICE):Overflow-Sts:C PP")
+}
+
+record(calcout, "$(DEVICE):Overflow-Calc:D_") {
+	field(INPA, "$(DEVICE):Overflow_ CP")
+	field(INPB, "8") # bitmask
+	field(CALC, "A&B?1:0")
+	field(OUT, "$(DEVICE):Overflow-Sts:D PP")
+}
+
+record(bi, "$(DEVICE):Overflow-Sts:A") {
+	field(ZNAM, "In Range")
+	field(ONAM, "Overflow")
+	field(ZSV, "NO_ALARM")
+	field(OSV, "MAJOR")
+}
+
+record(bi, "$(DEVICE):Overflow-Sts:B") {
+	field(ZNAM, "In Range")
+	field(ONAM, "Overflow")
+	field(ZSV, "NO_ALARM")
+	field(OSV, "MAJOR")
+}
+
+record(bi, "$(DEVICE):Overflow-Sts:C") {
+	field(ZNAM, "In Range")
+	field(ONAM, "Overflow")
+	field(ZSV, "NO_ALARM")
+	field(OSV, "MAJOR")
+}
+
+record(bi, "$(DEVICE):Overflow-Sts:D") {
+	field(ZNAM, "In Range")
+	field(ONAM, "Overflow")
+	field(ZSV, "NO_ALARM")
+	field(OSV, "MAJOR")
 }
 

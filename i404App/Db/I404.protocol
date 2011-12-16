@@ -71,9 +71,10 @@ getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
 checkHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10%{\7|\6}"; @init { getHV; }}
 checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}"; ExtraInput = IGNORE;}
 #
-# Query the last measured current data in amps.
+# Query the last measured current data in amps. Sample currents and overflow 
+# bits, ignore the timestamp.
 #
-getCs {out "READ:CURR?"; in "READ:CURR?\10%*c%*e S,%e A,%(\$1:\$2.VAL)e A,%(\$1:\$3.VAL)e A,%(\$1:\$4.VAL)e A,%*d"; InTerminator = CR LF;}
+getCs {out "READ:CURR?"; in "READ:CURR?\10%*c%*e S,%e A,%(\$1:\$2.VAL)e A,%(\$1:\$3.VAL)e A,%(\$1:\$4.VAL)e A,%(\$1:\$5.VAL)d"; InTerminator = CR LF;}
 #
 # Query the beam position
 #
