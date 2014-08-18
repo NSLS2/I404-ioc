@@ -652,7 +652,7 @@ x 131
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):C1"
+controlPv "$(DEVICE):A"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -677,7 +677,7 @@ x 257
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):C2"
+controlPv "$(DEVICE):B"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -702,7 +702,7 @@ x 383
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):C3"
+controlPv "$(DEVICE):C"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -727,7 +727,7 @@ x 510
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):C4"
+controlPv "$(DEVICE):D"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
