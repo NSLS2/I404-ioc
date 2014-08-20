@@ -13,7 +13,7 @@ i404_registerRecordDeviceDriver(pdbbase)
 
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
 # Initialise test
-drvAsynIPPortConfigure("COM1", "moxa:4002")
+drvAsynIPPortConfigure("COM1", "xf28ida-tsrv2:4016")
 #drvAsynSerialPortConfigure("COM1", "/dev/ttyS0")
 asynOctetSetInputEos("COM1",0,"\r\n")
 asynOctetSetOutputEos("COM1",0,"\r\n")
