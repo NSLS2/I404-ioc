@@ -24,7 +24,7 @@ msgstr "$(Sys)$(Dev)I:Raw1-I"
 
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:195
 msgid "$(DEVICE):All:FOut"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:All-FOut_"
 
 #. recordtype: ai
 #. DESC: CURRENT 2
@@ -90,7 +90,7 @@ msgstr "$(Sys)$(Dev)Err:Clr-Cmd"
 #. recordtype: mbbi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:618
 msgid "$(DEVICE):CSWITCH"
-msgstr ""
+msgstr "$(Sys)$(Dev)Cnt:Chan-Sel"
 
 #. recordtype: longin
 #. DESC: fetch calib status only
@@ -98,27 +98,27 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:226
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:197
 msgid "$(DEVICE):Calib-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)Sts:Calib-I"
 
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:231
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:228
 msgid "$(DEVICE):Calib:Status"
-msgstr ""
+msgstr "$(Sys)$(Dev)Sts:Calib-Sts"
 
 #. recordtype: calc
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:225
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:232
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:222
 msgid "$(DEVICE):Calib:Status:Calc"
-msgstr ""
+msgstr "$(Sys)$(Dev)Sts:Calib-Calc_"
 
 #. recordtype: ai
 #. DESC: CURRENT 4
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:532
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:660
 msgid "$(DEVICE):D"
-msgstr ""
+msgstr "$(Sys)$(Dev)I:Raw4-I"
 
 #. recordtype: dfanout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:297
@@ -164,7 +164,7 @@ msgstr "$(Sys)$(Dev)Enbl:ICUpdate-Cmd"
 #. recordtype: bo
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:115
 msgid "$(DEVICE):ENABLE_UPDATES"
-msgstr ""
+msgstr "$(Sys)$(Dev)Enbl:Updt-Cmd"
 
 #. recordtype: calcout
 #. DESC: ENABLE GETTING ERRORS
@@ -273,13 +273,13 @@ msgstr "$(Sys)$(Dev)Cmd:Save-Cmd"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:86
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:563
 msgid "$(DEVICE):FAN1"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:Fan1-FOut_"
 
 #. recordtype: fanout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:98
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:48
 msgid "$(DEVICE):FAN2"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:Fan2-FOut_"
 
 #. recordtype: fanout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:692
@@ -305,14 +305,14 @@ msgstr "$(Sys)$(Dev)DB:Fan1-DFOut"
 #. DESC: Current-to-Freq Mapping
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:460
 msgid "$(DEVICE):FREQ"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:I2F-SP"
 
 #. recordtype: mbbi
 #. DESC: Current-to-Freq Mapping
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:471
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:468
 msgid "$(DEVICE):FREQ-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:I2F-RB"
 
 #. recordtype: bi
 #. DESC: Get Capacitance - Binary
@@ -505,7 +505,7 @@ msgstr "$(Sys)$(Dev)Val:Cal-I"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:558
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:103
 msgid "$(DEVICE):INCREMENT_XAXIS"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:IncrX1-Calcout_"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:698
@@ -513,7 +513,7 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:710
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:694
 msgid "$(DEVICE):INCREMENT_XAXIS2"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:IncrX2-Calcout_"
 
 #. recordtype: seq
 #. DESC: PERFORM INITIALISATION
@@ -526,21 +526,21 @@ msgstr "$(Sys)$(Dev)Cmd:Init-Seq"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:440
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:434
 msgid "$(DEVICE):INITMODE"
-msgstr ""
+msgstr "$(Sys)$(Dev)Mode:Init-Sel"
 
 #. recordtype: waveform
 #. DESC: Identification string
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:883
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:198
 msgid "$(DEVICE):Identity"
-msgstr ""
+msgstr "$(Sys)$(Dev)ID-I"
 
 #. recordtype: ao
 #. DESC: Integration time setpoint
 #. EGU: s
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:846
 msgid "$(DEVICE):IntPeriod"
-msgstr ""
+msgstr "$(Sys)$(Dev)Time:Intg-SP"
 
 #. recordtype: ai
 #. DESC: Integration time readback
@@ -549,77 +549,77 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:853
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:354
 msgid "$(DEVICE):IntPeriod-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)Time:Intg-RB"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:582
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:87
 msgid "$(DEVICE):KSOUT"
-msgstr ""
+msgstr "$(Sys)$(Dev)DB:SetK-Calcout_"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR A IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:537
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:88
 msgid "$(DEVICE):Ka"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KAIn-I"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:566
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:588
 msgid "$(DEVICE):KaOUT"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KAOut-I"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:545
 msgid "$(DEVICE):Kb"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KBIn-I"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:570
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:584
 msgid "$(DEVICE):KbOUT"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KBOut-I"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:549
 msgid "$(DEVICE):Kc"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KCIn-I"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:574
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:585
 msgid "$(DEVICE):KcOUT"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KCOut-I"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:553
 msgid "$(DEVICE):Kd"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KDIn-I"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:578
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:586
 msgid "$(DEVICE):KdOUT"
-msgstr ""
+msgstr "$(Sys)$(Dev)Val:KDOut-I"
 
 #. recordtype: mbbi
 #. DESC: Monitor readback
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:451
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:448
 msgid "$(DEVICE):MODE-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)Mode-Sts"
 
 #. recordtype: calcout
 #. DESC: OSCILLATE THE TRIGGER VALUE
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:596
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:593
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:104
-msgid "$(DEVICE):OSCILLATOR2"
-msgstr "$(Sys)$(Dev)Osc:2-Cmd"
+msgid "$(DEVICE):OSCILLATOR"
+msgstr "$(Sys)$(Dev)Cmd:Osc1-Cmd"
 
 #. recordtype: calcout
 #. DESC: OSCILLATE THE TRIGGER VALUE
@@ -627,7 +627,7 @@ msgstr "$(Sys)$(Dev)Osc:2-Cmd"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:720
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:695
 msgid "$(DEVICE):OSCILLATOR2"
-msgstr ""
+msgstr "$(Sys)$(Dev)Cmd:Osc2-Cmd"
 
 #. recordtype: bo
 #. DESC: OUTPUT 0
@@ -648,13 +648,13 @@ msgstr "$(Sys)$(Dev)Out:1-Cmd"
 #. DESC: OUTPUT 0
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:604
 msgid "$(DEVICE):OUT2"
-msgstr ""
+msgstr "$(Sys)$(Dev)Out:3-Cmd"
 
 #. recordtype: bo
 #. DESC: OUTPUT 1
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:611
 msgid "$(DEVICE):OUT3"
-msgstr ""
+msgstr "$(Sys)$(Dev)Out:4-Cmd"
 
 #. recordtype: bo
 #. DESC: OVERRIDE ERROR CHECKING
@@ -665,46 +665,46 @@ msgstr "$(Sys)$(Dev)Err:Ovrd-Cmd"
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:928
 msgid "$(DEVICE):Overflow-Calc:A_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:935
 msgid "$(DEVICE):Overflow-Calc:B_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:942
 msgid "$(DEVICE):Overflow-Calc:C_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:949
 msgid "$(DEVICE):Overflow-Calc:D_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:956
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:932
 msgid "$(DEVICE):Overflow-Sts:A"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:963
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:939
 msgid "$(DEVICE):Overflow-Sts:B"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:970
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:946
 msgid "$(DEVICE):Overflow-Sts:C"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:977
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:953
 msgid "$(DEVICE):Overflow-Sts:D"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: longin
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:925
@@ -713,7 +713,7 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:936
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:929
 msgid "$(DEVICE):Overflow_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: stringout
 #. DESC: STORE AND SET PASSWORD
@@ -726,7 +726,7 @@ msgstr "$(Sys)$(Dev)Val:Pwd-SP"
 #. recordtype: stringin
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:911
 msgid "$(DEVICE):Password-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: mbbo
 #. DESC: SELECTION OF CURRENT RANGES
@@ -749,7 +749,7 @@ msgstr "$(Sys)$(Dev)Val:Range-I"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:254
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:293
 msgid "$(DEVICE):RANGE_"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: stringin
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:324
@@ -792,13 +792,13 @@ msgstr "$(Sys)$(Dev)Rst-Cmd"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:614
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:607
 msgid "$(DEVICE):RESET_PLOT"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bo
 #. DESC: RESET THE GRAPH X AXIS
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:713
 msgid "$(DEVICE):RESET_PLOT2"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: seq
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:160
@@ -811,12 +811,12 @@ msgstr "$(Sys)$(Dev)Rst-Seq"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:199
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:348
 msgid "$(DEVICE):Range:FOut"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bo
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:171
 msgid "$(DEVICE):Reset-Cmd"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bi
 #. DESC: Reset In-Progress
@@ -824,27 +824,27 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:179
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:206
 msgid "$(DEVICE):Reset-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: seq
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:178
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:172
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:204
 msgid "$(DEVICE):Reset:Seq1"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: seq
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:193
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:190
 msgid "$(DEVICE):Reset:Seq2"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: longout
 #. DESC: Resolution setpoint
 #. EGU: bits
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:891
 msgid "$(DEVICE):Resolution"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: longin
 #. DESC: Resolution readback
@@ -853,7 +853,7 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:898
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:356
 msgid "$(DEVICE):Resolution-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bo
 #. DESC: SCAN FOR ERROR MESSAGES
@@ -875,7 +875,7 @@ msgstr "$(Sys)$(Dev)Val:Cap-SP"
 #. recordtype: bi
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:562
 msgid "$(DEVICE):SETKS"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: scalcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:317
@@ -896,14 +896,14 @@ msgstr "$(Sys)$(Dev)Cmd:SetRange-Cmd"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:359
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:385
 msgid "$(DEVICE):STATUS"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ao
 #. DESC: Frequency to suppress
 #. EGU: Hz
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:866
 msgid "$(DEVICE):SuppressFreq"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #. DESC: Suppression frequency readback
@@ -912,14 +912,14 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:871
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:203
 msgid "$(DEVICE):SuppressFreq-I"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bo
 #. DESC: TRIGGER PV FOR GRAPH
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:591
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:600
 msgid "$(DEVICE):TRIGGER"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: bo
 #. DESC: TRIGGER PV FOR GRAPH
@@ -938,21 +938,21 @@ msgstr "$(Sys)$(Dev)DB:HVWait-Calcout_"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:65
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:61
 msgid "$(DEVICE):X"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ao
 #. DESC: GRAPH X AXIS
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:107
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:94
 msgid "$(DEVICE):XAXIS"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ao
 #. DESC: GRAPH X AXIS
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:705
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:701
 msgid "$(DEVICE):XAXIS2"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #. DESC: X POSITION IN FROM I404
@@ -960,44 +960,44 @@ msgstr ""
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:60
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:119
 msgid "$(DEVICE):XIN"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #. DESC: X POSITION OFFSET
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:32
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:59
 msgid "$(DEVICE):XOFF"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:56
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:101
 msgid "$(DEVICE):XPOSCALC"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:71
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:82
 msgid "$(DEVICE):Y"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #. DESC: Y POSITION IN FROM I404
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:52
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:81
 msgid "$(DEVICE):YIN"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: ai
 #. DESC: Y POSITION OFFSET
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:38
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:80
 msgid "$(DEVICE):YOFF"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:77
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:102
 msgid "$(DEVICE):YPOSCALC"
-msgstr ""
+msgstr "$(Sys)$(Dev)"
 
