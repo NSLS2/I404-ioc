@@ -938,21 +938,21 @@ msgstr "$(Sys)$(Dev)DB:HVWait-Calcout_"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:65
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:61
 msgid "$(DEVICE):X"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Pos:X-I"
 
 #. recordtype: ao
 #. DESC: GRAPH X AXIS
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:107
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:94
 msgid "$(DEVICE):XAXIS"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Val:XAxis1-SP"
 
 #. recordtype: ao
 #. DESC: GRAPH X AXIS
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:705
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:701
 msgid "$(DEVICE):XAXIS2"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Val:XAxis2-SP"
 
 #. recordtype: ai
 #. DESC: X POSITION IN FROM I404
@@ -960,44 +960,44 @@ msgstr "$(Sys)$(Dev)"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:60
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:119
 msgid "$(DEVICE):XIN"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Pos:XRaw-I"
 
 #. recordtype: ai
 #. DESC: X POSITION OFFSET
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:32
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:59
 msgid "$(DEVICE):XOFF"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Offset:X-I"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:56
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:101
 msgid "$(DEVICE):XPOSCALC"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)DB:X-Calcout_"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:71
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:82
 msgid "$(DEVICE):Y"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Pos:Y-I"
 
 #. recordtype: ai
 #. DESC: Y POSITION IN FROM I404
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:52
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:81
 msgid "$(DEVICE):YIN"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Pos:YRaw-I"
 
 #. recordtype: ai
 #. DESC: Y POSITION OFFSET
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:38
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:80
 msgid "$(DEVICE):YOFF"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)Offset:Y-I"
 
 #. recordtype: calcout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:77
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:102
 msgid "$(DEVICE):YPOSCALC"
-msgstr "$(Sys)$(Dev)"
+msgstr "$(Sys)$(Dev)DB:Y-Calcout_"
 
