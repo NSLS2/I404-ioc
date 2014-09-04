@@ -4,3 +4,8 @@ getpvs -I /usr/lib/epics/dbd -I . \
 	base.dbd \
 	sCalcoutRecord.dbd \
 	~/local/data/work/hg/repos/i404/i404App/Db/I404.template
+getpvs -I /usr/lib/epics/dbd -I . \
+	-o dsp.pot \
+	base.dbd \
+	sCalcoutRecord.dbd \
+	~/local/data/work/hg/repos/i404/i404App/Db/dsp.db
