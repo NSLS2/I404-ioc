@@ -562,49 +562,49 @@ msgstr "$(Sys)$(Dev)DB:SetK-Calcout_"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:537
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:88
 msgid "$(DEVICE):Ka"
-msgstr "$(Sys)$(Dev)Val:KAIn-I"
+msgstr "$(Sys)$(Dev)Gain:1-RB"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:566
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:588
 msgid "$(DEVICE):KaOUT"
-msgstr "$(Sys)$(Dev)Val:KAOut-I"
+msgstr "$(Sys)$(Dev)Gain:1-SP"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:545
 msgid "$(DEVICE):Kb"
-msgstr "$(Sys)$(Dev)Val:KBIn-I"
+msgstr "$(Sys)$(Dev)Gain:2-RB"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:570
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:584
 msgid "$(DEVICE):KbOUT"
-msgstr "$(Sys)$(Dev)Val:KBOut-I"
+msgstr "$(Sys)$(Dev)Gain:2-SP"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:549
 msgid "$(DEVICE):Kc"
-msgstr "$(Sys)$(Dev)Val:KCIn-I"
+msgstr "$(Sys)$(Dev)Gain:3-RB"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:574
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:585
 msgid "$(DEVICE):KcOUT"
-msgstr "$(Sys)$(Dev)Val:KCOut-I"
+msgstr "$(Sys)$(Dev)Gain:3-SP"
 
 #. recordtype: ai
 #. DESC: COMPENSATION FACTOR B IN
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:553
 msgid "$(DEVICE):Kd"
-msgstr "$(Sys)$(Dev)Val:KDIn-I"
+msgstr "$(Sys)$(Dev)Gain:4-RB"
 
 #. recordtype: ai
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:578
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:586
 msgid "$(DEVICE):KdOUT"
-msgstr "$(Sys)$(Dev)Val:KDOut-I"
+msgstr "$(Sys)$(Dev)Gain:4-SP"
 
 #. recordtype: mbbi
 #. DESC: Monitor readback

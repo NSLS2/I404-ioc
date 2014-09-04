@@ -193,7 +193,7 @@ x 800
 y 312
 w 50
 h 21
-controlPv "$(Sys)$(Dev)Val:KAIn-I"
+controlPv "$(Sys)$(Dev)Gain:1-RB"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -263,7 +263,7 @@ x 679
 y 309
 w 70
 h 25
-controlPv "$(Sys)$(Dev)Val:KAOut-I"
+controlPv "$(Sys)$(Dev)Gain:1-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -328,7 +328,7 @@ x 800
 y 349
 w 50
 h 21
-controlPv "$(Sys)$(Dev)Val:KBIn-I"
+controlPv "$(Sys)$(Dev)Gain:2-RB"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -352,7 +352,7 @@ x 680
 y 347
 w 70
 h 25
-controlPv "$(Sys)$(Dev)Val:KBOut-I"
+controlPv "$(Sys)$(Dev)Gain:2-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -417,7 +417,7 @@ x 800
 y 386
 w 50
 h 21
-controlPv "$(Sys)$(Dev)Val:KCIn-I"
+controlPv "$(Sys)$(Dev)Gain:3-RB"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -441,7 +441,7 @@ x 680
 y 384
 w 70
 h 25
-controlPv "$(Sys)$(Dev)Val:KCOut-I"
+controlPv "$(Sys)$(Dev)Gain:3-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -506,7 +506,7 @@ x 800
 y 422
 w 50
 h 21
-controlPv "$(Sys)$(Dev)Val:KDIn-I"
+controlPv "$(Sys)$(Dev)Gain:4-RB"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -530,7 +530,7 @@ x 680
 y 420
 w 70
 h 25
-controlPv "$(Sys)$(Dev)Val:KDOut-I"
+controlPv "$(Sys)$(Dev)Gain:4-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0

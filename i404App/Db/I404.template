@@ -85,7 +85,7 @@ record(calcout, "$(Sys)$(Dev)DB:Y-Calcout_") {
 
 record(fanout, "$(Sys)$(Dev)DB:Fan1-FOut_") {
   field(LNK1, "$(Sys)$(Dev)DB:SetK-Calcout_")
-  field(LNK2, "$(Sys)$(Dev)Val:KAIn-I")
+  field(LNK2, "$(Sys)$(Dev)Gain:1-RB")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:IncrX1-Calcout_") {
@@ -534,7 +534,7 @@ record(ai, "$(Sys)$(Dev)I:Raw4-I") {
   field(FLNK, "$(Sys)$(Dev)I:4-Calcout_")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KAIn-I") {
+record(ai, "$(Sys)$(Dev)Gain:1-RB") {
   field(DESC, "COMPENSATION FACTOR A IN")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getKs($(DEVICE),Kb,Kc,Kd) $(PORT) 0")
@@ -542,15 +542,15 @@ record(ai, "$(Sys)$(Dev)Val:KAIn-I") {
   field(SCAN, "Passive")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KBIn-I") {
+record(ai, "$(Sys)$(Dev)Gain:2-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KCIn-I") {
+record(ai, "$(Sys)$(Dev)Gain:3-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KDIn-I") {
+record(ai, "$(Sys)$(Dev)Gain:4-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
@@ -563,29 +563,29 @@ record(bi, "$(Sys)$(Dev)Cmd:SetK-Cmd") {
   field(FLNK, "$(Sys)$(Dev)DB:Fan1-FOut_")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KAOut-I") {
+record(ai, "$(Sys)$(Dev)Gain:1-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KBOut-I") {
+record(ai, "$(Sys)$(Dev)Gain:2-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KCOut-I") {
+record(ai, "$(Sys)$(Dev)Gain:3-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(Sys)$(Dev)Val:KDOut-I") {
+record(ai, "$(Sys)$(Dev)Gain:4-SP") {
   field(VAL, "1.0")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:SetK-Calcout_") {
   field(DTYP, "stream")
-  field(INPB, "$(Sys)$(Dev)Val:KBOut-I.VAL")
-  field(INPC, "$(Sys)$(Dev)Val:KCOut-I.VAL")
-  field(INPD, "$(Sys)$(Dev)Val:KDOut-I.VAL")
+  field(INPB, "$(Sys)$(Dev)Gain:2-SP.VAL")
+  field(INPC, "$(Sys)$(Dev)Gain:3-SP.VAL")
+  field(INPD, "$(Sys)$(Dev)Gain:4-SP.VAL")
   field(OUT, "@I404.protocol setKs() $(PORT) 0")
-  field(INPA, "$(Sys)$(Dev)Val:KAOut-I.VAL")
+  field(INPA, "$(Sys)$(Dev)Gain:1-SP.VAL")
 }
 
 record(bo, "$(Sys)$(Dev)Trig:1-Cmd") {
