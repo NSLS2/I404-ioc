@@ -31,7 +31,7 @@ x 12
 y 6
 w 120
 h 25
-controlPv "$(DEVICE):IC1"
+controlPv "$(Sys)$(Dev)I:1-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 45

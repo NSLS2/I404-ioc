@@ -66,7 +66,7 @@ offColor index 17
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-indicatorPv "$(DEVICE):STATUS"
+indicatorPv "$(Sys)$(Dev)Err-Sts"
 buttonType "push"
 font "helvetica-medium-r-18.0"
 objType "controls"
@@ -99,8 +99,8 @@ font "helvetica-medium-r-18.0"
 plotMode "plotLastNPts"
 nPts 10000
 updateTimerMs 500
-triggerPv "$(DEVICE):TRIGGER"
-resetPv "$(DEVICE):RESET_PLOT"
+triggerPv "$(Sys)$(Dev)Trig:1-Cmd"
+resetPv "$(Sys)$(Dev)Rst:Plot1-Cmd"
 # X axis properties
 showXAxis
 xAxisSrc "AutoScale"
@@ -116,12 +116,12 @@ y2Max 1
 # Trace Properties
 numTraces 2
 xPv {
-  0 "$(DEVICE):XAXIS"
-  1 "$(DEVICE):XAXIS"
+  0 "$(Sys)$(Dev)Val:XAxis1-SP"
+  1 "$(Sys)$(Dev)Val:XAxis1-SP"
 }
 yPv {
-  0 "$(DEVICE):X"
-  1 "$(DEVICE):Y"
+  0 "$(Sys)$(Dev)Pos:X-I"
+  1 "$(Sys)$(Dev)Pos:Y-I"
 }
 plotUpdateMode {
   0 "trigger"
@@ -153,7 +153,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):CALIB"
+controlPv "$(Sys)$(Dev)Cmd:Cal-Cmd"
 onLabel "Calibrate"
 offLabel "Calibrate"
 labelType "literal"
@@ -193,7 +193,7 @@ x 800
 y 312
 w 50
 h 21
-controlPv "$(DEVICE):Ka"
+controlPv "$(Sys)$(Dev)Val:KAIn-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -223,7 +223,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):SETKS"
+controlPv "$(Sys)$(Dev)Cmd:SetK-Cmd"
 onLabel "Set"
 offLabel "Set"
 labelType "literal"
@@ -263,7 +263,7 @@ x 679
 y 309
 w 70
 h 25
-controlPv "$(DEVICE):KaOUT"
+controlPv "$(Sys)$(Dev)Val:KAOut-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -328,7 +328,7 @@ x 800
 y 349
 w 50
 h 21
-controlPv "$(DEVICE):Kb"
+controlPv "$(Sys)$(Dev)Val:KBIn-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -352,7 +352,7 @@ x 680
 y 347
 w 70
 h 25
-controlPv "$(DEVICE):KbOUT"
+controlPv "$(Sys)$(Dev)Val:KBOut-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -417,7 +417,7 @@ x 800
 y 386
 w 50
 h 21
-controlPv "$(DEVICE):Kc"
+controlPv "$(Sys)$(Dev)Val:KCIn-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -441,7 +441,7 @@ x 680
 y 384
 w 70
 h 25
-controlPv "$(DEVICE):KcOUT"
+controlPv "$(Sys)$(Dev)Val:KCOut-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -506,7 +506,7 @@ x 800
 y 422
 w 50
 h 21
-controlPv "$(DEVICE):Kd"
+controlPv "$(Sys)$(Dev)Val:KDIn-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -530,7 +530,7 @@ x 680
 y 420
 w 70
 h 25
-controlPv "$(DEVICE):KdOUT"
+controlPv "$(Sys)$(Dev)Val:KDOut-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -575,7 +575,7 @@ x 724
 y 458
 w 60
 h 25
-controlPv "$(DEVICE):XOFF"
+controlPv "$(Sys)$(Dev)Offset:X-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -606,7 +606,7 @@ offColor index 3
 inconsistentColor index 3
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):RESET"
+controlPv "$(Sys)$(Dev)Rst-Cmd"
 onLabel "Reset I404"
 offLabel "Reset I404"
 labelType "literal"
@@ -632,7 +632,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):GETCS"
+controlPv "$(Sys)$(Dev)DB:GetCS-Sts_"
 onLabel "Get Current"
 offLabel "Get Current"
 labelType "literal"
@@ -652,7 +652,7 @@ x 131
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):A"
+controlPv "$(Sys)$(Dev)I:Raw1-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -677,7 +677,7 @@ x 257
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):B"
+controlPv "$(Sys)$(Dev)I:Raw2-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -702,7 +702,7 @@ x 383
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):C"
+controlPv "$(Sys)$(Dev)I:Raw3-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -727,7 +727,7 @@ x 510
 y 623
 w 120
 h 25
-controlPv "$(DEVICE):D"
+controlPv "$(Sys)$(Dev)I:Raw4-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -752,7 +752,7 @@ x 30
 y 574
 w 90
 h 25
-controlPv "$(DEVICE):X"
+controlPv "$(Sys)$(Dev)Pos:X-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -797,7 +797,7 @@ x 150
 y 574
 w 90
 h 25
-controlPv "$(DEVICE):Y"
+controlPv "$(Sys)$(Dev)Pos:Y-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -875,7 +875,7 @@ x 736
 y 243
 w 160
 h 25
-controlPv "$(DEVICE):PASSWORD"
+controlPv "$(Sys)$(Dev)Val:Pwd-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -925,7 +925,7 @@ x 823
 y 460
 w 54
 h 21
-controlPv "$(DEVICE):XOFF"
+controlPv "$(Sys)$(Dev)Offset:X-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -995,7 +995,7 @@ x 1078
 y 460
 w 54
 h 21
-controlPv "$(DEVICE):YOFF"
+controlPv "$(Sys)$(Dev)Offset:Y-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -1019,7 +1019,7 @@ x 980
 y 458
 w 60
 h 25
-controlPv "$(DEVICE):YOFF"
+controlPv "$(Sys)$(Dev)Offset:Y-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1078,7 +1078,7 @@ offColor index 3
 inconsistentColor index 3
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):CLRERR"
+controlPv "$(Sys)$(Dev)Err:Clr-Cmd"
 onLabel "Clear Error"
 offLabel "Clear Error"
 labelType "literal"
@@ -1104,7 +1104,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):RESET_PLOT"
+controlPv "$(Sys)$(Dev)Rst:Plot1-Cmd"
 onLabel "Reset Plot"
 offLabel "Reset Plot"
 labelType "literal"
@@ -1150,7 +1150,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):ENABLE_UPDATES"
+controlPv "$(Sys)$(Dev)Enbl:Updt-Cmd"
 3d
 font "helvetica-medium-r-18.0"
 objType "controls"
@@ -1166,7 +1166,7 @@ x 641
 y 517
 w 504
 h 25
-controlPv "$(DEVICE):ERR"
+controlPv "$(Sys)$(Dev)Err-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1196,7 +1196,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):OVRERR"
+controlPv "$(Sys)$(Dev)Err:Ovrd-Cmd"
 3d
 font "helvetica-medium-r-18.0"
 objType "controls"
@@ -1246,7 +1246,7 @@ x 643
 y 139
 w 106
 h 21
-controlPv "$(DEVICE):RANGE_MESSAGE1"
+controlPv "$(Sys)$(Dev)Val:RngMsg1-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1269,7 +1269,7 @@ x 761
 y 139
 w 73
 h 21
-controlPv "$(DEVICE):RANGE_MESSAGE2"
+controlPv "$(Sys)$(Dev)Val:RngMsg2-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1292,7 +1292,7 @@ x 843
 y 139
 w 226
 h 21
-controlPv "$(DEVICE):RANGE_MESSAGE3"
+controlPv "$(Sys)$(Dev)Val:RngMsg3-I"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1340,7 +1340,7 @@ bgColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):RANGE"
+controlPv "$(Sys)$(Dev)Cmd:Range-Sel"
 font "helvetica-medium-r-18.0"
 endObjectProperties
 
@@ -1360,7 +1360,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):SET_RANGE"
+controlPv "$(Sys)$(Dev)Cmd:SetRange-Cmd"
 onLabel "Set"
 offLabel "Set"
 labelType "literal"
@@ -1413,7 +1413,7 @@ x 961
 y 99
 w 84
 h 21
-controlPv "$(DEVICE):RANGEIN"
+controlPv "$(Sys)$(Dev)Val:Range-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -1474,7 +1474,7 @@ x 876
 y 40
 w 90
 h 25
-controlPv "$(DEVICE):CAP"
+controlPv "$(Sys)$(Dev)Val:Cap-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -1505,7 +1505,7 @@ selectColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-controlPv "$(DEVICE):SETCAP"
+controlPv "$(Sys)$(Dev)Val:Cap-SP"
 font "helvetica-medium-r-18.0"
 endObjectProperties
 
@@ -1563,7 +1563,7 @@ x 739
 y 175
 w 90
 h 25
-controlPv "$(DEVICE):HVMAX"
+controlPv "$(Sys)$(Dev)E:HVMax1-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
@@ -1588,7 +1588,7 @@ x 867
 y 178
 w 80
 h 21
-controlPv "$(DEVICE):HVMAXIN"
+controlPv "$(Sys)$(Dev)E:HVMax-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -1638,7 +1638,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-indicatorPv "$(DEVICE):HVSTAT"
+indicatorPv "$(Sys)$(Dev)E:HV-Sts"
 font "helvetica-medium-r-18.0"
 objType "controls"
 endObjectProperties
@@ -1693,7 +1693,7 @@ offColor index 3
 inconsistentColor index 14
 topShadowColor index 0
 botShadowColor index 14
-indicatorPv "$(DEVICE):HVACTIVE"
+indicatorPv "$(Sys)$(Dev)Cmd:HV-Cmd"
 font "helvetica-medium-r-18.0"
 objType "controls"
 endObjectProperties
@@ -1708,7 +1708,7 @@ x 867
 y 209
 w 80
 h 21
-controlPv "$(DEVICE):HVIN"
+controlPv "$(Sys)$(Dev)E:HVIn-I"
 format "decimal"
 font "helvetica-medium-r-18.0"
 fgColor index 14
@@ -1752,7 +1752,7 @@ x 739
 y 206
 w 90
 h 25
-controlPv "$(DEVICE):HV"
+controlPv "$(Sys)$(Dev)E:HV1-SP"
 font "helvetica-medium-r-18.0"
 fgColor index 14
 bgColor index 0
