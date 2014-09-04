@@ -1,4 +1,4 @@
-#!../../bin/linux-x86/i404
+#!../../bin/linux-x86_64/i404
 
 ## You may have to change i404 to something else
 ## everywhere it appears in this file
