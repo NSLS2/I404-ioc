@@ -31,7 +31,7 @@ x 12
 y 6
 w 120
 h 25
-controlPv "$(DEVICE):IC1"
+controlPv "$(Sys)$(Dev)I:1-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 45
@@ -56,7 +56,7 @@ x 139
 y 6
 w 120
 h 25
-controlPv "$(DEVICE):IC2"
+controlPv "$(Sys)$(Dev)I:2-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 26
@@ -81,7 +81,7 @@ x 266
 y 6
 w 120
 h 25
-controlPv "$(DEVICE):IC3"
+controlPv "$(Sys)$(Dev)I:3-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 33
@@ -106,7 +106,7 @@ x 393
 y 6
 w 120
 h 25
-controlPv "$(DEVICE):IC4"
+controlPv "$(Sys)$(Dev)I:4-I"
 format "exponential"
 font "helvetica-medium-r-18.0"
 fgColor index 37

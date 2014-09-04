@@ -3,125 +3,125 @@
 #! DBDEND
 
 
-record(bo, "$(DEVICE):SETCAP") {
+record(bo, "$(Sys)$(Dev)Val:Cap-SP") {
   field(DESC, "Set Capacitor")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setCap() $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
-  field(FLNK, "$(DEVICE):GETCAP")
+  field(FLNK, "$(Sys)$(Dev)Val:Cap-Sts")
 }
 
-record(bi, "$(DEVICE):GETCAP") {
+record(bi, "$(Sys)$(Dev)Val:Cap-Sts") {
   field(DESC, "Get Capacitance - Binary")
   field(DTYP, "stream")
   field(PINI,"1")
-  field(INP, "@I404.protocol getCap($(DEVICE):CAP) $(PORT) 0")
+  field(INP, "@I404.protocol getCap($(Sys)$(Dev)Val:Cap-I) $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
 }
 
-record(ai, "$(DEVICE):CAP") {
+record(ai, "$(Sys)$(Dev)Val:Cap-I") {
   field(DESC, "Capacitance As Float")
   field(PREC, "2")
   field(EGU, "F")
   field(VAL, "0")
-  field(FLNK, "$(DEVICE):CHECK_CAP")
+  field(FLNK, "$(Sys)$(Dev)Cmd:CapChk-Calcout")
 }
 
-record(ai, "$(DEVICE):XOFF") {
+record(ai, "$(Sys)$(Dev)Offset:X-I") {
   field(DESC, "X POSITION OFFSET")
   field(VAL, "0")
   field(PINI, "YES")
 }
 
-record(ai, "$(DEVICE):YOFF") {
+record(ai, "$(Sys)$(Dev)Offset:Y-I") {
   field(DESC, "Y POSITION OFFSET")
   field(VAL, "0")
   field(PINI, "YES")
 }
 
-record(ai, "$(DEVICE):XIN") {
+record(ai, "$(Sys)$(Dev)Pos:XRaw-I") {
   field(DESC, "X POSITION IN FROM I404")
   field(SCAN, "1 second")
   field(DTYP, "stream")
-  field(FLNK, "$(DEVICE):FAN2")
-  field(INP, "@I404.protocol getPos($(DEVICE):YIN) $(PORT) 0")
+  field(FLNK, "$(Sys)$(Dev)DB:Fan2-FOut_")
+  field(INP, "@I404.protocol getPos($(Sys)$(Dev)Pos:YRaw-I) $(PORT) 0")
 }
 
-record(ai, "$(DEVICE):YIN") {
+record(ai, "$(Sys)$(Dev)Pos:YRaw-I") {
   field(DESC, "Y POSITION IN FROM I404")
 }
 
-record(calcout, "$(DEVICE):XPOSCALC") {
+record(calcout, "$(Sys)$(Dev)DB:X-Calcout_") {
   field(SCAN, "Passive")
   field(CALC, "B-A")
-  field(INPA, "$(DEVICE):XOFF")
-  field(INPB, "$(DEVICE):XIN")
-  field(OUT, "$(DEVICE):X PP")
+  field(INPA, "$(Sys)$(Dev)Offset:X-I")
+  field(INPB, "$(Sys)$(Dev)Pos:XRaw-I")
+  field(OUT, "$(Sys)$(Dev)Pos:X-I PP")
   field(OOPT, "Every Time")
 }
 
-record(ai, "$(DEVICE):X") {
+record(ai, "$(Sys)$(Dev)Pos:X-I") {
   field(SCAN, "Passive")
   field(VAL, "0")
   field(PINI, "YES")
 }
 
-record(ai, "$(DEVICE):Y") {
+record(ai, "$(Sys)$(Dev)Pos:Y-I") {
   field(SCAN, "Passive")
   field(VAL, "0")
   field(PINI, "YES")
 }
 
-record(calcout, "$(DEVICE):YPOSCALC") {
+record(calcout, "$(Sys)$(Dev)DB:Y-Calcout_") {
   field(SCAN, "Passive")
   field(CALC, "B-A")
-  field(INPA, "$(DEVICE):YOFF")
-  field(INPB, "$(DEVICE):YIN")
-  field(OUT, "$(DEVICE):Y PP")
+  field(INPA, "$(Sys)$(Dev)Offset:Y-I")
+  field(INPB, "$(Sys)$(Dev)Pos:YRaw-I")
+  field(OUT, "$(Sys)$(Dev)Pos:Y-I PP")
   field(OOPT, "Every Time")
 }
 
-record(fanout, "$(DEVICE):FAN1") {
-  field(LNK1, "$(DEVICE):KSOUT")
-  field(LNK2, "$(DEVICE):Ka")
+record(fanout, "$(Sys)$(Dev)DB:Fan1-FOut_") {
+  field(LNK1, "$(Sys)$(Dev)DB:SetK-Calcout_")
+  field(LNK2, "$(Sys)$(Dev)Gain:1-RB")
 }
 
-record(calcout, "$(DEVICE):INCREMENT_XAXIS") {
+record(calcout, "$(Sys)$(Dev)DB:IncrX1-Calcout_") {
   field(SCAN, "Passive")
   field(CALC, "B=1?-2:A+1")
-  field(OUT, "$(DEVICE):XAXIS PP")
+  field(OUT, "$(Sys)$(Dev)Val:XAxis1-SP PP")
   field(OOPT, "Every Time")
 }
 
-record(fanout, "$(DEVICE):FAN2") {
+record(fanout, "$(Sys)$(Dev)DB:Fan2-FOut_") {
   field(SCAN, "Passive")
   field(SELM, "All")
-  field(LNK2, "$(DEVICE):XPOSCALC")
-  field(LNK3, "$(DEVICE):YPOSCALC")
-  field(LNK4, "$(DEVICE):INCREMENT_XAXIS")
-  field(LNK5, "$(DEVICE):OSCILLATOR")
+  field(LNK2, "$(Sys)$(Dev)DB:X-Calcout_")
+  field(LNK3, "$(Sys)$(Dev)DB:Y-Calcout_")
+  field(LNK4, "$(Sys)$(Dev)DB:IncrX1-Calcout_")
+  field(LNK5, "$(Sys)$(Dev)Cmd:Osc1-Cmd")
 }
 
-record(ao, "$(DEVICE):XAXIS") {
+record(ao, "$(Sys)$(Dev)Val:XAxis1-SP") {
   field(SCAN, "Passive")
   field(VAL, "-1")
   field(DESC, "GRAPH X AXIS")
   field(PINI, "YES")
-  field(OUT, "$(DEVICE):INCREMENT_XAXIS.A")
+  field(OUT, "$(Sys)$(Dev)DB:IncrX1-Calcout_.A")
 }
 
-record(bo, "$(DEVICE):ENABLE_UPDATES") {
+record(bo, "$(Sys)$(Dev)Enbl:Updt-Cmd") {
   field(SCAN, "Passive")
   field(PINI, "YES")
   field(VAL, "1")
-  field(OUT, "$(DEVICE):XIN.DISA PP")
+  field(OUT, "$(Sys)$(Dev)Pos:XRaw-I.DISA PP")
   field(ZNAM, "Disable")
   field(ONAM, "Enable")
 }
 
-record(bo, "$(DEVICE):EXECUTE_CALIB") {
+record(bo, "$(Sys)$(Dev)Cmd:Cal-Cmd") {
   field(DESC, "Calibrate device")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol doCalib() $(PORT) 0")
@@ -129,84 +129,84 @@ record(bo, "$(DEVICE):EXECUTE_CALIB") {
 #  field(DISV, "0")
 }
 
-record(bo, "$(DEVICE):CALIB") {
-  field(FLNK, "$(DEVICE):EXECUTE_CALIB")
-#  field(OUT, "$(DEVICE):EXECUTE_CALIB.DISA")
+record(bo, "$(Sys)$(Dev)Cmd:Cal-Cmd") {
+  field(FLNK, "$(Sys)$(Dev)Cmd:Cal-Cmd")
+#  field(OUT, "$(Sys)$(Dev)Cmd:Cal-Cmd.DISA")
 }
 
-record(bo, "$(DEVICE):RESET") {
-  field(FLNK, "$(DEVICE):RESET_SEQ")
-#  field(OUT, "$(DEVICE):RESET_SEQ.DISA")
+record(bo, "$(Sys)$(Dev)Rst-Cmd") {
+  field(FLNK, "$(Sys)$(Dev)Rst-Seq")
+#  field(OUT, "$(Sys)$(Dev)Rst-Seq.DISA")
 }
 
-record(bo, "$(DEVICE):EXECUTE_SAVE") {
+record(bo, "$(Sys)$(Dev)Cmd:Save-Cmd") {
   field(DESC, "SAVE STATE TO EEPROM")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol save() $(PORT) 0")
 }
 
-record(bo, "$(DEVICE):EXECUTE_RECALL") {
+record(bo, "$(Sys)$(Dev)Cmd:Rcl-Cmd") {
   field(DESC, "RECALL STATE FROM EEPROM")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol recall() $(PORT) 0")
 }
 
-record(bo, "$(DEVICE):EXECUTE_RESET") {
+record(bo, "$(Sys)$(Dev)Rst-Cmd") {
   field(DESC, "Reset device")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol reset() $(PORT) 0")
 }
 
-record(seq, "$(DEVICE):RESET_SEQ") {
+record(seq, "$(Sys)$(Dev)Rst-Seq") {
   field(DLY1, "0.0")
-  field(LNK1, "$(DEVICE):EXECUTE_SAVE PP")
+  field(LNK1, "$(Sys)$(Dev)Cmd:Save-Cmd PP")
   field(DLY2, "3.0")
-  field(LNK2, "$(DEVICE):EXECUTE_RESET PP")
+  field(LNK2, "$(Sys)$(Dev)Rst-Cmd PP")
   field(DLY3, "4.0")
-  field(LNK3, "$(DEVICE):EXECUTE_RECALL PP")
+  field(LNK3, "$(Sys)$(Dev)Cmd:Rcl-Cmd PP")
   field(DLY4, "2.0")
-  field(LNK4, "$(DEVICE):EXECUTE_INIT PP")
+  field(LNK4, "$(Sys)$(Dev)Cmd:Init-Cmd PP")
 }
 
-record(bo,"$(DEVICE):Reset-Cmd") {
-  field(FLNK,"$(DEVICE):Reset:Seq1")
+record(bo,"$(Sys)$(Dev)Rst-Cmd") {
+  field(FLNK,"$(Sys)$(Dev)Rst:1-Seq_")
 }
 
 #
 # Reset:Seq1 and Seq2 are a set: do not de-couple!
 #
-record(seq,"$(DEVICE):Reset:Seq1") {
-  field(LNK1,"$(DEVICE):Reset-I PP")
+record(seq,"$(Sys)$(Dev)Rst:1-Seq_") {
+  field(LNK1,"$(Sys)$(Dev)Rst-Sts PP")
   field(DO1, "1") #indicate reset is active
-  field(DOL2, "$(DEVICE):GETCS.SCAN") #record GETCS SCAN setting in D02 field
+  field(DOL2, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") #record GETCS SCAN setting in D02 field
   field(DO3, "0")
-  field(LNK3,"$(DEVICE):GETCS.SCAN") # now set scan algorithm to "passive"
+  field(LNK3,"$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # now set scan algorithm to "passive"
   field(DLY4, "1.0") # let pending reads finish 
-  field(LNK4, "$(DEVICE):EXECUTE_RESET PP")
+  field(LNK4, "$(Sys)$(Dev)Rst-Cmd PP")
   field(DLY5, "4.0") # let *RST take effect
-  field(LNK5, "$(DEVICE):EXECUTE_CALIB PP")
+  field(LNK5, "$(Sys)$(Dev)Cmd:Cal-Cmd PP")
   field(DLY6, "10.0") # let "calib:gain" take effect
-  field(LNK6, "$(DEVICE):EXECUTE_INIT PP")
-  field(FLNK, "$(DEVICE):Reset:Seq2") 
+  field(LNK6, "$(Sys)$(Dev)Cmd:Init-Cmd PP")
+  field(FLNK, "$(Sys)$(Dev)Rst:2-Seq_") 
 }
 
-record(seq,"$(DEVICE):Reset:Seq2") {
+record(seq,"$(Sys)$(Dev)Rst:2-Seq_") {
   field(DLY1, "2.0") # let "init" from Reset:Seq1 take effect
-  field(LNK1, "$(DEVICE):All:FOut PP") # update key indicators
+  field(LNK1, "$(Sys)$(Dev)DB:All-FOut_ PP") # update key indicators
   field(DLY1, "2.0")
-  field(LNK1,"$(DEVICE):Calib-I PP")
-  field(LNK2, "$(DEVICE):Identity PP")
-  field(LNK3,"$(DEVICE):Range:FOut PP") #int-period,cap,range,res
+  field(LNK1,"$(Sys)$(Dev)Sts:Calib-I PP")
+  field(LNK2, "$(Sys)$(Dev)ID-I PP")
+  field(LNK3,"$(Sys)$(Dev)DB:Range-FOut_ PP") #int-period,cap,range,res
   field(LNK4,"$(DEVICE):Password.PROC PP") #some functions are locked; unlock them
   field(DO4, "1")
   field(DLY5, "1")
-  field(LNK5,"$(DEVICE):SuppressFreq-I PP")
-  field(DOL6, "$(DEVICE):Reset:Seq1.DO2") # fetch previous SCAN setting
-  field(LNK6, "$(DEVICE):GETCS.SCAN") # restore GETCS previous SCAN setting
-  field(LNK7,"$(DEVICE):Reset-I PP") # indicate reset ops are done
+  field(LNK5,"$(Sys)$(Dev)Freq:Suppress-RB PP")
+  field(DOL6, "$(Sys)$(Dev)Rst:1-Seq_.DO2") # fetch previous SCAN setting
+  field(LNK6, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # restore GETCS previous SCAN setting
+  field(LNK7,"$(Sys)$(Dev)Rst-Sts PP") # indicate reset ops are done
 }
 
-record(bi,"$(DEVICE):Reset-I") {
+record(bi,"$(Sys)$(Dev)Rst-Sts") {
   field(DESC,"Reset In-Progress")
   field(PINI,"1")
   field(VAL,"0")
@@ -215,48 +215,48 @@ record(bi,"$(DEVICE):Reset-I") {
   field(OSV,"MAJOR")
 }
 
-record(longin,"$(DEVICE):Calib-I") {
+record(longin,"$(Sys)$(Dev)Sts:Calib-I") {
   field(DESC,"fetch calib status only")
   field(DTYP,"stream")
   field(INP,"@I404.protocol getCalib() $(PORT) 0")
-  field(FLNK,"$(DEVICE):Calib:Status:Calc")
+  field(FLNK,"$(Sys)$(Dev)Sts:Calib-Calc_")
 }
 
-record(calc,"$(DEVICE):Calib:Status:Calc") {
-  field(INPA,"$(DEVICE):Calib-I NPP")
+record(calc,"$(Sys)$(Dev)Sts:Calib-Calc_") {
+  field(INPA,"$(Sys)$(Dev)Sts:Calib-I NPP")
   field(CALC,"A=15?1:0")
-  field(FLNK,"$(DEVICE):Calib:Status")
+  field(FLNK,"$(Sys)$(Dev)Sts:Calib-Sts")
 }
 
-record(bi, "$(DEVICE):Calib:Status") {
-  field(INP, "$(DEVICE):Calib:Status:Calc")
+record(bi, "$(Sys)$(Dev)Sts:Calib-Sts") {
+  field(INP, "$(Sys)$(Dev)Sts:Calib-Calc_")
   field(ZNAM, "Error")
   field(ONAM, "OK")
 }
 
-record(bo, "$(DEVICE):EXECUTE_INIT") {
+record(bo, "$(Sys)$(Dev)Cmd:Init-Cmd") {
   field(DESC, "INITIATE ON VALID TRIGGER")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol init() $(PORT) 0")
 }
 
-record(mbbo, "$(DEVICE):RANGE") {
+record(mbbo, "$(Sys)$(Dev)Cmd:Range-Sel") {
   field(VAL, "0")
   field(ZRST, "4.0e-7")
   field(ONST, "8.0e-7")
   field(TWST, "2.0e-6")
   field(THST, "1.0e-5")
-  field(FLNK, "$(DEVICE):RANGE_STRING")
+  field(FLNK, "$(Sys)$(Dev)Val:Range-Str")
   field(FRST, "1.0e-4")
   field(DESC, "SELECTION OF CURRENT RANGES")
 }
 
-record(ao,"$(DEVICE):RANGE_") {
-  field(FLNK, "$(DEVICE):RANGE_STRING")
+record(ao,"$(Sys)$(Dev)Val:Range-SP") {
+  field(FLNK, "$(Sys)$(Dev)Val:Range-Str")
   field(EGU,"A")
 }
 
-record(ai, "$(DEVICE):RANGEIN") {
+record(ai, "$(Sys)$(Dev)Val:Range-I") {
   field(DESC, "GET CURRENT RANGE FROM I404")
   field(PINI, "YES")
   field(DTYP, "stream")
@@ -266,178 +266,178 @@ record(ai, "$(DEVICE):RANGEIN") {
   field(EGU,"A")
 }
 
-record(ao, "$(DEVICE):CAP_SWITCH") {
+record(ao, "$(Sys)$(Dev)Val:CapSw-SP") {
   field(DESC, "CAPACITANCE SWITCH POINT")
   field(PINI, "YES")
   field(VAL, "1.0e-6")
 }
 
-record(calcout, "$(DEVICE):CHECK_CAP") {
+record(calcout, "$(Sys)$(Dev)Cmd:CapChk-Calcout") {
   field(PINI, "YES")
   field(CALC, "(C>=B&&A=3.3e-9)||(C<B&&A=1.0e-10)?C:-1")
-  field(INPA, "$(DEVICE):CAP")
-  field(INPB, "$(DEVICE):CAP_SWITCH")
-  field(INPC, "$(DEVICE):RANGE_STRING PP")
-  field(OUT, "$(DEVICE):DFAN1 PP")
+  field(INPA, "$(Sys)$(Dev)Val:Cap-I")
+  field(INPB, "$(Sys)$(Dev)Val:CapSw-SP")
+  field(INPC, "$(Sys)$(Dev)Val:Range-Str PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan1-FOut_ PP")
   field(DESC, "CHECK CAPACITANCE VALID")
 }
 
-record(bi, "$(DEVICE):SET_RANGE") {
+record(bi, "$(Sys)$(Dev)Cmd:SetRange-Cmd") {
   field(SCAN, "Passive")
-  field(FLNK, "$(DEVICE):FAN4")
+  field(FLNK, "$(Sys)$(Dev)DB:Fan4-FOut_")
 }
 
-record(stringin, "$(DEVICE):RANGE_STRING") {
+record(stringin, "$(Sys)$(Dev)Val:Range-Str") {
   field(SCAN, "Passive")
-  field(FLNK, "$(DEVICE):CHECK_CAP")
-  field(INP, "$(DEVICE):RANGE_.VAL")
+  field(FLNK, "$(Sys)$(Dev)Cmd:CapChk-Calcout")
+  field(INP, "$(Sys)$(Dev)Val:Range-SP.VAL")
   field(DESC, "REQUESTED RANGE AS VALUE")
 }
 
-record(dfanout, "$(DEVICE):DFAN1") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan1-FOut_") {
   field(SCAN, "Passive")
-  field(OUTA, "$(DEVICE):DISSR.A PP")
-  field(OUTB, "$(DEVICE):EXECSR.VAL")
+  field(OUTA, "$(Sys)$(Dev)Dsbl:SetRng-Calcout.A PP")
+  field(OUTB, "$(Sys)$(Dev)DB:SetRng-SP_.VAL")
 }
 
-record(calcout, "$(DEVICE):DISSR") {
+record(calcout, "$(Sys)$(Dev)Dsbl:SetRng-Calcout") {
   field(DESC, "DISABLE SET RANGE")
   field(SCAN, "Passive")
   field(PINI, "YES")
   field(VAL, "0")
   field(CALC, "A>=0?0:1")
-  field(OUT, "$(DEVICE):DFAN2 PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan2-FOut_ PP")
 }
 
-record(fanout, "$(DEVICE):FAN4") {
-  field(LNK1, "$(DEVICE):EXECSR")
-  field(LNK2, "$(DEVICE):RANGEIN")
+record(fanout, "$(Sys)$(Dev)DB:Fan4-FOut_") {
+  field(LNK1, "$(Sys)$(Dev)DB:SetRng-SP_")
+  field(LNK2, "$(Sys)$(Dev)Val:Range-I")
 }
 
-record(scalcout, "$(DEVICE):SET_MESSAGE") {
+record(scalcout, "$(Sys)$(Dev)DB:SetMsg-SCalcout_") {
   field(SCAN, "Passive")
   field(CALC, "A=0?'VALID':'INVALID'")
-  field(OUT, "$(DEVICE):RANGE_MESSAGE2 PP")
+  field(OUT, "$(Sys)$(Dev)Val:RngMsg2-I PP")
   field(OOPT, "Every Time")
 }
 
-record(stringin, "$(DEVICE):RANGE_MESSAGE1") {
+record(stringin, "$(Sys)$(Dev)Val:RngMsg1-I") {
   field(VAL, "Capacitance ")
 }
 
-record(stringin, "$(DEVICE):RANGE_MESSAGE2") {
+record(stringin, "$(Sys)$(Dev)Val:RngMsg2-I") {
   field(SCAN, "Passive")
   field(DESC, "VALID/INVALID MESAGE")
 }
 
-record(stringin, "$(DEVICE):RANGE_MESSAGE3") {
+record(stringin, "$(Sys)$(Dev)Val:RngMsg3-I") {
   field(VAL, " for selected current range")
 }
 
-record(dfanout, "$(DEVICE):DFAN2") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan2-FOut_") {
   field(SCAN, "Passive")
-  field(OUTA, "$(DEVICE):SET_MESSAGE.A PP")
-  field(OUTB, "$(DEVICE):SET_RANGE.DISA")
+  field(OUTA, "$(Sys)$(Dev)DB:SetMsg-SCalcout_.A PP")
+  field(OUTB, "$(Sys)$(Dev)Cmd:SetRange-Cmd.DISA")
 }
 
-record(ao, "$(DEVICE):EXECSR") {
+record(ao, "$(Sys)$(Dev)DB:SetRng-SP_") {
   field(SCAN, "Passive")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setRange() $(PORT) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
-  field(FLNK, "$(DEVICE):Range:FOut")
+  field(FLNK, "$(Sys)$(Dev)DB:Range-FOut_")
   field(EGU,"A")
 }
 
-record(fanout,"$(DEVICE):Range:FOut") {
-  field(LNK1,"$(DEVICE):RANGEIN")
-  field(LNK2,"$(DEVICE):IntPeriod-I")
-  field(LNK3,"$(DEVICE):GETCAP")
-  field(LNK4,"$(DEVICE):Resolution-I")
+record(fanout,"$(Sys)$(Dev)DB:Range-FOut_") {
+  field(LNK1,"$(Sys)$(Dev)Val:Range-I")
+  field(LNK2,"$(Sys)$(Dev)Time:Intg-RB")
+  field(LNK3,"$(Sys)$(Dev)Val:Cap-Sts")
+  field(LNK4,"$(Sys)$(Dev)Res-RB")
 }
 
-record(bo, "$(DEVICE):STATUS") {
+record(bo, "$(Sys)$(Dev)Err-Sts") {
   field(SCAN, "Passive")
-  field(OUT, "$(DEVICE):ENBERR.B PP")
+  field(OUT, "$(Sys)$(Dev)Enbl:Err-Cmd.B PP")
   field(ZNAM, "Ok")
   field(ONAM, "Error")
   field(VAL, "0")
   field(DESC, "ERROR STATUS")
 }
 
-record(bo, "$(DEVICE):CLRERR") {
+record(bo, "$(Sys)$(Dev)Err:Clr-Cmd") {
   field(VAL, "0")
-  field(OUT, "$(DEVICE):ENBERR.A PP")
+  field(OUT, "$(Sys)$(Dev)Enbl:Err-Cmd.A PP")
   field(DESC, "CLEAR ERROR STATUS")
   field(SCAN, "Passive")
 }
 
-record(calcout, "$(DEVICE):ENBERR") {
+record(calcout, "$(Sys)$(Dev)Enbl:Err-Cmd") {
   field(SCAN, "Passive")
   field(CALC, "B=1&&A=0||C=1?1:0")
-  field(OUT, "$(DEVICE):ERR.DISA PP")
+  field(OUT, "$(Sys)$(Dev)Err-I.DISA PP")
   field(DESC, "ENABLE GETTING ERRORS")
 }
 
-record(calcout, "$(DEVICE):ERRBIN") {
+record(calcout, "$(Sys)$(Dev)DB:Err2Bin-Calcout_") {
   field(SCAN, "Passive")
   field(CALC, "A=0?0:1")
-  field(OUT, "$(DEVICE):STATUS.VAL PP")
+  field(OUT, "$(Sys)$(Dev)Err-Sts.VAL PP")
   field(VAL, "0")
   field(OOPT, "Every Time")
   field(DOPT, "Use CALC")
   field(DESC, "ERROR STATUS TO BINARY")
 }
 
-record(scalcout, "$(DEVICE):CHKERR") {
+record(scalcout, "$(Sys)$(Dev)DB:ErrChk-SCalcout_") {
   field(CALC, "AA!='No error'&&AA!=''")
-  field(OUT, "$(DEVICE):ERRBIN.A PP")
+  field(OUT, "$(Sys)$(Dev)DB:Err2Bin-Calcout_.A PP")
   field(SCAN, "Passive")
-  field(INAA, "$(DEVICE):ERR.VAL")
+  field(INAA, "$(Sys)$(Dev)Err-I.VAL")
   field(OOPT, "Every Time")
   field(DOPT, "Use CALC")
   field(DESC, "CHECK ERROR STATUS")
 }
 
-record(stringin, "$(DEVICE):ERR") {
+record(stringin, "$(Sys)$(Dev)Err-I") {
   field(DESC, "ERROR MESSAGE FROM I404")
   field(SCAN, "Passive")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getErr() $(PORT) 0")
-  field(FLNK, "$(DEVICE):CHKERR")
+  field(FLNK, "$(Sys)$(Dev)DB:ErrChk-SCalcout_")
 }
 
 
-record(bo, "$(DEVICE):SCNERR") {
+record(bo, "$(Sys)$(Dev)Err:Scan-Cmd") {
 #  field(SCAN, "2 second")
-  field(FLNK, "$(DEVICE):ERR")
+  field(FLNK, "$(Sys)$(Dev)Err-I")
   field(DESC, "SCAN FOR ERROR MESSAGES")
 }
 
-record(bo, "$(DEVICE):OVRERR") {
+record(bo, "$(Sys)$(Dev)Err:Ovrd-Cmd") {
   field(DESC, "OVERRIDE ERROR CHECKING")
   field(PINI, "YES")
   field(VAL, "0")
-  field(OUT, "$(DEVICE):ENBERR.C PP")
+  field(OUT, "$(Sys)$(Dev)Enbl:Err-Cmd.C PP")
   field(ZNAM, "Disable Error")
   field(ONAM, "Enable Error")
 }
 
-record(seq, "$(DEVICE):INIT") {
+record(seq, "$(Sys)$(Dev)Cmd:Init-Seq") {
   field(DESC, "PERFORM INITIALISATION")
   field(PINI, "YES")
-  field(LNK1, "$(DEVICE):OUT1.PROC")
-  field(LNK2, "$(DEVICE):HVSTAT.PROC")
+  field(LNK1, "$(Sys)$(Dev)Out:1-Cmd.PROC")
+  field(LNK2, "$(Sys)$(Dev)E:HV-Sts.PROC")
   field(DLY3, "1")
-  field(LNK3, "$(DEVICE):HVERR.PROC")
-  field(LNK4, "$(DEVICE):OUT0.PROC")
-  field(LNK5, "$(DEVICE):INITMODE.PROC")
+  field(LNK3, "$(Sys)$(Dev)Err:HV-Sts.PROC")
+  field(LNK4, "$(Sys)$(Dev)Out:0-Cmd.PROC")
+  field(LNK5, "$(Sys)$(Dev)Mode:Init-Sel.PROC")
   field(DLY6, "1")
   field(DO6, "1")
   field(LNK6, "$(DEVICE):Password.PROC PP") #unlock some cmds
 }
 		
-record(mbbo, "$(DEVICE):INITMODE") {
+record(mbbo, "$(Sys)$(Dev)Mode:Init-Sel") {
   field(DESC, "INIT POSITION MODE")
   field(SCAN, "Passive")
   field(DTYP, "stream")
@@ -445,10 +445,10 @@ record(mbbo, "$(DEVICE):INITMODE") {
   field(TWST,"Quadrant")
   field(THST,"Split")
   field(OUT, "@I404.protocol setMode() $(PORT) 0")
-  field(FLNK,"$(DEVICE):MODE-I")
+  field(FLNK,"$(Sys)$(Dev)Mode-Sts")
 }
 
-record(mbbi,"$(DEVICE):MODE-I") {
+record(mbbi,"$(Sys)$(Dev)Mode-Sts") {
   field(DESC,"Monitor readback")
   field(DTYP,"stream")
   field(ONST,"None")
@@ -457,7 +457,7 @@ record(mbbi,"$(DEVICE):MODE-I") {
   field(INP,"@I404.protocol getMode() $(PORT) 0")
 }
 
-record(mbbo,"$(DEVICE):FREQ") {
+record(mbbo,"$(Sys)$(Dev)Val:I2F-SP") {
   field(DESC,"Current-to-Freq Mapping")
   field(PINI,"1")
   field(DTYP,"stream")
@@ -465,10 +465,10 @@ record(mbbo,"$(DEVICE):FREQ") {
   field(TWST,"Positive")
   field(THST,"Negative")
   field(OUT,"@I404.protocol setFreq() $(PORT) 0")
-  field(FLNK,"$(DEVICE):FREQ-I")
+  field(FLNK,"$(Sys)$(Dev)Val:I2F-RB")
 }
 
-record(mbbi,"$(DEVICE):FREQ-I") {
+record(mbbi,"$(Sys)$(Dev)Val:I2F-RB") {
   field(DESC,"Current-to-Freq Mapping")
   field(DTYP,"stream")
   field(ONST,"Absolute")
@@ -477,7 +477,7 @@ record(mbbi,"$(DEVICE):FREQ-I") {
   field(INP,"@I404.protocol getFreq() $(PORT) 0")
 }
 
-record(bi, "$(DEVICE):HVSTAT") {
+record(bi, "$(Sys)$(Dev)E:HV-Sts") {
   field(SCAN, "Passive")
   field(DTYP, "stream")
   field(INP, "@I404.protocol checkHV() $(PORT) 0")
@@ -485,56 +485,56 @@ record(bi, "$(DEVICE):HVSTAT") {
   field(ONAM, "HV Control Present")
 }
 
-record(stringin, "$(DEVICE):HVERR") {
+record(stringin, "$(Sys)$(Dev)Err:HV-Sts") {
   field(DESC, "ERROR MESSAGE FROM HV CHECK")
   field(SCAN, "Passive")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getErr() $(PORT) 0")
 }
 
-record(bo, "$(DEVICE):OUT1") {
+record(bo, "$(Sys)$(Dev)Out:1-Cmd") {
   field(SCAN, "Passive")
   field(VAL, "1")
-  field(OUT, "$(DEVICE):SCNERR.DISA")
+  field(OUT, "$(Sys)$(Dev)Err:Scan-Cmd.DISA")
   field(DESC, "OUTPUT 1")
 }
 
-record(bo, "$(DEVICE):OUT0") {
+record(bo, "$(Sys)$(Dev)Out:0-Cmd") {
   field(SCAN, "Passive")
   field(VAL, "0")
-  field(OUT, "$(DEVICE):SCNERR.DISA")
+  field(OUT, "$(Sys)$(Dev)Err:Scan-Cmd.DISA")
   field(DESC, "OUTPUT 0")
 }
 
-record(bi, "$(DEVICE):GETCS") {
+record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
   field(PINI,"1")
-  field(FLNK, "$(DEVICE):A")
+  field(FLNK, "$(Sys)$(Dev)I:Raw1-I")
 }
 
-record(ai, "$(DEVICE):A") {
+record(ai, "$(Sys)$(Dev)I:Raw1-I") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getCs($(DEVICE),B,C,D,Overflow_) $(PORT) 0")
   field(SCAN, "Passive")
-  field(FLNK, "$(DEVICE):ICCALC1")
+  field(FLNK, "$(Sys)$(Dev)I:1-Calcout_")
 }
 
-record(ai, "$(DEVICE):B") {
+record(ai, "$(Sys)$(Dev)I:Raw2-I") {
   field(DESC, "CURRENT 2")
-  field(FLNK, "$(DEVICE):ICCALC2")
+  field(FLNK, "$(Sys)$(Dev)I:2-Calcout_")
 }
 
-record(ai, "$(DEVICE):C") {
+record(ai, "$(Sys)$(Dev)I:Raw3-I") {
   field(DESC, "CURRENT 3")
-  field(FLNK, "$(DEVICE):ICCALC3")
+  field(FLNK, "$(Sys)$(Dev)I:3-Calcout_")
 }
 
-record(ai, "$(DEVICE):D") {
+record(ai, "$(Sys)$(Dev)I:Raw4-I") {
   field(DESC, "CURRENT 4")
-  field(FLNK, "$(DEVICE):ICCALC4")
+  field(FLNK, "$(Sys)$(Dev)I:4-Calcout_")
 }
 
-record(ai, "$(DEVICE):Ka") {
+record(ai, "$(Sys)$(Dev)Gain:1-RB") {
   field(DESC, "COMPENSATION FACTOR A IN")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getKs($(DEVICE),Kb,Kc,Kd) $(PORT) 0")
@@ -542,233 +542,233 @@ record(ai, "$(DEVICE):Ka") {
   field(SCAN, "Passive")
 }
 
-record(ai, "$(DEVICE):Kb") {
+record(ai, "$(Sys)$(Dev)Gain:2-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
-record(ai, "$(DEVICE):Kc") {
+record(ai, "$(Sys)$(Dev)Gain:3-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
-record(ai, "$(DEVICE):Kd") {
+record(ai, "$(Sys)$(Dev)Gain:4-RB") {
   field(DESC, "COMPENSATION FACTOR B IN")
 }
 
-record(bo, "$(DEVICE):RESET_PLOT") {
-  field(OUT, "$(DEVICE):INCREMENT_XAXIS.B PP")
+record(bo, "$(Sys)$(Dev)Rst:Plot1-Cmd") {
+  field(OUT, "$(Sys)$(Dev)DB:IncrX1-Calcout_.B PP")
   field(DESC, "RESET THE GRAPH X AXIS")
 }
 
-record(bi, "$(DEVICE):SETKS") {
-  field(FLNK, "$(DEVICE):FAN1")
+record(bi, "$(Sys)$(Dev)Cmd:SetK-Cmd") {
+  field(FLNK, "$(Sys)$(Dev)DB:Fan1-FOut_")
 }
 
-record(ai, "$(DEVICE):KaOUT") {
+record(ai, "$(Sys)$(Dev)Gain:1-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(DEVICE):KbOUT") {
+record(ai, "$(Sys)$(Dev)Gain:2-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(DEVICE):KcOUT") {
+record(ai, "$(Sys)$(Dev)Gain:3-SP") {
   field(VAL, "1.0")
 }
 
-record(ai, "$(DEVICE):KdOUT") {
+record(ai, "$(Sys)$(Dev)Gain:4-SP") {
   field(VAL, "1.0")
 }
 
-record(calcout, "$(DEVICE):KSOUT") {
+record(calcout, "$(Sys)$(Dev)DB:SetK-Calcout_") {
   field(DTYP, "stream")
-  field(INPB, "$(DEVICE):KbOUT.VAL")
-  field(INPC, "$(DEVICE):KcOUT.VAL")
-  field(INPD, "$(DEVICE):KdOUT.VAL")
+  field(INPB, "$(Sys)$(Dev)Gain:2-SP.VAL")
+  field(INPC, "$(Sys)$(Dev)Gain:3-SP.VAL")
+  field(INPD, "$(Sys)$(Dev)Gain:4-SP.VAL")
   field(OUT, "@I404.protocol setKs() $(PORT) 0")
-  field(INPA, "$(DEVICE):KaOUT.VAL")
+  field(INPA, "$(Sys)$(Dev)Gain:1-SP.VAL")
 }
 
-record(bo, "$(DEVICE):TRIGGER") {
+record(bo, "$(Sys)$(Dev)Trig:1-Cmd") {
   field(DESC, "TRIGGER PV FOR GRAPH")
-  field(OUT, "$(DEVICE):OSCILLATOR.A")
+  field(OUT, "$(Sys)$(Dev)Cmd:Osc1-Cmd.A")
 }
 
-record(calcout, "$(DEVICE):OSCILLATOR") {
+record(calcout, "$(Sys)$(Dev)Cmd:Osc1-Cmd") {
   field(DESC, "OSCILLATE THE TRIGGER VALUE")
   field(SCAN, "Passive")
   field(CALC, "!A")
-  field(OUT, "$(DEVICE):TRIGGER.VAL PP")
+  field(OUT, "$(Sys)$(Dev)Trig:1-Cmd.VAL PP")
   field(OOPT, "Every Time")
 }
 
-record(bo, "$(DEVICE):OUT2") {
+record(bo, "$(Sys)$(Dev)Out:3-Cmd") {
   field(SCAN, "Passive")
   field(VAL, "0")
-  field(OUT, "$(DEVICE):RESET_PLOT PP")
+  field(OUT, "$(Sys)$(Dev)Rst:Plot1-Cmd PP")
   field(DESC, "OUTPUT 0")
 }
 
-record(bo, "$(DEVICE):OUT3") {
+record(bo, "$(Sys)$(Dev)Out:4-Cmd") {
   field(SCAN, "Passive")
   field(VAL, "1")
-  field(OUT, "$(DEVICE):RESET_PLOT PP")
+  field(OUT, "$(Sys)$(Dev)Rst:Plot1-Cmd PP")
   field(DESC, "OUTPUT 1")
 }
 
-record(mbbi, "$(DEVICE):CSWITCH") {
+record(mbbi, "$(Sys)$(Dev)Cnt:Chan-Sel") {
   field(ZRST, "ONE")
   field(ONST, "TWO")
   field(TWST, "THREE")
   field(THST, "FOUR")
 }
 
-record(ai, "$(DEVICE):ICCALIB") {
+record(ai, "$(Sys)$(Dev)Val:Cal-I") {
   field(VAL, "1")
   field(PINI, "YES")
 }
 
-record(ai, "$(DEVICE):IC1") {
+record(ai, "$(Sys)$(Dev)I:1-I") {
   field(SCAN, "Passive")
 }
 
-record(calcout, "$(DEVICE):ICCALC1") {
+record(calcout, "$(Sys)$(Dev)I:1-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):A")
-  field(INPB, "$(DEVICE):ICCALIB")
-  field(OUT, "$(DEVICE):IC1 PP")
+  field(INPA, "$(Sys)$(Dev)I:Raw1-I")
+  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(OUT, "$(Sys)$(Dev)I:1-I PP")
   field(OOPT, "Every Time")
 }
 
-record(calcout, "$(DEVICE):ICCALC2") {
+record(calcout, "$(Sys)$(Dev)I:2-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):B")
-  field(INPB, "$(DEVICE):ICCALIB")
-  field(OUT, "$(DEVICE):IC2 PP")
+  field(INPA, "$(Sys)$(Dev)I:Raw2-I")
+  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(OUT, "$(Sys)$(Dev)I:2-I PP")
   field(OOPT, "Every Time")
 }
 
-record(calcout, "$(DEVICE):ICCALC3") {
+record(calcout, "$(Sys)$(Dev)I:3-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):C")
-  field(INPB, "$(DEVICE):ICCALIB")
-  field(OUT, "$(DEVICE):IC3 PP")
+  field(INPA, "$(Sys)$(Dev)I:Raw3-I")
+  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(OUT, "$(Sys)$(Dev)I:3-I PP")
   field(OOPT, "Every Time")
 }
 
-record(calcout, "$(DEVICE):ICCALC4") {
+record(calcout, "$(Sys)$(Dev)I:4-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(DEVICE):D")
-  field(INPB, "$(DEVICE):ICCALIB")
-  field(OUT, "$(DEVICE):IC4 PP")
+  field(INPA, "$(Sys)$(Dev)I:Raw4-I")
+  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(OUT, "$(Sys)$(Dev)I:4-I PP")
   field(OOPT, "Every Time")
 }
 
-record(ai, "$(DEVICE):IC2") {
+record(ai, "$(Sys)$(Dev)I:2-I") {
   field(SCAN, "Passive")
 }
 
-record(ai, "$(DEVICE):IC3") {
+record(ai, "$(Sys)$(Dev)I:3-I") {
   field(SCAN, "Passive")
 }
 
-record(ai, "$(DEVICE):IC4") {
+record(ai, "$(Sys)$(Dev)I:4-I") {
   field(SCAN, "Passive")
 }
 
-record(bi, "$(DEVICE):GETCS2") {
-  field(FLNK, "$(DEVICE):FAN3")
+record(bi, "$(Sys)$(Dev)Cmd:GetCS2-Cmd") {
+  field(FLNK, "$(Sys)$(Dev)DB:Fan3-FOut_")
   field(SCAN, "1 second")
 }
 
-record(bo, "$(DEVICE):ENABLE_IC_UPDATES") {
+record(bo, "$(Sys)$(Dev)Enbl:ICUpdate-Cmd") {
   field(SCAN, "Passive")
   field(PINI, "YES")
   field(VAL, "1")
-  field(OUT, "$(DEVICE):GETCS2.DISA")
+  field(OUT, "$(Sys)$(Dev)Cmd:GetCS2-Cmd.DISA")
   field(ZNAM, "Disable")
   field(ONAM, "Enable")
 }
 
-record(fanout, "$(DEVICE):FAN3") {
-  field(LNK1, "$(DEVICE):A")
-  field(LNK2, "$(DEVICE):INCREMENT_XAXIS2")
-  field(LNK3, "$(DEVICE):OSCILLATOR2")
+record(fanout, "$(Sys)$(Dev)DB:Fan3-FOut_") {
+  field(LNK1, "$(Sys)$(Dev)I:Raw1-I")
+  field(LNK2, "$(Sys)$(Dev)DB:IncrX2-Calcout_")
+  field(LNK3, "$(Sys)$(Dev)Cmd:Osc2-Cmd")
 }
 
-record(calcout, "$(DEVICE):INCREMENT_XAXIS2") {
+record(calcout, "$(Sys)$(Dev)DB:IncrX2-Calcout_") {
   field(SCAN, "Passive")
   field(CALC, "B=1?-2:A+1")
-  field(OUT, "$(DEVICE):XAXIS2.VAL PP")
+  field(OUT, "$(Sys)$(Dev)Val:XAxis2-SP.VAL PP")
   field(OOPT, "Every Time")
 }
 
-record(ao, "$(DEVICE):XAXIS2") {
+record(ao, "$(Sys)$(Dev)Val:XAxis2-SP") {
   field(SCAN, "Passive")
   field(VAL, "-1")
   field(DESC, "GRAPH X AXIS")
   field(PINI, "YES")
-  field(OUT, "$(DEVICE):INCREMENT_XAXIS2.A")
+  field(OUT, "$(Sys)$(Dev)DB:IncrX2-Calcout_.A")
 }
 
-record(bo, "$(DEVICE):RESET_PLOT2") {
-  field(OUT, "$(DEVICE):INCREMENT_XAXIS2.B PP")
+record(bo, "$(Sys)$(Dev)Rst:Plot2-Cmd") {
+  field(OUT, "$(Sys)$(Dev)DB:IncrX2-Calcout_.B PP")
   field(DESC, "RESET THE GRAPH X AXIS")
 }
 
-record(bo, "$(DEVICE):TRIGGER2") {
+record(bo, "$(Sys)$(Dev)Trig:2-Cmd") {
   field(DESC, "TRIGGER PV FOR GRAPH")
-  field(OUT, "$(DEVICE):OSCILLATOR2.A")
+  field(OUT, "$(Sys)$(Dev)Cmd:Osc2-Cmd.A")
 }
 
-record(calcout, "$(DEVICE):OSCILLATOR2") {
+record(calcout, "$(Sys)$(Dev)Cmd:Osc2-Cmd") {
   field(DESC, "OSCILLATE THE TRIGGER VALUE")
   field(SCAN, "Passive")
   field(CALC, "!A")
-  field(OUT, "$(DEVICE):TRIGGER2.VAL PP")
+  field(OUT, "$(Sys)$(Dev)Trig:2-Cmd.VAL PP")
   field(OOPT, "Every Time")
 }
 
-record(ao, "$(DEVICE):HV") {
-  field(FLNK, "$(DEVICE):HVSEQ1")
-  field(OUT, "$(DEVICE):HV2")
+record(ao, "$(Sys)$(Dev)E:HV1-SP") {
+  field(FLNK, "$(Sys)$(Dev)DB:HV1-Seq_")
+  field(OUT, "$(Sys)$(Dev)E:HV2-SP")
 }
 
-record(ao, "$(DEVICE):HV2") {
+record(ao, "$(Sys)$(Dev)E:HV2-SP") {
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setHV() $(PORT) 0")
 }
 
-record(ai, "$(DEVICE):HVIN") {
+record(ai, "$(Sys)$(Dev)E:HVIn-I") {
   field(PINI, "YES")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getHV() $(PORT) 0")
 }
 
-record(ao, "$(DEVICE):HVMAX") {
-  field(FLNK, "$(DEVICE):HVMSEQ")
-  field(OUT, "$(DEVICE):HVMAX2.VAL")
+record(ao, "$(Sys)$(Dev)E:HVMax1-SP") {
+  field(FLNK, "$(Sys)$(Dev)E:HVMax-Seq")
+  field(OUT, "$(Sys)$(Dev)E:HVMax2-SP.VAL")
 }
 
-record(seq, "$(DEVICE):HVMSEQ") {
+record(seq, "$(Sys)$(Dev)E:HVMax-Seq") {
   field(DESC, "NEED TO WAIT FOR HIVO")
   field(SCAN, "Passive")
-  field(LNK1, "$(DEVICE):HVMAX2.PROC")
-  field(LNK2, "$(DEVICE):HVMAXIN.PROC")
+  field(LNK1, "$(Sys)$(Dev)E:HVMax2-SP.PROC")
+  field(LNK2, "$(Sys)$(Dev)E:HVMax-I.PROC")
   field(DLY2, "1")
 }
 
-record(ao, "$(DEVICE):HVMAX2") {
+record(ao, "$(Sys)$(Dev)E:HVMax2-SP") {
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setHVM() $(PORT) 0")
 }
 
-record(ai, "$(DEVICE):HVMAXIN") {
+record(ai, "$(Sys)$(Dev)E:HVMax-I") {
   field(PINI, "YES")
   field(DTYP, "stream")
   field(INP, "@I404.protocol getHVM() $(PORT) 0")
 }
 
-record(bo, "$(DEVICE):HVACTIVE") {
+record(bo, "$(Sys)$(Dev)Cmd:HV-Cmd") {
   field(ONAM, " ")
   field(SCAN, "Passive")
   field(PINI, "YES")
@@ -776,84 +776,84 @@ record(bo, "$(DEVICE):HVACTIVE") {
   field(ZNAM, "Setting HIVO")
 }
 
-record(seq, "$(DEVICE):HVSEQ1") {
+record(seq, "$(Sys)$(Dev)DB:HV1-Seq_") {
   field(DESC, "NEED TO WAIT FOR HIVO")
   field(SCAN, "Passive")
-  field(LNK2, "$(DEVICE):ENBHVRCHK.PROC")
-  field(LNK1, "$(DEVICE):DSBERR.PROC")
-  field(LNK3, "$(DEVICE):HV2.PROC")
-  field(LNK4, "$(DEVICE):ERR.PROC")
+  field(LNK2, "$(Sys)$(Dev)Enbl:HVChk-Cmd.PROC")
+  field(LNK1, "$(Sys)$(Dev)Dsbl:Err-Cmd.PROC")
+  field(LNK3, "$(Sys)$(Dev)E:HV2-SP.PROC")
+  field(LNK4, "$(Sys)$(Dev)Err-I.PROC")
 }
 
-record(bo, "$(DEVICE):EXECUTE_CLEAR") {
+record(bo, "$(Sys)$(Dev)Cmd:Clr-Cmd") {
   field(DESC, "CLEAR REGISTERS AND MESSAGES")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol clear() $(PORT) 0")
 }
 
-record(dfanout, "$(DEVICE):FANOUT1") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan1-DFOut") {
   field(SCAN, "Passive")
-  field(OUTA, "$(DEVICE):HVRCHK.DISA")
-  field(OUTB, "$(DEVICE):HVACTIVE PP")
+  field(OUTA, "$(Sys)$(Dev)Sts:HVChk-Sts.DISA")
+  field(OUTB, "$(Sys)$(Dev)Cmd:HV-Cmd PP")
 }
 
-record(bo, "$(DEVICE):DSBERR") {
+record(bo, "$(Sys)$(Dev)Dsbl:Err-Cmd") {
   field(DOL, "1")
-  field(OUT, "$(DEVICE):SCNERR.DISA")
+  field(OUT, "$(Sys)$(Dev)Err:Scan-Cmd.DISA")
 }
 
-record(bo, "$(DEVICE):ENBERR1") {
+record(bo, "$(Sys)$(Dev)Enbl:Err1-Cmd") {
   field(DOL, "0")
-  field(OUT, "$(DEVICE):SCNERR.DISA")
+  field(OUT, "$(Sys)$(Dev)Err:Scan-Cmd.DISA")
 }
 
-record(seq, "$(DEVICE):HVSEQ2") {
-  field(LNK1, "$(DEVICE):DSBHVRCHK.PROC")
-  field(LNK2, "$(DEVICE):EXECUTE_CLEAR.PROC")
-  field(LNK3, "$(DEVICE):ENBERR1.PROC")
-  field(LNK4, "$(DEVICE):HVIN.PROC")
+record(seq, "$(Sys)$(Dev)DB:HV2-Seq_") {
+  field(LNK1, "$(Sys)$(Dev)Dsbl:HVChk-Cmd.PROC")
+  field(LNK2, "$(Sys)$(Dev)Cmd:Clr-Cmd.PROC")
+  field(LNK3, "$(Sys)$(Dev)Enbl:Err1-Cmd.PROC")
+  field(LNK4, "$(Sys)$(Dev)E:HVIn-I.PROC")
 }
 
-record(calcout, "$(DEVICE):WAIT4HIVO") {
+record(calcout, "$(Sys)$(Dev)DB:HVWait-Calcout_") {
   field(OOPT, "When Non-zero")
   field(SCAN, "Passive")
   field(CALC, "A")
-  field(INPA, "$(DEVICE):HVRCHK.VAL")
-  field(OUT, "$(DEVICE):HVSEQ2.PROC")
+  field(INPA, "$(Sys)$(Dev)Sts:HVChk-Sts.VAL")
+  field(OUT, "$(Sys)$(Dev)DB:HV2-Seq_.PROC")
 }
 
-record(bi, "$(DEVICE):HVRCHK") {
+record(bi, "$(Sys)$(Dev)Sts:HVChk-Sts") {
   field(SCAN, "1 second")
   field(DTYP, "stream")
-  field(FLNK, "$(DEVICE):WAIT4HIVO")
+  field(FLNK, "$(Sys)$(Dev)DB:HVWait-Calcout_")
   field(INP, "@I404.protocol checkHVR() $(PORT) 0")
   field(ZNAM, "SETTING HIVO")
   field(ONAM, "HIVO IDLE")
 }
 
-record(bo, "$(DEVICE):DSBHVRCHK") {
+record(bo, "$(Sys)$(Dev)Dsbl:HVChk-Cmd") {
   field(PINI, "YES")
   field(DOL, "1")
-  field(OUT, "$(DEVICE):FANOUT1.VAL PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut.VAL PP")
   field(SCAN, "Passive")
 }
 
-record(bo, "$(DEVICE):ENBHVRCHK") {
+record(bo, "$(Sys)$(Dev)Enbl:HVChk-Cmd") {
   field(DOL, "0")
-  field(OUT, "$(DEVICE):FANOUT1.VAL PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut.VAL PP")
 }
 
-record(ao,"$(DEVICE):IntPeriod") {
+record(ao,"$(Sys)$(Dev)Time:Intg-SP") {
   field(DESC,"Integration time setpoint")
   field(DTYP,"stream")
   field(OUT,"@I404.protocol setPeriod() $(PORT) 0")
   field(EGU,"s")
   field(DRVH,"65")
   field(DRVL,"0.0001")
-  field(FLNK,"$(DEVICE):IntPeriod-I")
+  field(FLNK,"$(Sys)$(Dev)Time:Intg-RB")
 }
 
-record(ai,"$(DEVICE):IntPeriod-I") {
+record(ai,"$(Sys)$(Dev)Time:Intg-RB") {
   field(DESC,"Integration time readback")
   field(DTYP,"stream")
   field(PINI,"1")
@@ -863,15 +863,15 @@ record(ai,"$(DEVICE):IntPeriod-I") {
   field(LOPR,"0.0001")
 }
 
-record(ao,"$(DEVICE):SuppressFreq") {
+record(ao,"$(Sys)$(Dev)Freq:Suppress-SP") {
   field(DESC,"Frequency to suppress")
   field(DTYP,"stream")
   field(OUT,"@I404.protocol setSuppressFreq() $(PORT) 0")
   field(EGU,"Hz")
-  field(FLNK, "$(DEVICE):SuppressFreq-I")
+  field(FLNK, "$(Sys)$(Dev)Freq:Suppress-RB")
 }
 
-record(ai,"$(DEVICE):SuppressFreq-I") {
+record(ai,"$(Sys)$(Dev)Freq:Suppress-RB") {
   field(DESC,"Suppression frequency readback")
   field(DTYP,"stream")
   field(PINI,"1")
@@ -880,7 +880,7 @@ record(ai,"$(DEVICE):SuppressFreq-I") {
 }
 
 # ID string is > 40 chars. Thus the waveform here.
-record(waveform,"$(DEVICE):Identity") {
+record(waveform,"$(Sys)$(Dev)ID-I") {
   field(DESC,"Identification string")
   field(DTYP,"stream")
   field(PINI,"1")
@@ -888,17 +888,17 @@ record(waveform,"$(DEVICE):Identity") {
   field(NELM,"60")
   field(INP,"@I404.protocol getId() $(PORT) 0")
 }
-record(longout,"$(DEVICE):Resolution") {
+record(longout,"$(Sys)$(Dev)Res-SP") {
   field(DESC,"Resolution setpoint")
   field(DTYP,"stream")
   field(EGU,"bits")
   field(OUT,"@I404.protocol setRes() $(PORT) 0")
   field(DRVH,"20")
   field(DRVL,"16")
-  field(FLNK,"$(DEVICE):Resolution-I")
+  field(FLNK,"$(Sys)$(Dev)Res-RB")
 }
 
-record(longin,"$(DEVICE):Resolution-I") {
+record(longin,"$(Sys)$(Dev)Res-RB") {
   field(DESC,"Resolution readback")
   field(DTYP,"stream")
   field(PINI,"1")
@@ -908,7 +908,7 @@ record(longin,"$(DEVICE):Resolution-I") {
   field(LOPR,"16")
 }
 
-record(stringin,"$(DEVICE):Password-I") {
+record(stringin,"$(Sys)$(Dev)Val:Pwd-I") {
   field(DTYP, "stream")
   field(INP, "@I404.protocol getPassword() $(PORT) 0")
 }
@@ -922,59 +922,59 @@ record(stringout,"$(DEVICE):Password") {
 }
 
 # Current-overflow status
-record(longin, "$(DEVICE):Overflow_") {
+record(longin, "$(Sys)$(Dev)DB:Ovrflw-I_") {
 }
 
-record(calcout, "$(DEVICE):Overflow-Calc:A_") {
-	field(INPA, "$(DEVICE):Overflow_ CP")
+record(calcout, "$(Sys)$(Dev)DB:Ovrflw1-Calcout_") {
+	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
 	field(INPB, "1") # bitmask
 	field(CALC, "A&B?1:0")
-	field(OUT, "$(DEVICE):Overflow-Sts:A PP")
+	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw1-Sts PP")
 }
 
-record(calcout, "$(DEVICE):Overflow-Calc:B_") {
-	field(INPA, "$(DEVICE):Overflow_ CP")
+record(calcout, "$(Sys)$(Dev)DB:Ovrflw2-Calcout_") {
+	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
 	field(INPB, "2") # bitmask
 	field(CALC, "A&B?1:0")
-	field(OUT, "$(DEVICE):Overflow-Sts:B PP")
+	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw2-Sts PP")
 }
 
-record(calcout, "$(DEVICE):Overflow-Calc:C_") {
-	field(INPA, "$(DEVICE):Overflow_ CP")
+record(calcout, "$(Sys)$(Dev)DB:Ovrflw3-Calcout_") {
+	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
 	field(INPB, "4") # bitmask
 	field(CALC, "A&B?1:0")
-	field(OUT, "$(DEVICE):Overflow-Sts:C PP")
+	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw3-Sts PP")
 }
 
-record(calcout, "$(DEVICE):Overflow-Calc:D_") {
-	field(INPA, "$(DEVICE):Overflow_ CP")
+record(calcout, "$(Sys)$(Dev)DB:Ovrflw4-Calcout_") {
+	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
 	field(INPB, "8") # bitmask
 	field(CALC, "A&B?1:0")
-	field(OUT, "$(DEVICE):Overflow-Sts:D PP")
+	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw4-Sts PP")
 }
 
-record(bi, "$(DEVICE):Overflow-Sts:A") {
+record(bi, "$(Sys)$(Dev)Sts:Ovrflw1-Sts") {
 	field(ZNAM, "In Range")
 	field(ONAM, "Overflow")
 	field(ZSV, "NO_ALARM")
 	field(OSV, "MAJOR")
 }
 
-record(bi, "$(DEVICE):Overflow-Sts:B") {
+record(bi, "$(Sys)$(Dev)Sts:Ovrflw2-Sts") {
 	field(ZNAM, "In Range")
 	field(ONAM, "Overflow")
 	field(ZSV, "NO_ALARM")
 	field(OSV, "MAJOR")
 }
 
-record(bi, "$(DEVICE):Overflow-Sts:C") {
+record(bi, "$(Sys)$(Dev)Sts:Ovrflw3-Sts") {
 	field(ZNAM, "In Range")
 	field(ONAM, "Overflow")
 	field(ZSV, "NO_ALARM")
 	field(OSV, "MAJOR")
 }
 
-record(bi, "$(DEVICE):Overflow-Sts:D") {
+record(bi, "$(Sys)$(Dev)Sts:Ovrflw4-Sts") {
 	field(ZNAM, "In Range")
 	field(ONAM, "Overflow")
 	field(ZSV, "NO_ALARM")
