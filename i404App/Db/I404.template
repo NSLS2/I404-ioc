@@ -514,7 +514,7 @@ record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
 record(ai, "$(Sys)$(Dev)I:Raw1-I") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(Sys)$(Dev),B,C,D,Overflow_) $(PORT) 0")
+  field(INP, "@I404.protocol getCs($(Sys)$(Dev),I:Raw2-I,I:Raw3-I,I:Raw4-I,DB:Ovrflw-I_) $(PORT) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(Sys)$(Dev)I:1-Calcout_")
 }
@@ -537,7 +537,7 @@ record(ai, "$(Sys)$(Dev)I:Raw4-I") {
 record(ai, "$(Sys)$(Dev)Gain:1-RB") {
   field(DESC, "COMPENSATION FACTOR A IN")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getKs($(Sys)$(Dev),Kb,Kc,Kd) $(PORT) 0")
+  field(INP, "@I404.protocol getKs($(Sys)$(Dev),Gain:2-RB,Gain:3-RB,Gain:4-RB) $(PORT) 0")
   field(PINI, "YES")
   field(SCAN, "Passive")
 }
