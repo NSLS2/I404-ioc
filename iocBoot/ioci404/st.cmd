@@ -42,7 +42,7 @@ set_pass1_restoreFile("I404.sav")
 #cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
-create_monitor_set("I404.req",15,"DEVICE=Sys=XF:28IDA-BI:1, Dev={BPM:2}")
+create_monitor_set("I404.req",15,"Sys=XF:28IDA-BI:1, Dev={BPM:2}")
 
 # Create ChannelFinder file
 cd ${TOP}
