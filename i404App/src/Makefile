@@ -22,6 +22,7 @@ i404_DBD += drvAsynIPPort.dbd
 i404_DBD += drvAsynSerialPort.dbd
 i404_DBD += calcSupport.dbd
 i404_DBD += asSupport.dbd
+i404_DBD += system.dbd
 
 # Add all the support libraries needed by this IOC
 i404_LIBS += calc sscan stream asyn autosave

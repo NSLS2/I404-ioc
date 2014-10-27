@@ -11,7 +11,12 @@ cd ${TOP}
 dbLoadDatabase("dbd/i404.dbd")
 i404_registerRecordDeviceDriver(pdbbase)
 
+epicsEnvSet("ENGINEER", "Wayne Lewis x5936")
+epicsEnvSet("LOCATION", "XF28IDA{RG:A2}")
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
+epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "NO")
+epicsEnvSet("EPICS_CA_ADDR_LIST", "10.28.0.255")
+
 # Initialise connection
 drvAsynIPPortConfigure("COM1", "xf28ida-tsrv2:4016")
 asynOctetSetInputEos("COM1",0,"\r\n")
@@ -38,3 +43,9 @@ set_pass1_restoreFile("I404.sav")
 iocInit()
 
 create_monitor_set("I404.req",15,"DEVICE=Sys=XF:28IDA-BI:1, Dev={BPM:2}")
+
+# Create ChannelFinder file
+cd ${TOP}
+dbl > ./records.dbl
+system "cp ./records.dbl /cf-update/$HOSTNAME.$IOCNAME.dbl"
+
