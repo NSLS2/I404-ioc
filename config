@@ -1,5 +1,4 @@
-NAME=i404-1
-PORT=5056
-HOST=
-USER=epics
-
+NAME=bpm02
+USER=softioc
+PORT=4062
+HOST=xf28ida-ioc1

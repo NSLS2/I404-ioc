@@ -11,25 +11,23 @@ cd ${TOP}
 dbLoadDatabase("dbd/i404.dbd")
 i404_registerRecordDeviceDriver(pdbbase)
 
+epicsEnvSet("ENGINEER", "Wayne Lewis x5936")
+epicsEnvSet("LOCATION", "XF28IDA{RG:A2}")
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
-# Initialise test
-drvAsynIPPortConfigure("COM1", "moxa:4002")
-#drvAsynSerialPortConfigure("COM1", "/dev/ttyS0")
+epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "NO")
+epicsEnvSet("EPICS_CA_ADDR_LIST", "10.28.0.255")
+
+# Initialise connection
+drvAsynIPPortConfigure("COM1", "xf28ida-tsrv2:4016")
 asynOctetSetInputEos("COM1",0,"\r\n")
 asynOctetSetOutputEos("COM1",0,"\r\n")
-#asynSetOption("COM1", 0, "baud", "115200")
-#asynSetOption("COM1", 0, "bits", "8")
-#asynSetOption ("COM1", 0, "parity", "none")
-#asynSetOption ("COM1", 0, "stop", "1")
-#asynSetOption ("COM1", 0, "clocal", "Y")
-#asynSetOption ("COM1", 0, "crtscts", "N")
 #asynSetTraceMask("COM1",0,"0x9")
 #asynSetTraceIOMask("COM1",0,"0x2")
 
 # Load record instances
-dbLoadRecords("db/I404.template","DEVICE=ixsrd{i404:1},PORT=COM1,CAP0=100pF,CAP1=3300pF")
-dbLoadRecords("db/dsp.db", "DEVICE=ixsrd{i404:1}")
-dbLoadRecords("db/asyn.db","DEVICE=ixsrd{i404:1},PORT=COM1,ADDR=0")
+dbLoadRecords("db/I404.db")
+#dbLoadRecords("db/dsp.db", "Sys=XF:28IDA-BI:1,Dev={BPM:2}")
+dbLoadRecords("db/asyn.db","Sys=XF:28IDA-BI:1,Dev={BPM:2},PORT=COM1,ADDR=0")
 
 # autosave/restore mechanisms
 save_restoreSet_Debug(0)
@@ -44,4 +42,10 @@ set_pass1_restoreFile("I404.sav")
 #cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
-create_monitor_set("I404.req",15,"DEVICE=ixsrd{i404:1}")
+create_monitor_set("I404.req",15,"Sys=XF:28IDA-BI:1, Dev={BPM:2}")
+
+# Create ChannelFinder file
+cd ${TOP}
+dbl > ./records.dbl
+system "cp ./records.dbl /cf-update/$HOSTNAME.$IOCNAME.dbl"
+
