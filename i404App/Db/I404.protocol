@@ -17,7 +17,7 @@ InTerminator = "";
 OutTerminator = LF;
 replytimeout = 1000;
 readtimeout  = 500;
-locktimeout = 60000;
+locktimeout = 1000;
 #
 # State commands
 #
@@ -67,14 +67,15 @@ getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10%*c%d"; InTerminator = CR LF;
 #
 setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %d\10%*c";}
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
-getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
+#getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
+getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d";}
 checkHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10%{\7|\6}"; @init { getHV; }}
 checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}"; ExtraInput = IGNORE;}
 #
 # Query the last measured current data in amps. Sample currents and overflow 
 # bits, ignore the timestamp.
 #
-getCs {out "READ:CURR?"; in "READ:CURR?\10%*c%*e S,%e A,%(\$1:\$2.VAL)e A,%(\$1:\$3.VAL)e A,%(\$1:\$4.VAL)e A,%(\$1:\$5.VAL)d"; InTerminator = CR LF;}
+getCs {out "READ:CURR?"; in "READ:CURR?\10%*c%*e S,%e A,%(\$1\$2.VAL)e A,%(\$1\$3.VAL)e A,%(\$1\$4.VAL)e A,%(\$1\$5.VAL)d"; InTerminator = CR LF;}
 #
 # Query the beam position
 #
@@ -83,7 +84,7 @@ getPos {out "READ:POS?"; in "READ:POS?\10%*c%f,%(\$1.VAL)f"; InTerminator = CR L
 # Set/Query Current Compensation Factors
 #
 setKs {out "CALIB:COMP %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:COMP %*f %*f %*f %*f\10%*c";}
-getKs {out "CALIB:COMP?"; in "CALIB:COMP?\10%*c%f,%(\$1:\$2.VAL)f,%(\$1:\$3.VAL)f,%(\$1:\$4.VAL)f"; InTerminator = CR LF;}
+getKs {out "CALIB:COMP?"; in "CALIB:COMP?\10%*c%f,%(\$1\$2.VAL)f,%(\$1\$3.VAL)f,%(\$1\$4.VAL)f"; InTerminator = CR LF;}
 #
 # Set/Query current Range
 #
