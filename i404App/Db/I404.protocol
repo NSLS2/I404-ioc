@@ -13,7 +13,7 @@
 # is required nothing will be transmitted after the ACK. If the I404
 # generates an error then it transmits a BELL (0x7) instead of the ACK.
 #
-InTerminator = "";
+InTerminator = CR LF;
 OutTerminator = LF;
 replytimeout = 3000;
 readtimeout  = 2500;
@@ -75,7 +75,7 @@ checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}"; ExtraInput = IGN
 # Query the last measured current data in amps. Sample currents and overflow 
 # bits, ignore the timestamp.
 #
-getCs {out "READ:CURR?"; in "READ:CURR?\10OK\10%*e S,%e A,%(\$1\$2.VAL)e A,%(\$1\$3.VAL)e A,%(\$1\$4.VAL)e A,%(\$1\$5.VAL)d"; InTerminator = CR LF;}
+getCs {out "READ:CURR?"; in "READ:CURR?\10\06%*e S,%e A,%(\$1\$2.VAL)e A,%(\$1\$3.VAL)e A,%(\$1\$4.VAL)e A,%(\$1\$5.VAL)d"; InTerminator = CR LF;}
 #
 # Query the beam position
 #
