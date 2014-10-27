@@ -36,13 +36,16 @@ save_restoreSet_DatedBackupFiles(1)
 
 set_savefile_path("${TOP}/as","/save")
 set_requestfile_path("${TOP}/as","/req")
+set_requestfile_path("${EPICS_BASE}/as","/req")
 
 set_pass1_restoreFile("I404.sav")
+set_pass1_restoreFile("asynRecord_settings.sav")
 
 #cd ${TOP}/iocBoot/${IOC}
 iocInit()
 
 create_monitor_set("I404.req",15,"Sys=XF:28IDA-BI:1, Dev={BPM:2}")
+create_monitor_set("asynRecord_settings.req", "15", "P=XF:28IDA-BI:1,R={BPM:2}Asyn")
 
 # Create ChannelFinder file
 cd ${TOP}
