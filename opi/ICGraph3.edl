@@ -47,8 +47,8 @@ font "helvetica-medium-r-18.0"
 plotMode "plotLastNPts"
 nPts 10000
 updateTimerMs 500
-triggerPv "$(DEVICE):TRIGGER2"
-resetPv "$(DEVICE):RESET_PLOT2"
+triggerPv "$(Sys)$(Dev)Trig:2-Cmd"
+resetPv "$(Sys)$(Dev)Rst:Plot2-Cmd"
 # X axis properties
 showXAxis
 xAxisSrc "AutoScale"
@@ -64,14 +64,14 @@ y2Max 1
 # Trace Properties
 numTraces 3
 xPv {
-  0 "$(DEVICE):XAXIS2"
-  1 "$(DEVICE):XAXIS2"
-  2 "$(DEVICE):XAXIS2"
+  0 "$(Sys)$(Dev)Val:XAxis2-SP"
+  1 "$(Sys)$(Dev)Val:XAxis2-SP"
+  2 "$(Sys)$(Dev)Val:XAxis2-SP"
 }
 yPv {
-  0 "$(DEVICE):IC1"
-  1 "$(DEVICE):IC2"
-  2 "$(DEVICE):IC3"
+  0 "$(Sys)$(Dev)I:1-I"
+  1 "$(Sys)$(Dev)I:2-I"
+  2 "$(Sys)$(Dev)I:3-I"
 }
 plotUpdateMode {
   0 "trigger"

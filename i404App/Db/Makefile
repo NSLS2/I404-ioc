@@ -10,9 +10,12 @@ include $(TOP)/configure/CONFIG
 #----------------------------------------------------
 # Create and install (or just install) into <top>/db
 # databases, templates, substitutions like this
-DB += I404.substitutions
-DB += I404.template
+DB += I404.db
+DB += dsp.db
+DB += asyn.db
 
+REQ += I404.req
+REQ += modules_I404.req
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>
