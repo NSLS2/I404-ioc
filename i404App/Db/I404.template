@@ -197,7 +197,7 @@ record(seq,"$(Sys)$(Dev)Rst:2-Seq_") {
   field(LNK1,"$(Sys)$(Dev)Sts:Calib-I PP")
   field(LNK2, "$(Sys)$(Dev)ID-I PP")
   field(LNK3,"$(Sys)$(Dev)DB:Range-FOut_ PP") #int-period,cap,range,res
-  field(LNK4,"$(DEVICE):Password.PROC PP") #some functions are locked; unlock them
+  field(LNK4,"$(Sys)$(Dev)Val:Pwd-I.PROC PP") #some functions are locked; unlock them
   field(DO4, "1")
   field(DLY5, "1")
   field(LNK5,"$(Sys)$(Dev)Freq:Suppress-RB PP")
@@ -434,7 +434,7 @@ record(seq, "$(Sys)$(Dev)Cmd:Init-Seq") {
   field(LNK5, "$(Sys)$(Dev)Mode:Init-Sel.PROC")
   field(DLY6, "1")
   field(DO6, "1")
-  field(LNK6, "$(DEVICE):Password.PROC PP") #unlock some cmds
+  field(LNK6, "$(Sys)$(Dev)Val:Pwd-I.PROC PP") #unlock some cmds
 }
 		
 record(mbbo, "$(Sys)$(Dev)Mode:Init-Sel") {
@@ -514,7 +514,7 @@ record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
 record(ai, "$(Sys)$(Dev)I:Raw1-I") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(DEVICE),B,C,D,Overflow_) $(PORT) 0")
+  field(INP, "@I404.protocol getCs($(Sys)$(Dev),B,C,D,Overflow_) $(PORT) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(Sys)$(Dev)I:1-Calcout_")
 }
@@ -537,7 +537,7 @@ record(ai, "$(Sys)$(Dev)I:Raw4-I") {
 record(ai, "$(Sys)$(Dev)Gain:1-RB") {
   field(DESC, "COMPENSATION FACTOR A IN")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getKs($(DEVICE),Kb,Kc,Kd) $(PORT) 0")
+  field(INP, "@I404.protocol getKs($(Sys)$(Dev),Kb,Kc,Kd) $(PORT) 0")
   field(PINI, "YES")
   field(SCAN, "Passive")
 }
@@ -913,7 +913,7 @@ record(stringin,"$(Sys)$(Dev)Val:Pwd-I") {
   field(INP, "@I404.protocol getPassword() $(PORT) 0")
 }
 
-record(stringout,"$(DEVICE):Password") {
+record(stringout,"$(Sys)$(Dev)Val:Pwd-I") {
   field(DTYP, "stream")
   field(PINI, "1") # this seems reqd, else "init" seq fails
   field(OMSL, "supervisory")
