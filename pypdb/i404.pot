@@ -124,14 +124,14 @@ msgstr "$(Sys)$(Dev)I:Raw4-I"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:297
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:281
 msgid "$(DEVICE):DFAN1"
-msgstr "$(Sys)$(Dev)DB:Fan1-FOut_"
+msgstr "$(Sys)$(Dev)DB:Fan1-DFOut_"
 
 
 #. recordtype: dfanout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:337
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:309
 msgid "$(DEVICE):DFAN2"
-msgstr "$(Sys)$(Dev)DB:Fan2-FOut_"
+msgstr "$(Sys)$(Dev)DB:Fan2-DFOut_"
 
 
 #. recordtype: calcout
@@ -299,7 +299,7 @@ msgstr "$(Sys)$(Dev)DB:Fan4-FOut_"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:837
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:843
 msgid "$(DEVICE):FANOUT1"
-msgstr "$(Sys)$(Dev)DB:Fan1-DFOut"
+msgstr "$(Sys)$(Dev)DB:Fan3-DFOut_"
 
 #. recordtype: mbbo
 #. DESC: Current-to-Freq Mapping

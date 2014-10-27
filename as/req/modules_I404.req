@@ -1,3 +1,0 @@
-#FILE... modules_I404.req
-
-file "I404.req", Sys=XF:28IDA-BI:1, Dev={BPM:2}

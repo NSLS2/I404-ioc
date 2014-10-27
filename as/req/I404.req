@@ -1,9 +1,0 @@
-#FILE... I404.req
-
-$(Sys)$(Dev)Mode:Init-Sel
-$(Sys)$(Dev)Val:Range-SP
-$(Sys)$(Dev)Err:Scan-Cmd.SCAN
-$(Sys)$(Dev)Val:I2F-SP
-$(Sys)$(Dev)DB:GetCS-Sts_.SCAN
-$(Sys)$(Dev)Res-SP
-$(Sys)$(Dev)Freq:Suppress-SP

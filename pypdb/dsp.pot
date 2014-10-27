@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2014-09-04 16:53-0400\n"
+"PO-Revision-Date: 2014-09-04 16:53-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n" 
+"X-Poedit-Basepath: /usr/lib/epics/dbd\n"
+"X-Poedit-SearchPath-0: /usr/lib/epics/dbd\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:7
+msgid "$(DEVICE):A"
+msgstr "$(Sys)$(Dev)"
+
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:28
+msgid "$(DEVICE):B"
+msgstr "$(Sys)$(Dev)"
+
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:49
+msgid "$(DEVICE):C"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Circular buffer for Channel A
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:5
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:14
+msgid "$(DEVICE):CircBuf-ChA_"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Circular buffer for Channel B
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:26
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:35
+msgid "$(DEVICE):CircBuf-ChB_"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Circular buffer for Channel C
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:47
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:56
+msgid "$(DEVICE):CircBuf-ChC_"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Circular buffer for Channel D
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:68
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:78
+msgid "$(DEVICE):CircBuf-ChD_"
+msgstr "$(Sys)$(Dev)"
+
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:70
+msgid "$(DEVICE):D"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: calc
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:20
+msgid "$(DEVICE):Gain-ChA"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: calc
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:41
+msgid "$(DEVICE):Gain-ChB"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: calc
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:62
+msgid "$(DEVICE):Gain-ChC"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: calc
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:84
+msgid "$(DEVICE):Gain-ChD"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Moving Average for Channel A
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:12
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:21
+msgid "$(DEVICE):MovAvg-ChA"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Moving Average for Channel B
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:33
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:42
+msgid "$(DEVICE):MovAvg-ChB"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Moving Average for Channel C
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:54
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:63
+msgid "$(DEVICE):MovAvg-ChC"
+msgstr "$(Sys)$(Dev)"
+
+#. recordtype: compress
+#. DESC: Moving Average for Channel D
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:76
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/dsp.db:85
+msgid "$(DEVICE):MovAvg-ChD"
+msgstr "$(Sys)$(Dev)"
+
