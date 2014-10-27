@@ -6,5 +6,6 @@ db/
 dbd/
 O.Common
 envPaths
-as/save
+as/req/
+as/save/
 records.dbl
