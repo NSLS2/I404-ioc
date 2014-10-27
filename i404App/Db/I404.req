@@ -8,24 +8,24 @@ $(Sys)$(Dev)DB:GetCS-Sts_.SCAN
 $(Sys)$(Dev)Res-SP
 $(Sys)$(Dev)Freq:Suppress-SP
 
-#$(DEVICE):MovAvg-ChA.NSAM
-#$(DEVICE):MovAvg-ChB.NSAM
-#$(DEVICE):MovAvg-ChC.NSAM
-#$(DEVICE):MovAvg-ChD.NSAM
+#$(Sys)$(Dev):MovAvg-ChA.NSAM
+#$(Sys)$(Dev):MovAvg-ChB.NSAM
+#$(Sys)$(Dev):MovAvg-ChC.NSAM
+#$(Sys)$(Dev):MovAvg-ChD.NSAM
 
-#$(DEVICE):MovAvg-ChA.N
-#$(DEVICE):MovAvg-ChB.N
-#$(DEVICE):MovAvg-ChC.N
-#$(DEVICE):MovAvg-ChD.N
+#$(Sys)$(Dev):MovAvg-ChA.N
+#$(Sys)$(Dev):MovAvg-ChB.N
+#$(Sys)$(Dev):MovAvg-ChC.N
+#$(Sys)$(Dev):MovAvg-ChD.N
 
-# normally targetted at $(DEVICE):MovAvg-ChX.VAL[0]
-#$(DEVICE):Gain-ChA.INPA
-#$(DEVICE):Gain-ChA.INPA
-#$(DEVICE):Gain-ChA.INPA
-#$(DEVICE):Gain-ChA.INPA
+# normally targetted at $(Sys)$(Dev):MovAvg-ChX.VAL[0]
+#$(Sys)$(Dev):Gain-ChA.INPA
+#$(Sys)$(Dev):Gain-ChA.INPA
+#$(Sys)$(Dev):Gain-ChA.INPA
+#$(Sys)$(Dev):Gain-ChA.INPA
 
 # "gains" for each channel
-#$(DEVICE):Gain-ChA.B
-#$(DEVICE):Gain-ChB.B
-#$(DEVICE):Gain-ChC.B
-#$(DEVICE):Gain-ChD.B
+#$(Sys)$(Dev):Gain-ChA.B
+#$(Sys)$(Dev):Gain-ChB.B
+#$(Sys)$(Dev):Gain-ChC.B
+#$(Sys)$(Dev):Gain-ChD.B
