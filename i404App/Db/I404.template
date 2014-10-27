@@ -278,7 +278,7 @@ record(calcout, "$(Sys)$(Dev)Cmd:CapChk-Calcout") {
   field(INPA, "$(Sys)$(Dev)Val:Cap-I")
   field(INPB, "$(Sys)$(Dev)Val:CapSw-SP")
   field(INPC, "$(Sys)$(Dev)Val:Range-Str PP")
-  field(OUT, "$(Sys)$(Dev)DB:Fan1-FOut_ PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut_ PP")
   field(DESC, "CHECK CAPACITANCE VALID")
 }
 
@@ -294,7 +294,7 @@ record(stringin, "$(Sys)$(Dev)Val:Range-Str") {
   field(DESC, "REQUESTED RANGE AS VALUE")
 }
 
-record(dfanout, "$(Sys)$(Dev)DB:Fan1-FOut_") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan1-DFOut_") {
   field(SCAN, "Passive")
   field(OUTA, "$(Sys)$(Dev)Dsbl:SetRng-Calcout.A PP")
   field(OUTB, "$(Sys)$(Dev)DB:SetRng-SP_.VAL")
@@ -306,7 +306,7 @@ record(calcout, "$(Sys)$(Dev)Dsbl:SetRng-Calcout") {
   field(PINI, "YES")
   field(VAL, "0")
   field(CALC, "A>=0?0:1")
-  field(OUT, "$(Sys)$(Dev)DB:Fan2-FOut_ PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan2-DFOut_ PP")
 }
 
 record(fanout, "$(Sys)$(Dev)DB:Fan4-FOut_") {
@@ -334,7 +334,7 @@ record(stringin, "$(Sys)$(Dev)Val:RngMsg3-I") {
   field(VAL, " for selected current range")
 }
 
-record(dfanout, "$(Sys)$(Dev)DB:Fan2-FOut_") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan2-DFOut_") {
   field(SCAN, "Passive")
   field(OUTA, "$(Sys)$(Dev)DB:SetMsg-SCalcout_.A PP")
   field(OUTB, "$(Sys)$(Dev)Cmd:SetRange-Cmd.DISA")
@@ -791,7 +791,7 @@ record(bo, "$(Sys)$(Dev)Cmd:Clr-Cmd") {
   field(OUT, "@I404.protocol clear() $(PORT) 0")
 }
 
-record(dfanout, "$(Sys)$(Dev)DB:Fan1-DFOut") {
+record(dfanout, "$(Sys)$(Dev)DB:Fan3-DFOut_") {
   field(SCAN, "Passive")
   field(OUTA, "$(Sys)$(Dev)Sts:HVChk-Sts.DISA")
   field(OUTB, "$(Sys)$(Dev)Cmd:HV-Cmd PP")
@@ -834,13 +834,13 @@ record(bi, "$(Sys)$(Dev)Sts:HVChk-Sts") {
 record(bo, "$(Sys)$(Dev)Dsbl:HVChk-Cmd") {
   field(PINI, "YES")
   field(DOL, "1")
-  field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut.VAL PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan3-DFOut_.VAL PP")
   field(SCAN, "Passive")
 }
 
 record(bo, "$(Sys)$(Dev)Enbl:HVChk-Cmd") {
   field(DOL, "0")
-  field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut.VAL PP")
+  field(OUT, "$(Sys)$(Dev)DB:Fan3-DFOut_.VAL PP")
 }
 
 record(ao,"$(Sys)$(Dev)Time:Intg-SP") {
