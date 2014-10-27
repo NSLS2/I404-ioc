@@ -508,28 +508,28 @@ record(bo, "$(Sys)$(Dev)Out:0-Cmd") {
 
 record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
   field(PINI,"1")
-  field(FLNK, "$(Sys)$(Dev)I:Raw1-I")
+  field(FLNK, "$(Sys)$(Dev)I:R1-I")
 }
 
-record(ai, "$(Sys)$(Dev)I:Raw1-I") {
+record(ai, "$(Sys)$(Dev)I:R1-I") {
   field(DESC, "CURRENT 1")
   field(DTYP, "stream")
-  field(INP, "@I404.protocol getCs($(Sys)$(Dev),I:Raw2-I,I:Raw3-I,I:Raw4-I,DB:Ovrflw-I_) $(PORT) 0")
+  field(INP, "@I404.protocol getCs($(Sys)$(Dev),I:R2-I,I:R3-I,I:R4-I,DB:OF-I_) $(PORT) 0")
   field(SCAN, "Passive")
   field(FLNK, "$(Sys)$(Dev)I:1-Calcout_")
 }
 
-record(ai, "$(Sys)$(Dev)I:Raw2-I") {
+record(ai, "$(Sys)$(Dev)I:R2-I") {
   field(DESC, "CURRENT 2")
   field(FLNK, "$(Sys)$(Dev)I:2-Calcout_")
 }
 
-record(ai, "$(Sys)$(Dev)I:Raw3-I") {
+record(ai, "$(Sys)$(Dev)I:R3-I") {
   field(DESC, "CURRENT 3")
   field(FLNK, "$(Sys)$(Dev)I:3-Calcout_")
 }
 
-record(ai, "$(Sys)$(Dev)I:Raw4-I") {
+record(ai, "$(Sys)$(Dev)I:R4-I") {
   field(DESC, "CURRENT 4")
   field(FLNK, "$(Sys)$(Dev)I:4-Calcout_")
 }
@@ -633,7 +633,7 @@ record(ai, "$(Sys)$(Dev)I:1-I") {
 
 record(calcout, "$(Sys)$(Dev)I:1-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(Sys)$(Dev)I:Raw1-I")
+  field(INPA, "$(Sys)$(Dev)I:R1-I")
   field(INPB, "$(Sys)$(Dev)Val:Cal-I")
   field(OUT, "$(Sys)$(Dev)I:1-I PP")
   field(OOPT, "Every Time")
@@ -641,7 +641,7 @@ record(calcout, "$(Sys)$(Dev)I:1-Calcout_") {
 
 record(calcout, "$(Sys)$(Dev)I:2-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(Sys)$(Dev)I:Raw2-I")
+  field(INPA, "$(Sys)$(Dev)I:R2-I")
   field(INPB, "$(Sys)$(Dev)Val:Cal-I")
   field(OUT, "$(Sys)$(Dev)I:2-I PP")
   field(OOPT, "Every Time")
@@ -649,7 +649,7 @@ record(calcout, "$(Sys)$(Dev)I:2-Calcout_") {
 
 record(calcout, "$(Sys)$(Dev)I:3-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(Sys)$(Dev)I:Raw3-I")
+  field(INPA, "$(Sys)$(Dev)I:R3-I")
   field(INPB, "$(Sys)$(Dev)Val:Cal-I")
   field(OUT, "$(Sys)$(Dev)I:3-I PP")
   field(OOPT, "Every Time")
@@ -657,7 +657,7 @@ record(calcout, "$(Sys)$(Dev)I:3-Calcout_") {
 
 record(calcout, "$(Sys)$(Dev)I:4-Calcout_") {
   field(CALC, "A*B")
-  field(INPA, "$(Sys)$(Dev)I:Raw4-I")
+  field(INPA, "$(Sys)$(Dev)I:R4-I")
   field(INPB, "$(Sys)$(Dev)Val:Cal-I")
   field(OUT, "$(Sys)$(Dev)I:4-I PP")
   field(OOPT, "Every Time")
@@ -690,7 +690,7 @@ record(bo, "$(Sys)$(Dev)Enbl:ICUpdate-Cmd") {
 }
 
 record(fanout, "$(Sys)$(Dev)DB:Fan3-FOut_") {
-  field(LNK1, "$(Sys)$(Dev)I:Raw1-I")
+  field(LNK1, "$(Sys)$(Dev)I:R1-I")
   field(LNK2, "$(Sys)$(Dev)DB:IncrX2-Calcout_")
   field(LNK3, "$(Sys)$(Dev)Cmd:Osc2-Cmd")
 }
@@ -922,32 +922,32 @@ record(stringout,"$(Sys)$(Dev)Val:Pwd-SP") {
 }
 
 # Current-overflow status
-record(longin, "$(Sys)$(Dev)DB:Ovrflw-I_") {
+record(longin, "$(Sys)$(Dev)DB:OF-I_") {
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw1-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
+	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
 	field(INPB, "1") # bitmask
 	field(CALC, "A&B?1:0")
 	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw1-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw2-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
+	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
 	field(INPB, "2") # bitmask
 	field(CALC, "A&B?1:0")
 	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw2-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw3-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
+	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
 	field(INPB, "4") # bitmask
 	field(CALC, "A&B?1:0")
 	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw3-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw4-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:Ovrflw-I_ CP")
+	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
 	field(INPB, "8") # bitmask
 	field(CALC, "A&B?1:0")
 	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw4-Sts PP")
