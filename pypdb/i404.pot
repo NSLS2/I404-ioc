@@ -715,18 +715,18 @@ msgstr "$(Sys)$(Dev)Sts:Ovrflw4-Sts"
 msgid "$(DEVICE):Overflow_"
 msgstr "$(Sys)$(Dev)DB:Ovrflw-I_"
 
-#. recordtype: stringout
 #. DESC: STORE AND SET PASSWORD
+#. recordtype: stringin
+#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:911
+msgid "$(DEVICE):Password-I"
+msgstr "$(Sys)$(Dev)Val:Pwd-I"
+
+#. recordtype: stringout
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:916
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:437
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:200
 msgid "$(DEVICE):PASSWORD"
 msgstr "$(Sys)$(Dev)Val:Pwd-SP"
-
-#. recordtype: stringin
-#: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:911
-msgid "$(DEVICE):Password-I"
-msgstr "$(Sys)$(Dev)Val:Pwd-I"
 
 #. recordtype: mbbo
 #. DESC: SELECTION OF CURRENT RANGES
