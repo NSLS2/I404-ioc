@@ -67,8 +67,8 @@ getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10%*c%d"; InTerminator = CR LF;
 #
 setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %d\10%*c";}
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
-#getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
-getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d";}
+getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d"; InTerminator = CR LF;}
+#getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d";}
 checkHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10%{\7|\6}"; @init { getHV; }}
 checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}"; ExtraInput = IGNORE;}
 #
