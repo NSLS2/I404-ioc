@@ -135,7 +135,7 @@ getId {out "*IDN?"; in "*IDN?%*1c%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
 #
 getPassword {out "SYST:PASS?"; in "SYST:PASS?\10\06%s"; InTerminator = CR LF;}
 setPassword {out "SYST:PASS %s"; 
-		in "SYST:PASS\10%s\10\06";
+		in "SYST:PASS %s\10\06";
 		extraInput=Ignore;
 		InTerminator = CR LF;}
 
