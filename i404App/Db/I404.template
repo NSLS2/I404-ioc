@@ -178,9 +178,9 @@ record(bo,"$(Sys)$(Dev)Rst-Cmd") {
 record(seq,"$(Sys)$(Dev)Rst:1-Seq_") {
   field(LNK1,"$(Sys)$(Dev)Rst-Sts PP")
   field(DO1, "1") #indicate reset is active
-  field(DOL2, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") #record GETCS SCAN setting in D02 field
+  field(DOL2, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") #record GETCS SCAN setting in D02 field
   field(DO3, "0")
-  field(LNK3,"$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # now set scan algorithm to "passive"
+  field(LNK3,"$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # now set scan algorithm to "passive"
   field(DLY4, "1.0") # let pending reads finish 
   field(LNK4, "$(Sys)$(Dev)Rst-Cmd PP")
   field(DLY5, "4.0") # let *RST take effect
@@ -202,7 +202,7 @@ record(seq,"$(Sys)$(Dev)Rst:2-Seq_") {
   field(DLY5, "1")
   field(LNK5,"$(Sys)$(Dev)Freq:Suppress-RB PP")
   field(DOL6, "$(Sys)$(Dev)Rst:1-Seq_.DO2") # fetch previous SCAN setting
-  field(LNK6, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # restore GETCS previous SCAN setting
+  field(LNK6, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # restore GETCS previous SCAN setting
   field(LNK7,"$(Sys)$(Dev)Rst-Sts PP") # indicate reset ops are done
 }
 
@@ -506,8 +506,9 @@ record(bo, "$(Sys)$(Dev)Out:0-Cmd") {
   field(DESC, "OUTPUT 0")
 }
 
-record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
+record(bi, "$(Sys)$(Dev)Cmd:GetCS-Cmd") {
   field(PINI,"1")
+  field(SCAN, "1 second")
   field(FLNK, "$(Sys)$(Dev)I:R1-I")
 }
 

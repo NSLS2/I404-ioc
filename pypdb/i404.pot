@@ -329,7 +329,7 @@ msgstr "$(Sys)$(Dev)Val:Cap-Sts"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:183
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:205
 msgid "$(DEVICE):GETCS"
-msgstr "$(Sys)$(Dev)DB:GetCS-Sts_"
+msgstr "$(Sys)$(Dev)Cmd:GetCS-Cmd"
 
 
 #. recordtype: bi
