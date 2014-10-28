@@ -178,9 +178,9 @@ record(bo,"$(Sys)$(Dev)Rst-Cmd") {
 record(seq,"$(Sys)$(Dev)Rst:1-Seq_") {
   field(LNK1,"$(Sys)$(Dev)Rst-Sts PP")
   field(DO1, "1") #indicate reset is active
-  field(DOL2, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") #record GETCS SCAN setting in D02 field
+  field(DOL2, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") #record GETCS SCAN setting in D02 field
   field(DO3, "0")
-  field(LNK3,"$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # now set scan algorithm to "passive"
+  field(LNK3,"$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # now set scan algorithm to "passive"
   field(DLY4, "1.0") # let pending reads finish 
   field(LNK4, "$(Sys)$(Dev)Rst-Cmd PP")
   field(DLY5, "4.0") # let *RST take effect
@@ -196,13 +196,13 @@ record(seq,"$(Sys)$(Dev)Rst:2-Seq_") {
   field(DLY1, "2.0")
   field(LNK1,"$(Sys)$(Dev)Sts:Calib-I PP")
   field(LNK2, "$(Sys)$(Dev)ID-I PP")
-  field(LNK3,"$(Sys)$(Dev)DB:Range-FOut_ PP") #int-period,cap,range,res
+  field(LNK3,"$(Sys)$(Dev)DB:Rng-FOut_ PP") #int-period,cap,range,res
   field(LNK4,"$(Sys)$(Dev)Val:Pwd-SP.PROC PP") #some functions are locked; unlock them
   field(DO4, "1")
   field(DLY5, "1")
   field(LNK5,"$(Sys)$(Dev)Freq:Suppress-RB PP")
   field(DOL6, "$(Sys)$(Dev)Rst:1-Seq_.DO2") # fetch previous SCAN setting
-  field(LNK6, "$(Sys)$(Dev)DB:GetCS-Sts_.SCAN") # restore GETCS previous SCAN setting
+  field(LNK6, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # restore GETCS previous SCAN setting
   field(LNK7,"$(Sys)$(Dev)Rst-Sts PP") # indicate reset ops are done
 }
 
@@ -240,23 +240,23 @@ record(bo, "$(Sys)$(Dev)Cmd:Init-Cmd") {
   field(OUT, "@I404.protocol init() $(PORT) 0")
 }
 
-record(mbbo, "$(Sys)$(Dev)Cmd:Range-Sel") {
+record(mbbo, "$(Sys)$(Dev)Cmd:Rng-Sel") {
   field(VAL, "0")
   field(ZRST, "4.0e-7")
   field(ONST, "8.0e-7")
   field(TWST, "2.0e-6")
   field(THST, "1.0e-5")
-  field(FLNK, "$(Sys)$(Dev)Val:Range-Str")
+  field(FLNK, "$(Sys)$(Dev)Val:Rng-Str")
   field(FRST, "1.0e-4")
   field(DESC, "SELECTION OF CURRENT RANGES")
 }
 
-record(ao,"$(Sys)$(Dev)Val:Range-SP") {
-  field(FLNK, "$(Sys)$(Dev)Val:Range-Str")
+record(ao,"$(Sys)$(Dev)Val:Rng-SP") {
+  field(FLNK, "$(Sys)$(Dev)Val:Rng-Str")
   field(EGU,"A")
 }
 
-record(ai, "$(Sys)$(Dev)Val:Range-I") {
+record(ai, "$(Sys)$(Dev)Val:Rng-I") {
   field(DESC, "GET CURRENT RANGE FROM I404")
   field(PINI, "YES")
   field(DTYP, "stream")
@@ -277,20 +277,20 @@ record(calcout, "$(Sys)$(Dev)Cmd:CapChk-Calcout") {
   field(CALC, "(C>=B&&A=3.3e-9)||(C<B&&A=1.0e-10)?C:-1")
   field(INPA, "$(Sys)$(Dev)Val:Cap-I")
   field(INPB, "$(Sys)$(Dev)Val:CapSw-SP")
-  field(INPC, "$(Sys)$(Dev)Val:Range-Str PP")
+  field(INPC, "$(Sys)$(Dev)Val:Rng-Str PP")
   field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut_ PP")
   field(DESC, "CHECK CAPACITANCE VALID")
 }
 
-record(bi, "$(Sys)$(Dev)Cmd:SetRange-Cmd") {
+record(bi, "$(Sys)$(Dev)Cmd:SetRng-Cmd") {
   field(SCAN, "Passive")
   field(FLNK, "$(Sys)$(Dev)DB:Fan4-FOut_")
 }
 
-record(stringin, "$(Sys)$(Dev)Val:Range-Str") {
+record(stringin, "$(Sys)$(Dev)Val:Rng-Str") {
   field(SCAN, "Passive")
   field(FLNK, "$(Sys)$(Dev)Cmd:CapChk-Calcout")
-  field(INP, "$(Sys)$(Dev)Val:Range-SP.VAL")
+  field(INP, "$(Sys)$(Dev)Val:Rng-SP.VAL")
   field(DESC, "REQUESTED RANGE AS VALUE")
 }
 
@@ -311,7 +311,7 @@ record(calcout, "$(Sys)$(Dev)Dsbl:SetRng-Calcout") {
 
 record(fanout, "$(Sys)$(Dev)DB:Fan4-FOut_") {
   field(LNK1, "$(Sys)$(Dev)DB:SetRng-SP_")
-  field(LNK2, "$(Sys)$(Dev)Val:Range-I")
+  field(LNK2, "$(Sys)$(Dev)Val:Rng-I")
 }
 
 record(scalcout, "$(Sys)$(Dev)DB:SetMsg-SCalcout_") {
@@ -337,7 +337,7 @@ record(stringin, "$(Sys)$(Dev)Val:RngMsg3-I") {
 record(dfanout, "$(Sys)$(Dev)DB:Fan2-DFOut_") {
   field(SCAN, "Passive")
   field(OUTA, "$(Sys)$(Dev)DB:SetMsg-SCalcout_.A PP")
-  field(OUTB, "$(Sys)$(Dev)Cmd:SetRange-Cmd.DISA")
+  field(OUTB, "$(Sys)$(Dev)Cmd:SetRng-Cmd.DISA")
 }
 
 record(ao, "$(Sys)$(Dev)DB:SetRng-SP_") {
@@ -345,12 +345,12 @@ record(ao, "$(Sys)$(Dev)DB:SetRng-SP_") {
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setRange() $(PORT) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
-  field(FLNK, "$(Sys)$(Dev)DB:Range-FOut_")
+  field(FLNK, "$(Sys)$(Dev)DB:Rng-FOut_")
   field(EGU,"A")
 }
 
-record(fanout,"$(Sys)$(Dev)DB:Range-FOut_") {
-  field(LNK1,"$(Sys)$(Dev)Val:Range-I")
+record(fanout,"$(Sys)$(Dev)DB:Rng-FOut_") {
+  field(LNK1,"$(Sys)$(Dev)Val:Rng-I")
   field(LNK2,"$(Sys)$(Dev)Time:Intg-RB")
   field(LNK3,"$(Sys)$(Dev)Val:Cap-Sts")
   field(LNK4,"$(Sys)$(Dev)Res-RB")
@@ -506,8 +506,9 @@ record(bo, "$(Sys)$(Dev)Out:0-Cmd") {
   field(DESC, "OUTPUT 0")
 }
 
-record(bi, "$(Sys)$(Dev)DB:GetCS-Sts_") {
+record(bi, "$(Sys)$(Dev)Cmd:GetCS-Cmd") {
   field(PINI,"1")
+  field(SCAN, "1 second")
   field(FLNK, "$(Sys)$(Dev)I:R1-I")
 }
 

@@ -329,7 +329,7 @@ msgstr "$(Sys)$(Dev)Val:Cap-Sts"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:183
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:205
 msgid "$(DEVICE):GETCS"
-msgstr "$(Sys)$(Dev)DB:GetCS-Sts_"
+msgstr "$(Sys)$(Dev)Cmd:GetCS-Cmd"
 
 
 #. recordtype: bi
@@ -732,7 +732,7 @@ msgstr "$(Sys)$(Dev)Val:Pwd-SP"
 #. DESC: SELECTION OF CURRENT RANGES
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:243
 msgid "$(DEVICE):RANGE"
-msgstr "$(Sys)$(Dev)Cmd:Range-Sel"
+msgstr "$(Sys)$(Dev)Cmd:Rng-Sel"
 
 
 #. recordtype: ai
@@ -742,14 +742,14 @@ msgstr "$(Sys)$(Dev)Cmd:Range-Sel"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:353
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:314
 msgid "$(DEVICE):RANGEIN"
-msgstr "$(Sys)$(Dev)Val:Range-I"
+msgstr "$(Sys)$(Dev)Val:Rng-I"
 
 #. recordtype: ao
 #. EGU: A
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:254
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:293
 msgid "$(DEVICE):RANGE_"
-msgstr "$(Sys)$(Dev)Val:Range-SP"
+msgstr "$(Sys)$(Dev)Val:Rng-SP"
 
 #. recordtype: stringin
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:324
@@ -778,7 +778,7 @@ msgstr "$(Sys)$(Dev)Val:RngMsg3-I"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:280
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:255
 msgid "$(DEVICE):RANGE_STRING"
-msgstr "$(Sys)$(Dev)Val:Range-Str"
+msgstr "$(Sys)$(Dev)Val:Rng-Str"
 
 
 #. recordtype: bo
@@ -810,8 +810,8 @@ msgstr "$(Sys)$(Dev)Rst-Seq"
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:352
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:199
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:348
-msgid "$(DEVICE):Range:FOut"
-msgstr "$(Sys)$(Dev)DB:Range-FOut_"
+msgid "$(DEVICE):Rng:FOut"
+msgstr "$(Sys)$(Dev)DB:Rng-FOut_"
 
 #. recordtype: bo
 #: /home/wlewis/local/data/work/hg/repos/i404/i404App/Db/I404.template:171
