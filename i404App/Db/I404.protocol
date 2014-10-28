@@ -15,9 +15,9 @@
 #
 InTerminator = CR LF;
 OutTerminator = LF;
-replytimeout = 10000;
-readtimeout  = 10000;
-locktimeout = 10000;
+replytimeout = 1000;
+readtimeout  = 1000;
+locktimeout = 1000;
 #
 # State commands
 #
@@ -89,12 +89,12 @@ getKs {out "CALIB:GAIN?"; in "CALIB:GAIN?\10\06%*d,%e,%(\$1\$2.VAL)e,%(\$1\$3.VA
 #
 # Set/Query current Range
 #
-setRange {out "CONF:RANGE %e"; in "CONF:RANGE %e\10\06";}
+setRange {out "CONF:RANGE %e"; in "CONF:RANGE %e\10{\06|\07}";}
 getRange {out "CONF:RANGE?"; in "CONF:RANGE?\10\06%e A"; InTerminator = CR LF;}
 #
 # Set/Query Position Function; 1 = None, 2 = Quadrant, 3 = Split Mode
 #
-setMode {out "CONF:MON %d"; in "CONF:MON %d\10\06";}
+setMode {out "CONF:MON %d"; in "CONF:MON %d\10{\06|\07}";}
 getMode {out "CONF:MON?"; in "CONF:MON?\10\06%d"; InTerminator = CR LF;}
 #
 # Get Error Message, returns a quoted string.
@@ -104,7 +104,7 @@ getErr {out "SYST:ERR?"; in "SYST:ERR?\10\06%*d,\34%[^,\34]\34"; InTerminator = 
 #
 # Set/Query Current-to-Frequency Mapping
 #
-setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %d\10\06";}
+setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %d\10{\06|\07}";}
 getFreq {out "CONF:FREQ?"; in "CONF:FREQ?\10\06%d"; InTerminator = CR LF;}
 
 #
