@@ -1,0 +1,16 @@
+The I404 must be in non-terminal mode for this protocol file to work. This is
+the only way it will successfully read out the values for each of the input
+currents.
+
+To put it into non-terminal mode, issue the following commands from Asyn, telnet
+or netcat:
+
+SYST:PASS 12345
+SYST:COMM:TERM 0
+
+The response to SYST:COMM:TERM? should be 
+SYST:COMM:TERM?
+0
+
+This whole response won't be visible from an Asyn record, but will be from
+telnet or netcat.
