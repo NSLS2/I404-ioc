@@ -1,4 +1,4 @@
-NAME=bpm02
+NAME=i404-2
 USER=softioc
-PORT=4062
-HOST=xf28ida-ioc1
+PORT=4507
+HOST=xf10idb-ioc1

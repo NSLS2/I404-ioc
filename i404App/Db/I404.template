@@ -9,10 +9,18 @@ record(bo, "$(Sys)$(Dev)Val:Cap-SP") {
   field(OUT, "@I404.protocol setCap() $(PORT) 0")
   field(ZNAM, "$(CAP0)")
   field(ONAM, "$(CAP1)")
-  field(FLNK, "$(Sys)$(Dev)Val:Cap-Sts")
+#  field(FLNK, "$(Sys)$(Dev)Val:Cap-Sts")
+  field(FLNK, "$(Sys)$(Dev)Val:Cap-Seq")
+}
+
+record(seq, "$(Sys)$(Dev)Val:Cap-Seq") {
+  field(DLY1, "0.02")
+# let cap set from Val:Cap-SP take effect
+  field(LNK1, "$(Sys)$(Dev)Val:Cap-Sts PP")
 }
 
 record(bi, "$(Sys)$(Dev)Val:Cap-Sts") {
+  field(SCAN, "Passive")
   field(DESC, "Get Capacitance - Binary")
   field(DTYP, "stream")
   field(PINI,"1")
@@ -22,10 +30,11 @@ record(bi, "$(Sys)$(Dev)Val:Cap-Sts") {
 }
 
 record(ai, "$(Sys)$(Dev)Val:Cap-I") {
+  field(SCAN, "Passive")
   field(DESC, "Capacitance As Float")
   field(PREC, "2")
   field(EGU, "F")
-  field(VAL, "0")
+  field(VAL, "0.0000000001")
   field(FLNK, "$(Sys)$(Dev)Cmd:CapChk-Calcout")
 }
 
@@ -45,6 +54,7 @@ record(ai, "$(Sys)$(Dev)Pos:XRaw-I") {
   field(DESC, "X POSITION IN FROM I404")
   field(SCAN, "1 second")
   field(DTYP, "stream")
+  field(PINI, "YES")
   field(FLNK, "$(Sys)$(Dev)DB:Fan2-FOut_")
   field(INP, "@I404.protocol getPos($(Sys)$(Dev)Pos:YRaw-I) $(PORT) 0")
 }
@@ -125,18 +135,15 @@ record(bo, "$(Sys)$(Dev)Cmd:Cal-Cmd") {
   field(DESC, "Calibrate device")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol doCalib() $(PORT) 0")
-#  field(VAL, "0")
-#  field(DISV, "0")
 }
 
-record(bo, "$(Sys)$(Dev)Cmd:Cal-Cmd") {
-  field(FLNK, "$(Sys)$(Dev)Cmd:Cal-Cmd")
-#  field(OUT, "$(Sys)$(Dev)Cmd:Cal-Cmd.DISA")
-}
+#record(bo, "$(Sys)$(Dev)Cmd:Cal-Cmd") {
+#  field(FLNK, "$(Sys)$(Dev)Cmd:Cal-Cmd")
+##  field(OUT, "$(Sys)$(Dev)Cmd:Cal-Cmd.DISA")
+#}
 
 record(bo, "$(Sys)$(Dev)Rst-Cmd") {
   field(FLNK, "$(Sys)$(Dev)Rst-Seq")
-#  field(OUT, "$(Sys)$(Dev)Rst-Seq.DISA")
 }
 
 record(bo, "$(Sys)$(Dev)Cmd:Save-Cmd") {
@@ -151,12 +158,6 @@ record(bo, "$(Sys)$(Dev)Cmd:Rcl-Cmd") {
   field(OUT, "@I404.protocol recall() $(PORT) 0")
 }
 
-record(bo, "$(Sys)$(Dev)Rst-Cmd") {
-  field(DESC, "Reset device")
-  field(DTYP, "stream")
-  field(OUT, "@I404.protocol reset() $(PORT) 0")
-}
-
 record(seq, "$(Sys)$(Dev)Rst-Seq") {
   field(DLY1, "0.0")
   field(LNK1, "$(Sys)$(Dev)Cmd:Save-Cmd PP")
@@ -168,64 +169,69 @@ record(seq, "$(Sys)$(Dev)Rst-Seq") {
   field(LNK4, "$(Sys)$(Dev)Cmd:Init-Cmd PP")
 }
 
-record(bo,"$(Sys)$(Dev)Rst-Cmd") {
-  field(FLNK,"$(Sys)$(Dev)Rst:1-Seq_")
-}
-
 #
 # Reset:Seq1 and Seq2 are a set: do not de-couple!
 #
-record(seq,"$(Sys)$(Dev)Rst:1-Seq_") {
-  field(LNK1,"$(Sys)$(Dev)Rst-Sts PP")
-  field(DO1, "1") #indicate reset is active
-  field(DOL2, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") #record GETCS SCAN setting in D02 field
+record(seq, "$(Sys)$(Dev)Rst:1-Seq_") {
+  field(LNK1, "$(Sys)$(Dev)Rst-Sts PP")
+  field(DO1, "1")
+#indicate reset is active
+  field(DOL2, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+#record GETCS SCAN setting in D02 field
   field(DO3, "0")
-  field(LNK3,"$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # now set scan algorithm to "passive"
-  field(DLY4, "1.0") # let pending reads finish 
+  field(LNK3, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+# now set scan algorithm to "passive"
+  field(DLY4, "1.0")
+# let pending reads finish
   field(LNK4, "$(Sys)$(Dev)Rst-Cmd PP")
-  field(DLY5, "4.0") # let *RST take effect
+  field(DLY5, "4.0")
+# let *RST take effect
   field(LNK5, "$(Sys)$(Dev)Cmd:Cal-Cmd PP")
-  field(DLY6, "10.0") # let "calib:gain" take effect
+  field(DLY6, "10.0")
+# let "calib:gain" take effect
   field(LNK6, "$(Sys)$(Dev)Cmd:Init-Cmd PP")
-  field(FLNK, "$(Sys)$(Dev)Rst:2-Seq_") 
+  field(FLNK, "$(Sys)$(Dev)Rst:2-Seq_")
 }
 
-record(seq,"$(Sys)$(Dev)Rst:2-Seq_") {
-  field(DLY1, "2.0") # let "init" from Reset:Seq1 take effect
-  field(LNK1, "$(Sys)$(Dev)DB:All-FOut_ PP") # update key indicators
+record(seq, "$(Sys)$(Dev)Rst:2-Seq_") {
   field(DLY1, "2.0")
-  field(LNK1,"$(Sys)$(Dev)Sts:Calib-I PP")
+# let "init" from Reset:Seq1 take effect
+  field(LNK1, "$(Sys)$(Dev)DB:All-FOut_ PP")
   field(LNK2, "$(Sys)$(Dev)ID-I PP")
-  field(LNK3,"$(Sys)$(Dev)DB:Rng-FOut_ PP") #int-period,cap,range,res
-  field(LNK4,"$(Sys)$(Dev)Val:Pwd-SP.PROC PP") #some functions are locked; unlock them
+  field(LNK3, "$(Sys)$(Dev)DB:Rng-FOut_ PP")
+#int-period,cap,range,res
+  field(LNK4, "$(Sys)$(Dev)Val:Pwd-SP.PROC PP")
+#some functions are locked; unlock them
   field(DO4, "1")
   field(DLY5, "1")
-  field(LNK5,"$(Sys)$(Dev)Freq:Suppress-RB PP")
-  field(DOL6, "$(Sys)$(Dev)Rst:1-Seq_.DO2") # fetch previous SCAN setting
-  field(LNK6, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN") # restore GETCS previous SCAN setting
-  field(LNK7,"$(Sys)$(Dev)Rst-Sts PP") # indicate reset ops are done
+  field(LNK5, "$(Sys)$(Dev)Freq:Suppress-RB PP")
+  field(DOL6, "$(Sys)$(Dev)Rst:1-Seq_.DO2")
+# fetch previous SCAN setting
+  field(LNK6, "$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+# restore GETCS previous SCAN setting
+  field(LNK7, "$(Sys)$(Dev)Rst-Sts PP")
 }
 
-record(bi,"$(Sys)$(Dev)Rst-Sts") {
-  field(DESC,"Reset In-Progress")
-  field(PINI,"1")
-  field(VAL,"0")
-  field(ZNAM,"Idle")
-  field(ONAM,"Active")
-  field(OSV,"MAJOR")
+record(bi, "$(Sys)$(Dev)Rst-Sts") {
+  field(DESC, "Reset In-Progress")
+  field(PINI, "1")
+  field(VAL, "0")
+  field(ZNAM, "Idle")
+  field(ONAM, "Active")
+  field(OSV, "MAJOR")
 }
 
-record(longin,"$(Sys)$(Dev)Sts:Calib-I") {
-  field(DESC,"fetch calib status only")
-  field(DTYP,"stream")
-  field(INP,"@I404.protocol getCalib() $(PORT) 0")
-  field(FLNK,"$(Sys)$(Dev)Sts:Calib-Calc_")
+record(longin, "$(Sys)$(Dev)Sts:Calib-I") {
+  field(DESC, "fetch calib status only")
+  field(DTYP, "stream")
+  field(INP, "@I404.protocol getCalib() $(PORT) 0")
+  field(FLNK, "$(Sys)$(Dev)Sts:Calib-Calc_")
 }
 
-record(calc,"$(Sys)$(Dev)Sts:Calib-Calc_") {
-  field(INPA,"$(Sys)$(Dev)Sts:Calib-I NPP")
-  field(CALC,"A=15?1:0")
-  field(FLNK,"$(Sys)$(Dev)Sts:Calib-Sts")
+record(calc, "$(Sys)$(Dev)Sts:Calib-Calc_") {
+  field(INPA, "$(Sys)$(Dev)Sts:Calib-I NPP")
+  field(CALC, "A=15?1:0")
+  field(FLNK, "$(Sys)$(Dev)Sts:Calib-Sts")
 }
 
 record(bi, "$(Sys)$(Dev)Sts:Calib-Sts") {
@@ -241,19 +247,25 @@ record(bo, "$(Sys)$(Dev)Cmd:Init-Cmd") {
 }
 
 record(mbbo, "$(Sys)$(Dev)Cmd:Rng-Sel") {
-  field(VAL, "0")
-  field(ZRST, "4.0e-7")
-  field(ONST, "8.0e-7")
-  field(TWST, "2.0e-6")
-  field(THST, "1.0e-5")
+  field(VAL, "10")
+  field(ZRST, "1.0e-13")
+  field(ONST, "1.0e-12")
+  field(TWST, "1.0e-11")
+  field(THST, "1.0e-10")
+  field(FRST, "1.0e-09")
+  field(FVST, "1.0e-08")
+  field(SXST, "1.0e-07")
+  field(SVST, "1.0e-06")
+  field(EIST, "1.0e-05")
+  field(NIST, "1.0e-04")
+  field(TEST, "1.0e-03")
   field(FLNK, "$(Sys)$(Dev)Val:Rng-Str")
-  field(FRST, "1.0e-4")
   field(DESC, "SELECTION OF CURRENT RANGES")
 }
 
-record(ao,"$(Sys)$(Dev)Val:Rng-SP") {
+record(ao, "$(Sys)$(Dev)Val:Rng-SP") {
   field(FLNK, "$(Sys)$(Dev)Val:Rng-Str")
-  field(EGU,"A")
+  field(EGU, "A")
 }
 
 record(ai, "$(Sys)$(Dev)Val:Rng-I") {
@@ -263,7 +275,7 @@ record(ai, "$(Sys)$(Dev)Val:Rng-I") {
   field(VAL, "0")
   field(INP, "@I404.protocol getRange() $(PORT) 0")
   field(SCAN, "Passive")
-  field(EGU,"A")
+  field(EGU, "A")
 }
 
 record(ao, "$(Sys)$(Dev)Val:CapSw-SP") {
@@ -277,7 +289,8 @@ record(calcout, "$(Sys)$(Dev)Cmd:CapChk-Calcout") {
   field(CALC, "(C>=B&&A=3.3e-9)||(C<B&&A=1.0e-10)?C:-1")
   field(INPA, "$(Sys)$(Dev)Val:Cap-I")
   field(INPB, "$(Sys)$(Dev)Val:CapSw-SP")
-  field(INPC, "$(Sys)$(Dev)Val:Rng-Str PP")
+#  field(INPC, "$(Sys)$(Dev)Val:Rng-Str PP")
+  field(INPC, "$(Sys)$(Dev)Val:Rng-SP PP")
   field(OUT, "$(Sys)$(Dev)DB:Fan1-DFOut_ PP")
   field(DESC, "CHECK CAPACITANCE VALID")
 }
@@ -346,14 +359,14 @@ record(ao, "$(Sys)$(Dev)DB:SetRng-SP_") {
   field(OUT, "@I404.protocol setRange() $(PORT) 0")
   field(DESC, "EXECUTE A SET CURRENT RANGE")
   field(FLNK, "$(Sys)$(Dev)DB:Rng-FOut_")
-  field(EGU,"A")
+  field(EGU, "A")
 }
 
-record(fanout,"$(Sys)$(Dev)DB:Rng-FOut_") {
-  field(LNK1,"$(Sys)$(Dev)Val:Rng-I")
-  field(LNK2,"$(Sys)$(Dev)Time:Intg-RB")
-  field(LNK3,"$(Sys)$(Dev)Val:Cap-Sts")
-  field(LNK4,"$(Sys)$(Dev)Res-RB")
+record(fanout, "$(Sys)$(Dev)DB:Rng-FOut_") {
+  field(LNK1, "$(Sys)$(Dev)Val:Rng-I")
+  field(LNK2, "$(Sys)$(Dev)Time:Intg-RB")
+  field(LNK3, "$(Sys)$(Dev)Val:Cap-Sts")
+  field(LNK4, "$(Sys)$(Dev)Res-RB")
 }
 
 record(bo, "$(Sys)$(Dev)Err-Sts") {
@@ -407,7 +420,6 @@ record(stringin, "$(Sys)$(Dev)Err-I") {
   field(FLNK, "$(Sys)$(Dev)DB:ErrChk-SCalcout_")
 }
 
-
 record(bo, "$(Sys)$(Dev)Err:Scan-Cmd") {
 #  field(SCAN, "2 second")
   field(FLNK, "$(Sys)$(Dev)Err-I")
@@ -434,47 +446,59 @@ record(seq, "$(Sys)$(Dev)Cmd:Init-Seq") {
   field(LNK5, "$(Sys)$(Dev)Mode:Init-Sel.PROC")
   field(DLY6, "1")
   field(DO6, "1")
-  field(LNK6, "$(Sys)$(Dev)Val:Pwd-SP.PROC PP") #unlock some cmds
+  field(LNK6, "$(Sys)$(Dev)Val:Pwd-SP.PROC PP")
 }
-		
+
 record(mbbo, "$(Sys)$(Dev)Mode:Init-Sel") {
   field(DESC, "INIT POSITION MODE")
   field(SCAN, "Passive")
   field(DTYP, "stream")
-  field(ONST,"None")
-  field(TWST,"Quadrant")
-  field(THST,"Split")
+  field(ONST, "None")
+  field(TWST, "Quadrant")
+  field(THST, "Split")
   field(OUT, "@I404.protocol setMode() $(PORT) 0")
-  field(FLNK,"$(Sys)$(Dev)Mode-Sts")
+  field(FLNK, "$(Sys)$(Dev)Mode-Sts")
 }
 
-record(mbbi,"$(Sys)$(Dev)Mode-Sts") {
-  field(DESC,"Monitor readback")
-  field(DTYP,"stream")
-  field(ONST,"None")
-  field(TWST,"Quadrant")
-  field(THST,"Split")
-  field(INP,"@I404.protocol getMode() $(PORT) 0")
+record(mbbi, "$(Sys)$(Dev)Mode-Sts") {
+  field(DESC, "Monitor readback")
+  field(DTYP, "stream")
+  field(ONST, "None")
+  field(TWST, "Quadrant")
+  field(THST, "Split")
+  field(INP, "@I404.protocol getMode() $(PORT) 0")
 }
 
-record(mbbo,"$(Sys)$(Dev)Val:I2F-SP") {
-  field(DESC,"Current-to-Freq Mapping")
-  field(PINI,"1")
-  field(DTYP,"stream")
-  field(ONST,"Absolute")
-  field(TWST,"Positive")
-  field(THST,"Negative")
-  field(OUT,"@I404.protocol setFreq() $(PORT) 0")
-  field(FLNK,"$(Sys)$(Dev)Val:I2F-RB")
+record(mbbo, "$(Sys)$(Dev)Val:I2F-SP") {
+  field(DESC, "Current-to-Freq Mapping")
+  field(PINI, "1")
+  field(DTYP, "stream")
+#  field(ONST, "Absolute")
+#  field(TWST, "Positive")
+#  field(THST, "Negative")
+  field(ZRST, "Absolute")
+  field(ONST, "Positive")
+  field(TWST, "Negative")
+  field(OUT, "@I404.protocol setFreq() $(PORT) 0")
+#  field(FLNK, "$(Sys)$(Dev)Val:I2F-RB")
+  field(FLNK, "$(Sys)$(Dev)Val:I2F-Seq")
 }
 
-record(mbbi,"$(Sys)$(Dev)Val:I2F-RB") {
-  field(DESC,"Current-to-Freq Mapping")
-  field(DTYP,"stream")
-  field(ONST,"Absolute")
-  field(TWST,"Positive")
-  field(THST,"Negative")
-  field(INP,"@I404.protocol getFreq() $(PORT) 0")
+record(seq, "$(Sys)$(Dev)Val:I2F-Seq") {
+  field(DLY1, "0.01")
+  field(LNK1, "$(Sys)$(Dev)Val:I2F-RB PP")
+}
+
+record(mbbi, "$(Sys)$(Dev)Val:I2F-RB") {
+  field(DESC, "Current-to-Freq Mapping")
+  field(DTYP, "stream")
+#  field(ONST, "Absolute")
+#  field(TWST, "Positive")
+#  field(THST, "Negative")
+  field(ZRST, "Absolute")
+  field(ONST, "Positive")
+  field(TWST, "Negative")
+  field(INP, "@I404.protocol getFreq() $(PORT) 0")
 }
 
 record(bi, "$(Sys)$(Dev)E:HV-Sts") {
@@ -507,7 +531,7 @@ record(bo, "$(Sys)$(Dev)Out:0-Cmd") {
 }
 
 record(bi, "$(Sys)$(Dev)Cmd:GetCS-Cmd") {
-  field(PINI,"1")
+  field(PINI, "1")
   field(SCAN, "1 second")
   field(FLNK, "$(Sys)$(Dev)I:R1-I")
 }
@@ -561,7 +585,8 @@ record(bo, "$(Sys)$(Dev)Rst:Plot1-Cmd") {
 }
 
 record(bi, "$(Sys)$(Dev)Cmd:SetK-Cmd") {
-  field(FLNK, "$(Sys)$(Dev)DB:Fan1-FOut_")
+#  field(FLNK, "$(Sys)$(Dev)DB:Fan1-FOut_")
+  field(FLNK, "$(Sys)$(Dev)DB:SetK-Calcout_")
 }
 
 record(ai, "$(Sys)$(Dev)Gain:1-SP") {
@@ -582,11 +607,11 @@ record(ai, "$(Sys)$(Dev)Gain:4-SP") {
 
 record(calcout, "$(Sys)$(Dev)DB:SetK-Calcout_") {
   field(DTYP, "stream")
+  field(INPA, "$(Sys)$(Dev)Gain:1-SP.VAL")
   field(INPB, "$(Sys)$(Dev)Gain:2-SP.VAL")
   field(INPC, "$(Sys)$(Dev)Gain:3-SP.VAL")
   field(INPD, "$(Sys)$(Dev)Gain:4-SP.VAL")
   field(OUT, "@I404.protocol setKs() $(PORT) 0")
-  field(INPA, "$(Sys)$(Dev)Gain:1-SP.VAL")
 }
 
 record(bo, "$(Sys)$(Dev)Trig:1-Cmd") {
@@ -635,7 +660,8 @@ record(ai, "$(Sys)$(Dev)I:1-I") {
 record(calcout, "$(Sys)$(Dev)I:1-Calcout_") {
   field(CALC, "A*B")
   field(INPA, "$(Sys)$(Dev)I:R1-I")
-  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+#  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(INPB, "$(Sys)$(Dev)Gain:1-RB")
   field(OUT, "$(Sys)$(Dev)I:1-I PP")
   field(OOPT, "Every Time")
 }
@@ -643,7 +669,8 @@ record(calcout, "$(Sys)$(Dev)I:1-Calcout_") {
 record(calcout, "$(Sys)$(Dev)I:2-Calcout_") {
   field(CALC, "A*B")
   field(INPA, "$(Sys)$(Dev)I:R2-I")
-  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+#  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(INPB, "$(Sys)$(Dev)Gain:2-RB")
   field(OUT, "$(Sys)$(Dev)I:2-I PP")
   field(OOPT, "Every Time")
 }
@@ -651,7 +678,8 @@ record(calcout, "$(Sys)$(Dev)I:2-Calcout_") {
 record(calcout, "$(Sys)$(Dev)I:3-Calcout_") {
   field(CALC, "A*B")
   field(INPA, "$(Sys)$(Dev)I:R3-I")
-  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+#  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(INPB, "$(Sys)$(Dev)Gain:3-RB")
   field(OUT, "$(Sys)$(Dev)I:3-I PP")
   field(OOPT, "Every Time")
 }
@@ -659,7 +687,8 @@ record(calcout, "$(Sys)$(Dev)I:3-Calcout_") {
 record(calcout, "$(Sys)$(Dev)I:4-Calcout_") {
   field(CALC, "A*B")
   field(INPA, "$(Sys)$(Dev)I:R4-I")
-  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+#  field(INPB, "$(Sys)$(Dev)Val:Cal-I")
+  field(INPB, "$(Sys)$(Dev)Gain:4-RB")
   field(OUT, "$(Sys)$(Dev)I:4-I PP")
   field(OOPT, "Every Time")
 }
@@ -844,82 +873,98 @@ record(bo, "$(Sys)$(Dev)Enbl:HVChk-Cmd") {
   field(OUT, "$(Sys)$(Dev)DB:Fan3-DFOut_.VAL PP")
 }
 
-record(ao,"$(Sys)$(Dev)Time:Intg-SP") {
-  field(DESC,"Integration time setpoint")
-  field(DTYP,"stream")
-  field(OUT,"@I404.protocol setPeriod() $(PORT) 0")
-  field(EGU,"s")
-  field(DRVH,"65")
-  field(DRVL,"0.0001")
-  field(FLNK,"$(Sys)$(Dev)Time:Intg-RB")
+record(ao, "$(Sys)$(Dev)Time:Intg-SP") {
+  field(DESC, "Integration time setpoint")
+  field(DTYP, "stream")
+  field(OUT, "@I404.protocol setPeriod() $(PORT) 0")
+  field(EGU, "s")
+  field(DRVH, "65")
+  field(DRVL, "0.0001")
+#  field(FLNK, "$(Sys)$(Dev)Time:Intg-RB")
+  field(FLNK, "$(Sys)$(Dev)Time:Intg-Seq")
 }
 
-record(ai,"$(Sys)$(Dev)Time:Intg-RB") {
-  field(DESC,"Integration time readback")
-  field(DTYP,"stream")
-  field(PINI,"1")
-  field(INP,"@I404.protocol getPeriod() $(PORT) 0")
-  field(EGU,"s")
-  field(HOPR,"65")
-  field(LOPR,"0.0001")
+record(seq, "$(Sys)$(Dev)Time:Intg-Seq") {
+  field(DLY1, "0.01")
+  field(LNK1, "$(Sys)$(Dev)Time:Intg-RB PP")
 }
 
-record(ao,"$(Sys)$(Dev)Freq:Suppress-SP") {
-  field(DESC,"Frequency to suppress")
-  field(DTYP,"stream")
-  field(OUT,"@I404.protocol setSuppressFreq() $(PORT) 0")
-  field(EGU,"Hz")
+record(ai, "$(Sys)$(Dev)Time:Intg-RB") {
+  field(SCAN, "Passive")
+  field(DESC, "Integration time readback")
+  field(DTYP, "stream")
+  field(PINI, "1")
+  field(INP, "@I404.protocol getPeriod() $(PORT) 0")
+  field(EGU, "s")
+  field(HOPR, "65")
+  field(LOPR, "0.0001")
+}
+
+record(ao, "$(Sys)$(Dev)Freq:Suppress-SP") {
+  field(DESC, "Frequency to suppress")
+  field(DTYP, "stream")
+  field(OUT, "@I404.protocol setSuppressFreq() $(PORT) 0")
+  field(EGU, "Hz")
   field(FLNK, "$(Sys)$(Dev)Freq:Suppress-RB")
 }
 
-record(ai,"$(Sys)$(Dev)Freq:Suppress-RB") {
-  field(DESC,"Suppression frequency readback")
-  field(DTYP,"stream")
-  field(PINI,"1")
-  field(INP,"@I404.protocol getSuppressFreq() $(PORT) 0")
-  field(EGU,"Hz")
+record(ai, "$(Sys)$(Dev)Freq:Suppress-RB") {
+  field(DESC, "Suppression frequency readback")
+  field(DTYP, "stream")
+  field(PINI, "1")
+  field(INP, "@I404.protocol getSuppressFreq() $(PORT) 0")
+  field(EGU, "Hz")
 }
 
 # ID string is > 40 chars. Thus the waveform here.
-record(waveform,"$(Sys)$(Dev)ID-I") {
-  field(DESC,"Identification string")
-  field(DTYP,"stream")
-  field(PINI,"1")
-  field(FTVL,"CHAR")
-  field(NELM,"60")
-  field(INP,"@I404.protocol getId() $(PORT) 0")
-}
-record(longout,"$(Sys)$(Dev)Res-SP") {
-  field(DESC,"Resolution setpoint")
-  field(DTYP,"stream")
-  field(EGU,"bits")
-  field(OUT,"@I404.protocol setRes() $(PORT) 0")
-  field(DRVH,"20")
-  field(DRVL,"16")
-  field(FLNK,"$(Sys)$(Dev)Res-RB")
+record(waveform, "$(Sys)$(Dev)ID-I") {
+  field(DESC, "Identification string")
+  field(DTYP, "stream")
+  field(PINI, "1")
+  field(FTVL, "CHAR")
+  field(NELM, "60")
+  field(INP, "@I404.protocol getId() $(PORT) 0")
 }
 
-record(longin,"$(Sys)$(Dev)Res-RB") {
-  field(DESC,"Resolution readback")
-  field(DTYP,"stream")
-  field(PINI,"1")
-  field(EGU,"bits")
-  field(INP,"@I404.protocol getRes() $(PORT) 0")
-  field(HOPR,"20")
-  field(LOPR,"16")
+record(longout, "$(Sys)$(Dev)Res-SP") {
+  field(DESC, "Resolution setpoint")
+  field(DTYP, "stream")
+  field(EGU, "bits")
+  field(OUT, "@I404.protocol setRes() $(PORT) 0")
+  field(DRVH, "20")
+  field(DRVL, "16")
+#  field(FLNK, "$(Sys)$(Dev)Res-RB")
+  field(FLNK, "$(Sys)$(Dev)Res-Seq")
 }
 
-record(stringin,"$(Sys)$(Dev)Val:Pwd-I") {
+record(seq, "$(Sys)$(Dev)Res-Seq") {
+  field(DLY1, "0.01")
+  field(LNK1, "$(Sys)$(Dev)Res-RB PP")
+}
+
+record(longin, "$(Sys)$(Dev)Res-RB") {
+  field(SCAN, "Passive")
+  field(DESC, "Resolution readback")
+  field(DTYP, "stream")
+  field(PINI, "1")
+  field(EGU, "bits")
+  field(INP, "@I404.protocol getRes() $(PORT) 0")
+  field(HOPR, "20")
+  field(LOPR, "16")
+}
+
+record(stringin, "$(Sys)$(Dev)Val:Pwd-I") {
   field(DTYP, "stream")
   field(INP, "@I404.protocol getPassword() $(PORT) 0")
 }
 
-record(stringout,"$(Sys)$(Dev)Val:Pwd-SP") {
+record(stringout, "$(Sys)$(Dev)Val:Pwd-SP") {
   field(DTYP, "stream")
-  field(PINI, "1") # this seems reqd, else "init" seq fails
+  field(PINI, "1")
+# this seems reqd, else "init" seq fails
   field(OMSL, "supervisory")
   field(DOL, "12345")
-  field(OUT,"@I404.protocol setPassword() $(PORT) 0")
+  field(OUT, "@I404.protocol setPassword() $(PORT) 0")
 }
 
 # Current-overflow status
@@ -927,58 +972,602 @@ record(longin, "$(Sys)$(Dev)DB:OF-I_") {
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw1-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
-	field(INPB, "1") # bitmask
-	field(CALC, "A&B?1:0")
-	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw1-Sts PP")
+  field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
+  field(INPB, "1")
+# bitmask
+  field(CALC, "A&B?1:0")
+  field(OUT, "$(Sys)$(Dev)Sts:Ovrflw1-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw2-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
-	field(INPB, "2") # bitmask
-	field(CALC, "A&B?1:0")
-	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw2-Sts PP")
+  field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
+  field(INPB, "2")
+# bitmask
+  field(CALC, "A&B?1:0")
+  field(OUT, "$(Sys)$(Dev)Sts:Ovrflw2-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw3-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
-	field(INPB, "4") # bitmask
-	field(CALC, "A&B?1:0")
-	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw3-Sts PP")
+  field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
+  field(INPB, "4")
+# bitmask
+  field(CALC, "A&B?1:0")
+  field(OUT, "$(Sys)$(Dev)Sts:Ovrflw3-Sts PP")
 }
 
 record(calcout, "$(Sys)$(Dev)DB:Ovrflw4-Calcout_") {
-	field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
-	field(INPB, "8") # bitmask
-	field(CALC, "A&B?1:0")
-	field(OUT, "$(Sys)$(Dev)Sts:Ovrflw4-Sts PP")
+  field(INPA, "$(Sys)$(Dev)DB:OF-I_ CP")
+  field(INPB, "8")
+# bitmask
+  field(CALC, "A&B?1:0")
+  field(OUT, "$(Sys)$(Dev)Sts:Ovrflw4-Sts PP")
 }
 
 record(bi, "$(Sys)$(Dev)Sts:Ovrflw1-Sts") {
-	field(ZNAM, "In Range")
-	field(ONAM, "Overflow")
-	field(ZSV, "NO_ALARM")
-	field(OSV, "MAJOR")
+  field(ZNAM, "In Range")
+  field(ONAM, "Overflow")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MAJOR")
 }
 
 record(bi, "$(Sys)$(Dev)Sts:Ovrflw2-Sts") {
-	field(ZNAM, "In Range")
-	field(ONAM, "Overflow")
-	field(ZSV, "NO_ALARM")
-	field(OSV, "MAJOR")
+  field(ZNAM, "In Range")
+  field(ONAM, "Overflow")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MAJOR")
 }
 
 record(bi, "$(Sys)$(Dev)Sts:Ovrflw3-Sts") {
-	field(ZNAM, "In Range")
-	field(ONAM, "Overflow")
-	field(ZSV, "NO_ALARM")
-	field(OSV, "MAJOR")
+  field(ZNAM, "In Range")
+  field(ONAM, "Overflow")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MAJOR")
 }
 
 record(bi, "$(Sys)$(Dev)Sts:Ovrflw4-Sts") {
-	field(ZNAM, "In Range")
-	field(ONAM, "Overflow")
-	field(ZSV, "NO_ALARM")
-	field(OSV, "MAJOR")
+  field(ZNAM, "In Range")
+  field(ONAM, "Overflow")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MAJOR")
 }
 
+#! Further lines contain data used by VisualDCT
+#! View(0,0,0.7)
+#! Record("$(Sys)$(Dev)Val:Cap-SP",640,458,0,0,"$(Sys)$(Dev)Val:Cap-SP")
+#! Field("$(Sys)$(Dev)Val:Cap-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:Cap-SP.FLNK")
+#! Link("$(Sys)$(Dev)Val:Cap-SP.FLNK","$(Sys)$(Dev)Val:Cap-Seq")
+#! Record("$(Sys)$(Dev)Val:Cap-Seq",640,335,0,0,"$(Sys)$(Dev)Val:Cap-Seq")
+#! Field("$(Sys)$(Dev)Val:Cap-Seq.LNK1",16777215,1,"$(Sys)$(Dev)Val:Cap-Seq.LNK1")
+#! Link("$(Sys)$(Dev)Val:Cap-Seq.LNK1","$(Sys)$(Dev)Val:Cap-Sts.VAL")
+#! Record("$(Sys)$(Dev)Val:Cap-Sts",900,298,0,1,"$(Sys)$(Dev)Val:Cap-Sts")
+#! Field("$(Sys)$(Dev)Val:Cap-Sts.VAL",16777215,0,"$(Sys)$(Dev)Val:Cap-Sts.VAL")
+#! Record("$(Sys)$(Dev)Val:Cap-I",40,1018,0,0,"$(Sys)$(Dev)Val:Cap-I")
+#! Field("$(Sys)$(Dev)Val:Cap-I.FLNK",16777215,1,"$(Sys)$(Dev)Val:Cap-I.FLNK")
+#! Link("$(Sys)$(Dev)Val:Cap-I.FLNK","$(Sys)$(Dev)Cmd:CapChk-Calcout")
+#! Field("$(Sys)$(Dev)Val:Cap-I.VAL",16777215,1,"$(Sys)$(Dev)Val:Cap-I.VAL")
+#! Record("$(Sys)$(Dev)Offset:X-I",2800,2840,0,0,"$(Sys)$(Dev)Offset:X-I")
+#! Field("$(Sys)$(Dev)Offset:X-I.VAL",16777215,0,"$(Sys)$(Dev)Offset:X-I.VAL")
+#! Record("$(Sys)$(Dev)Offset:Y-I",3380,2560,0,0,"$(Sys)$(Dev)Offset:Y-I")
+#! Field("$(Sys)$(Dev)Offset:Y-I.VAL",16777215,1,"$(Sys)$(Dev)Offset:Y-I.VAL")
+#! Record("$(Sys)$(Dev)Pos:XRaw-I",2220,2492,0,0,"$(Sys)$(Dev)Pos:XRaw-I")
+#! Field("$(Sys)$(Dev)Pos:XRaw-I.FLNK",16777215,1,"$(Sys)$(Dev)Pos:XRaw-I.FLNK")
+#! Link("$(Sys)$(Dev)Pos:XRaw-I.FLNK","$(Sys)$(Dev)DB:Fan2-FOut_")
+#! Field("$(Sys)$(Dev)Pos:XRaw-I.VAL",16777215,1,"$(Sys)$(Dev)Pos:XRaw-I.VAL")
+#! Field("$(Sys)$(Dev)Pos:XRaw-I.DISA",16777215,0,"$(Sys)$(Dev)Pos:XRaw-I.DISA")
+#! Record("$(Sys)$(Dev)Pos:YRaw-I",3580,2609,0,0,"$(Sys)$(Dev)Pos:YRaw-I")
+#! Field("$(Sys)$(Dev)Pos:YRaw-I.VAL",16777215,0,"$(Sys)$(Dev)Pos:YRaw-I.VAL")
+#! Record("$(Sys)$(Dev)DB:X-Calcout_",2520,2698,0,1,"$(Sys)$(Dev)DB:X-Calcout_")
+#! Field("$(Sys)$(Dev)DB:X-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)DB:X-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:X-Calcout_.INPA","$(Sys)$(Dev)Offset:X-I.VAL")
+#! Field("$(Sys)$(Dev)DB:X-Calcout_.INPB",16777215,0,"$(Sys)$(Dev)DB:X-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)DB:X-Calcout_.INPB","$(Sys)$(Dev)Pos:XRaw-I.VAL")
+#! Field("$(Sys)$(Dev)DB:X-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:X-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:X-Calcout_.OUT","$(Sys)$(Dev)Pos:X-I.VAL")
+#! Record("$(Sys)$(Dev)Pos:X-I",2500,2940,0,0,"$(Sys)$(Dev)Pos:X-I")
+#! Field("$(Sys)$(Dev)Pos:X-I.VAL",16777215,0,"$(Sys)$(Dev)Pos:X-I.VAL")
+#! Record("$(Sys)$(Dev)Pos:Y-I",3780,2600,0,0,"$(Sys)$(Dev)Pos:Y-I")
+#! Field("$(Sys)$(Dev)Pos:Y-I.VAL",16777215,0,"$(Sys)$(Dev)Pos:Y-I.VAL")
+#! Record("$(Sys)$(Dev)DB:Y-Calcout_",3140,2518,0,0,"$(Sys)$(Dev)DB:Y-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Y-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)DB:Y-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:Y-Calcout_.INPA","$(Sys)$(Dev)Offset:Y-I.VAL")
+#! Field("$(Sys)$(Dev)DB:Y-Calcout_.INPB",16777215,1,"$(Sys)$(Dev)DB:Y-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)DB:Y-Calcout_.INPB","$(Sys)$(Dev)Pos:YRaw-I.VAL")
+#! Field("$(Sys)$(Dev)DB:Y-Calcout_.OUT",16777215,1,"$(Sys)$(Dev)DB:Y-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Y-Calcout_.OUT","$(Sys)$(Dev)Pos:Y-I.VAL")
+#! Record("$(Sys)$(Dev)DB:Fan1-FOut_",1520,2855,0,1,"$(Sys)$(Dev)DB:Fan1-FOut_")
+#! Field("$(Sys)$(Dev)DB:Fan1-FOut_.LNK1",16777215,1,"$(Sys)$(Dev)DB:Fan1-FOut_.LNK1")
+#! Link("$(Sys)$(Dev)DB:Fan1-FOut_.LNK1","$(Sys)$(Dev)DB:SetK-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Fan1-FOut_.LNK2",16777215,0,"$(Sys)$(Dev)DB:Fan1-FOut_.LNK2")
+#! Link("$(Sys)$(Dev)DB:Fan1-FOut_.LNK2","$(Sys)$(Dev)Gain:1-RB")
+#! Record("$(Sys)$(Dev)DB:IncrX1-Calcout_",3640,2806,0,0,"$(Sys)$(Dev)DB:IncrX1-Calcout_")
+#! Field("$(Sys)$(Dev)DB:IncrX1-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:IncrX1-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:IncrX1-Calcout_.OUT","$(Sys)$(Dev)Val:XAxis1-SP.VAL")
+#! Field("$(Sys)$(Dev)DB:IncrX1-Calcout_.A",16777215,1,"$(Sys)$(Dev)DB:IncrX1-Calcout_.A")
+#! Field("$(Sys)$(Dev)DB:IncrX1-Calcout_.B",16777215,1,"$(Sys)$(Dev)DB:IncrX1-Calcout_.B")
+#! Record("$(Sys)$(Dev)DB:Fan2-FOut_",2800,2558,0,0,"$(Sys)$(Dev)DB:Fan2-FOut_")
+#! Field("$(Sys)$(Dev)DB:Fan2-FOut_.LNK2",16777215,0,"$(Sys)$(Dev)DB:Fan2-FOut_.LNK2")
+#! Link("$(Sys)$(Dev)DB:Fan2-FOut_.LNK2","$(Sys)$(Dev)DB:X-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Fan2-FOut_.LNK3",16777215,1,"$(Sys)$(Dev)DB:Fan2-FOut_.LNK3")
+#! Link("$(Sys)$(Dev)DB:Fan2-FOut_.LNK3","$(Sys)$(Dev)DB:Y-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Fan2-FOut_.LNK4",16777215,1,"$(Sys)$(Dev)DB:Fan2-FOut_.LNK4")
+#! Link("$(Sys)$(Dev)DB:Fan2-FOut_.LNK4","$(Sys)$(Dev)DB:IncrX1-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Fan2-FOut_.LNK5",16777215,1,"$(Sys)$(Dev)DB:Fan2-FOut_.LNK5")
+#! Link("$(Sys)$(Dev)DB:Fan2-FOut_.LNK5","$(Sys)$(Dev)Cmd:Osc1-Cmd")
+#! Record("$(Sys)$(Dev)Val:XAxis1-SP",3380,2792,0,0,"$(Sys)$(Dev)Val:XAxis1-SP")
+#! Field("$(Sys)$(Dev)Val:XAxis1-SP.VAL",16777215,1,"$(Sys)$(Dev)Val:XAxis1-SP.VAL")
+#! Field("$(Sys)$(Dev)Val:XAxis1-SP.OUT",16777215,1,"$(Sys)$(Dev)Val:XAxis1-SP.OUT")
+#! Link("$(Sys)$(Dev)Val:XAxis1-SP.OUT","$(Sys)$(Dev)DB:IncrX1-Calcout_.A")
+#! Record("$(Sys)$(Dev)Enbl:Updt-Cmd",2240,2718,0,0,"$(Sys)$(Dev)Enbl:Updt-Cmd")
+#! Field("$(Sys)$(Dev)Enbl:Updt-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Enbl:Updt-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Enbl:Updt-Cmd.OUT","$(Sys)$(Dev)Pos:XRaw-I.DISA")
+#! Record("$(Sys)$(Dev)Cmd:Cal-Cmd",780,2420,0,0,"$(Sys)$(Dev)Cmd:Cal-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Cal-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Cmd:Cal-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Rst-Cmd",400,2069,0,0,"$(Sys)$(Dev)Rst-Cmd")
+#! Field("$(Sys)$(Dev)Rst-Cmd.FLNK",16777215,0,"$(Sys)$(Dev)Rst-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Rst-Cmd.FLNK","$(Sys)$(Dev)Rst-Seq")
+#! Field("$(Sys)$(Dev)Rst-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Rst-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Save-Cmd",100,1940,0,0,"$(Sys)$(Dev)Cmd:Save-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Save-Cmd.VAL",16777215,0,"$(Sys)$(Dev)Cmd:Save-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Rcl-Cmd",80,1800,0,0,"$(Sys)$(Dev)Cmd:Rcl-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Rcl-Cmd.VAL",16777215,0,"$(Sys)$(Dev)Cmd:Rcl-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Rst-Seq",100,2088,0,1,"$(Sys)$(Dev)Rst-Seq")
+#! Field("$(Sys)$(Dev)Rst-Seq.LNK1",16777215,0,"$(Sys)$(Dev)Rst-Seq.LNK1")
+#! Link("$(Sys)$(Dev)Rst-Seq.LNK1","$(Sys)$(Dev)Cmd:Save-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst-Seq.LNK2",16777215,1,"$(Sys)$(Dev)Rst-Seq.LNK2")
+#! Link("$(Sys)$(Dev)Rst-Seq.LNK2","$(Sys)$(Dev)Rst-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst-Seq.LNK3",16777215,0,"$(Sys)$(Dev)Rst-Seq.LNK3")
+#! Link("$(Sys)$(Dev)Rst-Seq.LNK3","$(Sys)$(Dev)Cmd:Rcl-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst-Seq.LNK4",16777215,1,"$(Sys)$(Dev)Rst-Seq.LNK4")
+#! Link("$(Sys)$(Dev)Rst-Seq.LNK4","$(Sys)$(Dev)Cmd:Init-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Rst:1-Seq_",740,1990,0,0,"$(Sys)$(Dev)Rst:1-Seq_")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.LNK1",16777215,0,"$(Sys)$(Dev)Rst:1-Seq_.LNK1")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.LNK1","$(Sys)$(Dev)Rst-Sts.VAL")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.DOL2",16777215,1,"$(Sys)$(Dev)Rst:1-Seq_.DOL2")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.DOL2","$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.LNK3",16777215,1,"$(Sys)$(Dev)Rst:1-Seq_.LNK3")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.LNK3","$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.LNK4",16777215,0,"$(Sys)$(Dev)Rst:1-Seq_.LNK4")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.LNK4","$(Sys)$(Dev)Rst-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.LNK5",16777215,1,"$(Sys)$(Dev)Rst:1-Seq_.LNK5")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.LNK5","$(Sys)$(Dev)Cmd:Cal-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.LNK6",16777215,0,"$(Sys)$(Dev)Rst:1-Seq_.LNK6")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.LNK6","$(Sys)$(Dev)Cmd:Init-Cmd.VAL")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.FLNK",16777215,1,"$(Sys)$(Dev)Rst:1-Seq_.FLNK")
+#! Link("$(Sys)$(Dev)Rst:1-Seq_.FLNK","$(Sys)$(Dev)Rst:2-Seq_")
+#! Field("$(Sys)$(Dev)Rst:1-Seq_.DO2",16777215,1,"$(Sys)$(Dev)Rst:1-Seq_.DO2")
+#! Record("$(Sys)$(Dev)Rst:2-Seq_",1280,1825,0,0,"$(Sys)$(Dev)Rst:2-Seq_")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK1",16777215,1,"$(Sys)$(Dev)Rst:2-Seq_.LNK1")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK2",16777215,0,"$(Sys)$(Dev)Rst:2-Seq_.LNK2")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK2","$(Sys)$(Dev)ID-I.VAL")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK3",16777215,1,"$(Sys)$(Dev)Rst:2-Seq_.LNK3")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK3","$(Sys)$(Dev)DB:Rng-FOut_.VAL")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK4",16777215,1,"$(Sys)$(Dev)Rst:2-Seq_.LNK4")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK4","$(Sys)$(Dev)Val:Pwd-SP.PROC")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK5",16777215,0,"$(Sys)$(Dev)Rst:2-Seq_.LNK5")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK5","$(Sys)$(Dev)Freq:Suppress-RB.VAL")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.DOL6",16777215,0,"$(Sys)$(Dev)Rst:2-Seq_.DOL6")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.DOL6","$(Sys)$(Dev)Rst:1-Seq_.DO2")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK6",16777215,1,"$(Sys)$(Dev)Rst:2-Seq_.LNK6")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK6","$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+#! Field("$(Sys)$(Dev)Rst:2-Seq_.LNK7",16777215,0,"$(Sys)$(Dev)Rst:2-Seq_.LNK7")
+#! Link("$(Sys)$(Dev)Rst:2-Seq_.LNK7","$(Sys)$(Dev)Rst-Sts.VAL")
+#! Record("$(Sys)$(Dev)Rst-Sts",740,1718,0,0,"$(Sys)$(Dev)Rst-Sts")
+#! Field("$(Sys)$(Dev)Rst-Sts.VAL",16777215,1,"$(Sys)$(Dev)Rst-Sts.VAL")
+#! Record("$(Sys)$(Dev)Sts:Calib-I",620,2626,0,0,"$(Sys)$(Dev)Sts:Calib-I")
+#! Field("$(Sys)$(Dev)Sts:Calib-I.FLNK",16777215,1,"$(Sys)$(Dev)Sts:Calib-I.FLNK")
+#! Link("$(Sys)$(Dev)Sts:Calib-I.FLNK","$(Sys)$(Dev)Sts:Calib-Calc_")
+#! Field("$(Sys)$(Dev)Sts:Calib-I.VAL",16777215,0,"$(Sys)$(Dev)Sts:Calib-I.VAL")
+#! Record("$(Sys)$(Dev)Sts:Calib-Calc_",880,2660,0,0,"$(Sys)$(Dev)Sts:Calib-Calc_")
+#! Field("$(Sys)$(Dev)Sts:Calib-Calc_.INPA",16777215,0,"$(Sys)$(Dev)Sts:Calib-Calc_.INPA")
+#! Link("$(Sys)$(Dev)Sts:Calib-Calc_.INPA","$(Sys)$(Dev)Sts:Calib-I.VAL")
+#! Field("$(Sys)$(Dev)Sts:Calib-Calc_.FLNK",16777215,1,"$(Sys)$(Dev)Sts:Calib-Calc_.FLNK")
+#! Link("$(Sys)$(Dev)Sts:Calib-Calc_.FLNK","$(Sys)$(Dev)Sts:Calib-Sts")
+#! Field("$(Sys)$(Dev)Sts:Calib-Calc_.VAL",16777215,0,"$(Sys)$(Dev)Sts:Calib-Calc_.VAL")
+#! Record("$(Sys)$(Dev)Sts:Calib-Sts",920,2840,0,1,"$(Sys)$(Dev)Sts:Calib-Sts")
+#! Field("$(Sys)$(Dev)Sts:Calib-Sts.INP",16777215,0,"$(Sys)$(Dev)Sts:Calib-Sts.INP")
+#! Link("$(Sys)$(Dev)Sts:Calib-Sts.INP","$(Sys)$(Dev)Sts:Calib-Calc_.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Init-Cmd",380,2220,0,0,"$(Sys)$(Dev)Cmd:Init-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Init-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Cmd:Init-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Rng-Sel",320,1208,0,0,"$(Sys)$(Dev)Cmd:Rng-Sel")
+#! Field("$(Sys)$(Dev)Cmd:Rng-Sel.FLNK",16777215,1,"$(Sys)$(Dev)Cmd:Rng-Sel.FLNK")
+#! Link("$(Sys)$(Dev)Cmd:Rng-Sel.FLNK","$(Sys)$(Dev)Val:Rng-Str")
+#! Record("$(Sys)$(Dev)Val:Rng-SP",660,1315,0,0,"$(Sys)$(Dev)Val:Rng-SP")
+#! Field("$(Sys)$(Dev)Val:Rng-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:Rng-SP.FLNK")
+#! Link("$(Sys)$(Dev)Val:Rng-SP.FLNK","$(Sys)$(Dev)Val:Rng-Str")
+#! Field("$(Sys)$(Dev)Val:Rng-SP.VAL",16777215,1,"$(Sys)$(Dev)Val:Rng-SP.VAL")
+#! Record("$(Sys)$(Dev)Val:Rng-I",1240,743,0,0,"$(Sys)$(Dev)Val:Rng-I")
+#! Record("$(Sys)$(Dev)Val:CapSw-SP",20,1220,0,0,"$(Sys)$(Dev)Val:CapSw-SP")
+#! Field("$(Sys)$(Dev)Val:CapSw-SP.VAL",16777215,1,"$(Sys)$(Dev)Val:CapSw-SP.VAL")
+#! Record("$(Sys)$(Dev)Cmd:CapChk-Calcout",320,1423,0,0,"$(Sys)$(Dev)Cmd:CapChk-Calcout")
+#! Field("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPA",16777215,0,"$(Sys)$(Dev)Cmd:CapChk-Calcout.INPA")
+#! Link("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPA","$(Sys)$(Dev)Val:Cap-I.VAL")
+#! Field("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPB",16777215,0,"$(Sys)$(Dev)Cmd:CapChk-Calcout.INPB")
+#! Link("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPB","$(Sys)$(Dev)Val:CapSw-SP.VAL")
+#! Field("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPC",16777215,1,"$(Sys)$(Dev)Cmd:CapChk-Calcout.INPC")
+#! Link("$(Sys)$(Dev)Cmd:CapChk-Calcout.INPC","$(Sys)$(Dev)Val:Rng-SP.VAL")
+#! Field("$(Sys)$(Dev)Cmd:CapChk-Calcout.OUT",16777215,1,"$(Sys)$(Dev)Cmd:CapChk-Calcout.OUT")
+#! Link("$(Sys)$(Dev)Cmd:CapChk-Calcout.OUT","$(Sys)$(Dev)DB:Fan1-DFOut_.VAL")
+#! Record("$(Sys)$(Dev)Cmd:SetRng-Cmd",700,655,0,0,"$(Sys)$(Dev)Cmd:SetRng-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:SetRng-Cmd.FLNK",16777215,1,"$(Sys)$(Dev)Cmd:SetRng-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Cmd:SetRng-Cmd.FLNK","$(Sys)$(Dev)DB:Fan4-FOut_")
+#! Field("$(Sys)$(Dev)Cmd:SetRng-Cmd.DISA",16777215,0,"$(Sys)$(Dev)Cmd:SetRng-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Val:Rng-Str",580,1026,0,0,"$(Sys)$(Dev)Val:Rng-Str")
+#! Field("$(Sys)$(Dev)Val:Rng-Str.FLNK",16777215,0,"$(Sys)$(Dev)Val:Rng-Str.FLNK")
+#! Link("$(Sys)$(Dev)Val:Rng-Str.FLNK","$(Sys)$(Dev)Cmd:CapChk-Calcout")
+#! Field("$(Sys)$(Dev)Val:Rng-Str.INP",16777215,1,"$(Sys)$(Dev)Val:Rng-Str.INP")
+#! Link("$(Sys)$(Dev)Val:Rng-Str.INP","$(Sys)$(Dev)Val:Rng-SP.VAL")
+#! Record("$(Sys)$(Dev)DB:Fan1-DFOut_",960,920,0,0,"$(Sys)$(Dev)DB:Fan1-DFOut_")
+#! Field("$(Sys)$(Dev)DB:Fan1-DFOut_.VAL",16777215,0,"$(Sys)$(Dev)DB:Fan1-DFOut_.VAL")
+#! Field("$(Sys)$(Dev)DB:Fan1-DFOut_.OUTA",16777215,0,"$(Sys)$(Dev)DB:Fan1-DFOut_.OUTA")
+#! Link("$(Sys)$(Dev)DB:Fan1-DFOut_.OUTA","$(Sys)$(Dev)Dsbl:SetRng-Calcout.A")
+#! Field("$(Sys)$(Dev)DB:Fan1-DFOut_.OUTB",16777215,1,"$(Sys)$(Dev)DB:Fan1-DFOut_.OUTB")
+#! Link("$(Sys)$(Dev)DB:Fan1-DFOut_.OUTB","$(Sys)$(Dev)DB:SetRng-SP_.VAL")
+#! Record("$(Sys)$(Dev)Dsbl:SetRng-Calcout",680,818,0,0,"$(Sys)$(Dev)Dsbl:SetRng-Calcout")
+#! Field("$(Sys)$(Dev)Dsbl:SetRng-Calcout.A",16777215,1,"$(Sys)$(Dev)Dsbl:SetRng-Calcout.A")
+#! Field("$(Sys)$(Dev)Dsbl:SetRng-Calcout.OUT",16777215,0,"$(Sys)$(Dev)Dsbl:SetRng-Calcout.OUT")
+#! Link("$(Sys)$(Dev)Dsbl:SetRng-Calcout.OUT","$(Sys)$(Dev)DB:Fan2-DFOut_.VAL")
+#! Record("$(Sys)$(Dev)DB:Fan4-FOut_",900,635,0,1,"$(Sys)$(Dev)DB:Fan4-FOut_")
+#! Field("$(Sys)$(Dev)DB:Fan4-FOut_.LNK1",16777215,1,"$(Sys)$(Dev)DB:Fan4-FOut_.LNK1")
+#! Link("$(Sys)$(Dev)DB:Fan4-FOut_.LNK1","$(Sys)$(Dev)DB:SetRng-SP_")
+#! Field("$(Sys)$(Dev)DB:Fan4-FOut_.LNK2",16777215,1,"$(Sys)$(Dev)DB:Fan4-FOut_.LNK2")
+#! Link("$(Sys)$(Dev)DB:Fan4-FOut_.LNK2","$(Sys)$(Dev)Val:Rng-I")
+#! Record("$(Sys)$(Dev)DB:SetMsg-SCalcout_",320,606,0,0,"$(Sys)$(Dev)DB:SetMsg-SCalcout_")
+#! Field("$(Sys)$(Dev)DB:SetMsg-SCalcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:SetMsg-SCalcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:SetMsg-SCalcout_.OUT","$(Sys)$(Dev)Val:RngMsg2-I.VAL")
+#! Field("$(Sys)$(Dev)DB:SetMsg-SCalcout_.A",16777215,0,"$(Sys)$(Dev)DB:SetMsg-SCalcout_.A")
+#! Record("$(Sys)$(Dev)Val:RngMsg1-I",4520,2709,0,0,"$(Sys)$(Dev)Val:RngMsg1-I")
+#! Record("$(Sys)$(Dev)Val:RngMsg2-I",320,475,0,0,"$(Sys)$(Dev)Val:RngMsg2-I")
+#! Field("$(Sys)$(Dev)Val:RngMsg2-I.VAL",16777215,0,"$(Sys)$(Dev)Val:RngMsg2-I.VAL")
+#! Record("$(Sys)$(Dev)Val:RngMsg3-I",4520,2489,0,0,"$(Sys)$(Dev)Val:RngMsg3-I")
+#! Record("$(Sys)$(Dev)DB:Fan2-DFOut_",360,800,0,0,"$(Sys)$(Dev)DB:Fan2-DFOut_")
+#! Field("$(Sys)$(Dev)DB:Fan2-DFOut_.VAL",16777215,1,"$(Sys)$(Dev)DB:Fan2-DFOut_.VAL")
+#! Field("$(Sys)$(Dev)DB:Fan2-DFOut_.OUTA",16777215,0,"$(Sys)$(Dev)DB:Fan2-DFOut_.OUTA")
+#! Link("$(Sys)$(Dev)DB:Fan2-DFOut_.OUTA","$(Sys)$(Dev)DB:SetMsg-SCalcout_.A")
+#! Field("$(Sys)$(Dev)DB:Fan2-DFOut_.OUTB",16777215,1,"$(Sys)$(Dev)DB:Fan2-DFOut_.OUTB")
+#! Link("$(Sys)$(Dev)DB:Fan2-DFOut_.OUTB","$(Sys)$(Dev)Cmd:SetRng-Cmd.DISA")
+#! Record("$(Sys)$(Dev)DB:SetRng-SP_",1220,918,0,0,"$(Sys)$(Dev)DB:SetRng-SP_")
+#! Field("$(Sys)$(Dev)DB:SetRng-SP_.VAL",16777215,1,"$(Sys)$(Dev)DB:SetRng-SP_.VAL")
+#! Field("$(Sys)$(Dev)DB:SetRng-SP_.FLNK",16777215,1,"$(Sys)$(Dev)DB:SetRng-SP_.FLNK")
+#! Link("$(Sys)$(Dev)DB:SetRng-SP_.FLNK","$(Sys)$(Dev)DB:Rng-FOut_")
+#! Record("$(Sys)$(Dev)DB:Rng-FOut_",1320,126,0,1,"$(Sys)$(Dev)DB:Rng-FOut_")
+#! Field("$(Sys)$(Dev)DB:Rng-FOut_.VAL",16777215,1,"$(Sys)$(Dev)DB:Rng-FOut_.VAL")
+#! Field("$(Sys)$(Dev)DB:Rng-FOut_.LNK1",16777215,0,"$(Sys)$(Dev)DB:Rng-FOut_.LNK1")
+#! Link("$(Sys)$(Dev)DB:Rng-FOut_.LNK1","$(Sys)$(Dev)Val:Rng-I")
+#! Field("$(Sys)$(Dev)DB:Rng-FOut_.LNK2",16777215,0,"$(Sys)$(Dev)DB:Rng-FOut_.LNK2")
+#! Link("$(Sys)$(Dev)DB:Rng-FOut_.LNK2","$(Sys)$(Dev)Time:Intg-RB")
+#! Field("$(Sys)$(Dev)DB:Rng-FOut_.LNK3",16777215,0,"$(Sys)$(Dev)DB:Rng-FOut_.LNK3")
+#! Link("$(Sys)$(Dev)DB:Rng-FOut_.LNK3","$(Sys)$(Dev)Val:Cap-Sts")
+#! Field("$(Sys)$(Dev)DB:Rng-FOut_.LNK4",16777215,0,"$(Sys)$(Dev)DB:Rng-FOut_.LNK4")
+#! Link("$(Sys)$(Dev)DB:Rng-FOut_.LNK4","$(Sys)$(Dev)Res-RB")
+#! Record("$(Sys)$(Dev)Err-Sts",1960,1178,0,0,"$(Sys)$(Dev)Err-Sts")
+#! Field("$(Sys)$(Dev)Err-Sts.OUT",16777215,1,"$(Sys)$(Dev)Err-Sts.OUT")
+#! Link("$(Sys)$(Dev)Err-Sts.OUT","$(Sys)$(Dev)Enbl:Err-Cmd.B")
+#! Field("$(Sys)$(Dev)Err-Sts.VAL",16777215,0,"$(Sys)$(Dev)Err-Sts.VAL")
+#! Record("$(Sys)$(Dev)Err:Clr-Cmd",2200,1046,0,0,"$(Sys)$(Dev)Err:Clr-Cmd")
+#! Field("$(Sys)$(Dev)Err:Clr-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Err:Clr-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Err:Clr-Cmd.OUT","$(Sys)$(Dev)Enbl:Err-Cmd.A")
+#! Record("$(Sys)$(Dev)Enbl:Err-Cmd",2220,1206,0,0,"$(Sys)$(Dev)Enbl:Err-Cmd")
+#! Field("$(Sys)$(Dev)Enbl:Err-Cmd.B",16777215,0,"$(Sys)$(Dev)Enbl:Err-Cmd.B")
+#! Field("$(Sys)$(Dev)Enbl:Err-Cmd.A",16777215,1,"$(Sys)$(Dev)Enbl:Err-Cmd.A")
+#! Field("$(Sys)$(Dev)Enbl:Err-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Enbl:Err-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Enbl:Err-Cmd.OUT","$(Sys)$(Dev)Err-I.DISA")
+#! Field("$(Sys)$(Dev)Enbl:Err-Cmd.C",16777215,1,"$(Sys)$(Dev)Enbl:Err-Cmd.C")
+#! Record("$(Sys)$(Dev)DB:Err2Bin-Calcout_",1980,1583,0,0,"$(Sys)$(Dev)DB:Err2Bin-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Err2Bin-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:Err2Bin-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Err2Bin-Calcout_.OUT","$(Sys)$(Dev)Err-Sts.VAL")
+#! Field("$(Sys)$(Dev)DB:Err2Bin-Calcout_.A",16777215,1,"$(Sys)$(Dev)DB:Err2Bin-Calcout_.A")
+#! Record("$(Sys)$(Dev)DB:ErrChk-SCalcout_",2260,1423,0,1,"$(Sys)$(Dev)DB:ErrChk-SCalcout_")
+#! Field("$(Sys)$(Dev)DB:ErrChk-SCalcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:ErrChk-SCalcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:ErrChk-SCalcout_.OUT","$(Sys)$(Dev)DB:Err2Bin-Calcout_.A")
+#! Field("$(Sys)$(Dev)DB:ErrChk-SCalcout_.INAA",16777215,1,"$(Sys)$(Dev)DB:ErrChk-SCalcout_.INAA")
+#! Link("$(Sys)$(Dev)DB:ErrChk-SCalcout_.INAA","$(Sys)$(Dev)Err-I.VAL")
+#! Record("$(Sys)$(Dev)Err-I",2560,1512,0,1,"$(Sys)$(Dev)Err-I")
+#! Field("$(Sys)$(Dev)Err-I.DISA",16777215,0,"$(Sys)$(Dev)Err-I.DISA")
+#! Field("$(Sys)$(Dev)Err-I.VAL",16777215,0,"$(Sys)$(Dev)Err-I.VAL")
+#! Field("$(Sys)$(Dev)Err-I.FLNK",16777215,0,"$(Sys)$(Dev)Err-I.FLNK")
+#! Link("$(Sys)$(Dev)Err-I.FLNK","$(Sys)$(Dev)DB:ErrChk-SCalcout_")
+#! Field("$(Sys)$(Dev)Err-I.PROC",16777215,0,"$(Sys)$(Dev)Err-I.PROC")
+#! Record("$(Sys)$(Dev)Err:Scan-Cmd",2860,1475,0,0,"$(Sys)$(Dev)Err:Scan-Cmd")
+#! Field("$(Sys)$(Dev)Err:Scan-Cmd.FLNK",16777215,0,"$(Sys)$(Dev)Err:Scan-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Err:Scan-Cmd.FLNK","$(Sys)$(Dev)Err-I")
+#! Field("$(Sys)$(Dev)Err:Scan-Cmd.DISA",16777215,1,"$(Sys)$(Dev)Err:Scan-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Err:Ovrd-Cmd",1960,1378,0,0,"$(Sys)$(Dev)Err:Ovrd-Cmd")
+#! Field("$(Sys)$(Dev)Err:Ovrd-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Err:Ovrd-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Err:Ovrd-Cmd.OUT","$(Sys)$(Dev)Enbl:Err-Cmd.C")
+#! Record("$(Sys)$(Dev)Cmd:Init-Seq",3540,85,0,0,"$(Sys)$(Dev)Cmd:Init-Seq")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK1",16777215,0,"$(Sys)$(Dev)Cmd:Init-Seq.LNK1")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK1","$(Sys)$(Dev)Out:1-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK2",16777215,1,"$(Sys)$(Dev)Cmd:Init-Seq.LNK2")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK2","$(Sys)$(Dev)E:HV-Sts.PROC")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK3",16777215,1,"$(Sys)$(Dev)Cmd:Init-Seq.LNK3")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK3","$(Sys)$(Dev)Err:HV-Sts.PROC")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK4",16777215,1,"$(Sys)$(Dev)Cmd:Init-Seq.LNK4")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK4","$(Sys)$(Dev)Out:0-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK5",16777215,0,"$(Sys)$(Dev)Cmd:Init-Seq.LNK5")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK5","$(Sys)$(Dev)Mode:Init-Sel.PROC")
+#! Field("$(Sys)$(Dev)Cmd:Init-Seq.LNK6",16777215,0,"$(Sys)$(Dev)Cmd:Init-Seq.LNK6")
+#! Link("$(Sys)$(Dev)Cmd:Init-Seq.LNK6","$(Sys)$(Dev)Val:Pwd-SP.PROC")
+#! Record("$(Sys)$(Dev)Mode:Init-Sel",3220,168,0,0,"$(Sys)$(Dev)Mode:Init-Sel")
+#! Field("$(Sys)$(Dev)Mode:Init-Sel.PROC",16777215,1,"$(Sys)$(Dev)Mode:Init-Sel.PROC")
+#! Field("$(Sys)$(Dev)Mode:Init-Sel.FLNK",16777215,0,"$(Sys)$(Dev)Mode:Init-Sel.FLNK")
+#! Link("$(Sys)$(Dev)Mode:Init-Sel.FLNK","$(Sys)$(Dev)Mode-Sts")
+#! Record("$(Sys)$(Dev)Mode-Sts",2920,238,0,1,"$(Sys)$(Dev)Mode-Sts")
+#! Record("$(Sys)$(Dev)Val:I2F-SP",1820,2568,0,0,"$(Sys)$(Dev)Val:I2F-SP")
+#! Field("$(Sys)$(Dev)Val:I2F-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:I2F-SP.FLNK")
+#! Link("$(Sys)$(Dev)Val:I2F-SP.FLNK","$(Sys)$(Dev)Val:I2F-RB")
+#! Record("$(Sys)$(Dev)Val:I2F-RB",1800,2778,0,0,"$(Sys)$(Dev)Val:I2F-RB")
+#! Record("$(Sys)$(Dev)E:HV-Sts",3880,72,0,0,"$(Sys)$(Dev)E:HV-Sts")
+#! Field("$(Sys)$(Dev)E:HV-Sts.PROC",16777215,0,"$(Sys)$(Dev)E:HV-Sts.PROC")
+#! Record("$(Sys)$(Dev)Err:HV-Sts",3920,246,0,0,"$(Sys)$(Dev)Err:HV-Sts")
+#! Field("$(Sys)$(Dev)Err:HV-Sts.PROC",16777215,0,"$(Sys)$(Dev)Err:HV-Sts.PROC")
+#! Record("$(Sys)$(Dev)Out:1-Cmd",3200,446,0,0,"$(Sys)$(Dev)Out:1-Cmd")
+#! Field("$(Sys)$(Dev)Out:1-Cmd.PROC",16777215,1,"$(Sys)$(Dev)Out:1-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Out:1-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Out:1-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Out:1-Cmd.OUT","$(Sys)$(Dev)Err:Scan-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Out:0-Cmd",3580,486,0,0,"$(Sys)$(Dev)Out:0-Cmd")
+#! Field("$(Sys)$(Dev)Out:0-Cmd.PROC",16777215,1,"$(Sys)$(Dev)Out:0-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Out:0-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Out:0-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Out:0-Cmd.OUT","$(Sys)$(Dev)Err:Scan-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Cmd:GetCS-Cmd",1540,2300,0,0,"$(Sys)$(Dev)Cmd:GetCS-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN",16777215,1,"$(Sys)$(Dev)Cmd:GetCS-Cmd.SCAN")
+#! Field("$(Sys)$(Dev)Cmd:GetCS-Cmd.FLNK",16777215,1,"$(Sys)$(Dev)Cmd:GetCS-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Cmd:GetCS-Cmd.FLNK","$(Sys)$(Dev)I:R1-I")
+#! Record("$(Sys)$(Dev)I:R1-I",3520,912,0,0,"$(Sys)$(Dev)I:R1-I")
+#! Field("$(Sys)$(Dev)I:R1-I.FLNK",16777215,0,"$(Sys)$(Dev)I:R1-I.FLNK")
+#! Link("$(Sys)$(Dev)I:R1-I.FLNK","$(Sys)$(Dev)I:1-Calcout_")
+#! Field("$(Sys)$(Dev)I:R1-I.VAL",16777215,0,"$(Sys)$(Dev)I:R1-I.VAL")
+#! Record("$(Sys)$(Dev)I:R2-I",1980,575,0,0,"$(Sys)$(Dev)I:R2-I")
+#! Field("$(Sys)$(Dev)I:R2-I.FLNK",16777215,1,"$(Sys)$(Dev)I:R2-I.FLNK")
+#! Link("$(Sys)$(Dev)I:R2-I.FLNK","$(Sys)$(Dev)I:2-Calcout_")
+#! Field("$(Sys)$(Dev)I:R2-I.VAL",16777215,0,"$(Sys)$(Dev)I:R2-I.VAL")
+#! Record("$(Sys)$(Dev)I:R3-I",2260,555,0,0,"$(Sys)$(Dev)I:R3-I")
+#! Field("$(Sys)$(Dev)I:R3-I.FLNK",16777215,0,"$(Sys)$(Dev)I:R3-I.FLNK")
+#! Link("$(Sys)$(Dev)I:R3-I.FLNK","$(Sys)$(Dev)I:3-Calcout_")
+#! Field("$(Sys)$(Dev)I:R3-I.VAL",16777215,1,"$(Sys)$(Dev)I:R3-I.VAL")
+#! Record("$(Sys)$(Dev)I:R4-I",2540,555,0,0,"$(Sys)$(Dev)I:R4-I")
+#! Field("$(Sys)$(Dev)I:R4-I.FLNK",16777215,1,"$(Sys)$(Dev)I:R4-I.FLNK")
+#! Link("$(Sys)$(Dev)I:R4-I.FLNK","$(Sys)$(Dev)I:4-Calcout_")
+#! Field("$(Sys)$(Dev)I:R4-I.VAL",16777215,1,"$(Sys)$(Dev)I:R4-I.VAL")
+#! Record("$(Sys)$(Dev)Gain:1-RB",1320,2792,0,0,"$(Sys)$(Dev)Gain:1-RB")
+#! Record("$(Sys)$(Dev)Gain:2-RB",4520,2209,0,0,"$(Sys)$(Dev)Gain:2-RB")
+#! Record("$(Sys)$(Dev)Gain:3-RB",4520,2289,0,0,"$(Sys)$(Dev)Gain:3-RB")
+#! Record("$(Sys)$(Dev)Gain:4-RB",4520,2389,0,0,"$(Sys)$(Dev)Gain:4-RB")
+#! Record("$(Sys)$(Dev)Rst:Plot1-Cmd",3940,2735,0,0,"$(Sys)$(Dev)Rst:Plot1-Cmd")
+#! Field("$(Sys)$(Dev)Rst:Plot1-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Rst:Plot1-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Rst:Plot1-Cmd.OUT","$(Sys)$(Dev)DB:IncrX1-Calcout_.B")
+#! Field("$(Sys)$(Dev)Rst:Plot1-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Rst:Plot1-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:SetK-Cmd",1500,2729,0,0,"$(Sys)$(Dev)Cmd:SetK-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:SetK-Cmd.FLNK",16777215,1,"$(Sys)$(Dev)Cmd:SetK-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Cmd:SetK-Cmd.FLNK","$(Sys)$(Dev)DB:Fan1-FOut_")
+#! Record("$(Sys)$(Dev)Gain:1-SP",1280,2989,0,0,"$(Sys)$(Dev)Gain:1-SP")
+#! Field("$(Sys)$(Dev)Gain:1-SP.VAL",16777215,0,"$(Sys)$(Dev)Gain:1-SP.VAL")
+#! Record("$(Sys)$(Dev)Gain:2-SP",1820,2989,0,0,"$(Sys)$(Dev)Gain:2-SP")
+#! Field("$(Sys)$(Dev)Gain:2-SP.VAL",16777215,0,"$(Sys)$(Dev)Gain:2-SP.VAL")
+#! Record("$(Sys)$(Dev)Gain:3-SP",1820,3089,0,0,"$(Sys)$(Dev)Gain:3-SP")
+#! Field("$(Sys)$(Dev)Gain:3-SP.VAL",16777215,0,"$(Sys)$(Dev)Gain:3-SP.VAL")
+#! Record("$(Sys)$(Dev)Gain:4-SP",1820,3189,0,0,"$(Sys)$(Dev)Gain:4-SP")
+#! Field("$(Sys)$(Dev)Gain:4-SP.VAL",16777215,0,"$(Sys)$(Dev)Gain:4-SP.VAL")
+#! Record("$(Sys)$(Dev)DB:SetK-Calcout_",1540,2998,0,1,"$(Sys)$(Dev)DB:SetK-Calcout_")
+#! Field("$(Sys)$(Dev)DB:SetK-Calcout_.INPB",16777215,1,"$(Sys)$(Dev)DB:SetK-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)DB:SetK-Calcout_.INPB","$(Sys)$(Dev)Gain:2-SP.VAL")
+#! Field("$(Sys)$(Dev)DB:SetK-Calcout_.INPC",16777215,1,"$(Sys)$(Dev)DB:SetK-Calcout_.INPC")
+#! Link("$(Sys)$(Dev)DB:SetK-Calcout_.INPC","$(Sys)$(Dev)Gain:3-SP.VAL")
+#! Field("$(Sys)$(Dev)DB:SetK-Calcout_.INPD",16777215,1,"$(Sys)$(Dev)DB:SetK-Calcout_.INPD")
+#! Link("$(Sys)$(Dev)DB:SetK-Calcout_.INPD","$(Sys)$(Dev)Gain:4-SP.VAL")
+#! Field("$(Sys)$(Dev)DB:SetK-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)DB:SetK-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:SetK-Calcout_.INPA","$(Sys)$(Dev)Gain:1-SP.VAL")
+#! Record("$(Sys)$(Dev)Trig:1-Cmd",3100,2975,0,0,"$(Sys)$(Dev)Trig:1-Cmd")
+#! Field("$(Sys)$(Dev)Trig:1-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Trig:1-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Trig:1-Cmd.OUT","$(Sys)$(Dev)Cmd:Osc1-Cmd.A")
+#! Field("$(Sys)$(Dev)Trig:1-Cmd.VAL",16777215,0,"$(Sys)$(Dev)Trig:1-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Osc1-Cmd",3120,2772,0,0,"$(Sys)$(Dev)Cmd:Osc1-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Osc1-Cmd.A",16777215,1,"$(Sys)$(Dev)Cmd:Osc1-Cmd.A")
+#! Field("$(Sys)$(Dev)Cmd:Osc1-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Cmd:Osc1-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Cmd:Osc1-Cmd.OUT","$(Sys)$(Dev)Trig:1-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Out:3-Cmd",4240,2806,0,0,"$(Sys)$(Dev)Out:3-Cmd")
+#! Field("$(Sys)$(Dev)Out:3-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Out:3-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Out:3-Cmd.OUT","$(Sys)$(Dev)Rst:Plot1-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Out:4-Cmd",4220,2566,0,0,"$(Sys)$(Dev)Out:4-Cmd")
+#! Field("$(Sys)$(Dev)Out:4-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Out:4-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Out:4-Cmd.OUT","$(Sys)$(Dev)Rst:Plot1-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cnt:Chan-Sel",4520,2566,0,0,"$(Sys)$(Dev)Cnt:Chan-Sel")
+#! Record("$(Sys)$(Dev)Val:Cal-I",2780,975,0,0,"$(Sys)$(Dev)Val:Cal-I")
+#! Field("$(Sys)$(Dev)Val:Cal-I.VAL",16777215,0,"$(Sys)$(Dev)Val:Cal-I.VAL")
+#! Record("$(Sys)$(Dev)I:1-I",2840,1329,0,0,"$(Sys)$(Dev)I:1-I")
+#! Field("$(Sys)$(Dev)I:1-I.VAL",16777215,0,"$(Sys)$(Dev)I:1-I.VAL")
+#! Record("$(Sys)$(Dev)I:1-Calcout_",2860,1112,0,1,"$(Sys)$(Dev)I:1-Calcout_")
+#! Field("$(Sys)$(Dev)I:1-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)I:1-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)I:1-Calcout_.INPA","$(Sys)$(Dev)I:R1-I.VAL")
+#! Field("$(Sys)$(Dev)I:1-Calcout_.INPB",16777215,0,"$(Sys)$(Dev)I:1-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)I:1-Calcout_.INPB","$(Sys)$(Dev)Val:Cal-I.VAL")
+#! Field("$(Sys)$(Dev)I:1-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)I:1-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)I:1-Calcout_.OUT","$(Sys)$(Dev)I:1-I.VAL")
+#! Record("$(Sys)$(Dev)I:2-Calcout_",2000,712,0,1,"$(Sys)$(Dev)I:2-Calcout_")
+#! Field("$(Sys)$(Dev)I:2-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)I:2-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)I:2-Calcout_.INPA","$(Sys)$(Dev)I:R2-I.VAL")
+#! Field("$(Sys)$(Dev)I:2-Calcout_.INPB",16777215,1,"$(Sys)$(Dev)I:2-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)I:2-Calcout_.INPB","$(Sys)$(Dev)Val:Cal-I.VAL")
+#! Field("$(Sys)$(Dev)I:2-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)I:2-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)I:2-Calcout_.OUT","$(Sys)$(Dev)I:2-I.VAL")
+#! Record("$(Sys)$(Dev)I:3-Calcout_",2240,712,0,0,"$(Sys)$(Dev)I:3-Calcout_")
+#! Field("$(Sys)$(Dev)I:3-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)I:3-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)I:3-Calcout_.INPA","$(Sys)$(Dev)I:R3-I.VAL")
+#! Field("$(Sys)$(Dev)I:3-Calcout_.INPB",16777215,1,"$(Sys)$(Dev)I:3-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)I:3-Calcout_.INPB","$(Sys)$(Dev)Val:Cal-I.VAL")
+#! Field("$(Sys)$(Dev)I:3-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)I:3-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)I:3-Calcout_.OUT","$(Sys)$(Dev)I:3-I.VAL")
+#! Record("$(Sys)$(Dev)I:4-Calcout_",2820,672,0,0,"$(Sys)$(Dev)I:4-Calcout_")
+#! Field("$(Sys)$(Dev)I:4-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)I:4-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)I:4-Calcout_.INPA","$(Sys)$(Dev)I:R4-I.VAL")
+#! Field("$(Sys)$(Dev)I:4-Calcout_.INPB",16777215,0,"$(Sys)$(Dev)I:4-Calcout_.INPB")
+#! Link("$(Sys)$(Dev)I:4-Calcout_.INPB","$(Sys)$(Dev)Val:Cal-I.VAL")
+#! Field("$(Sys)$(Dev)I:4-Calcout_.OUT",16777215,1,"$(Sys)$(Dev)I:4-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)I:4-Calcout_.OUT","$(Sys)$(Dev)I:4-I.VAL")
+#! Record("$(Sys)$(Dev)I:2-I",1960,929,0,0,"$(Sys)$(Dev)I:2-I")
+#! Field("$(Sys)$(Dev)I:2-I.VAL",16777215,0,"$(Sys)$(Dev)I:2-I.VAL")
+#! Record("$(Sys)$(Dev)I:3-I",2220,929,0,0,"$(Sys)$(Dev)I:3-I")
+#! Field("$(Sys)$(Dev)I:3-I.VAL",16777215,0,"$(Sys)$(Dev)I:3-I.VAL")
+#! Record("$(Sys)$(Dev)I:4-I",2840,869,0,0,"$(Sys)$(Dev)I:4-I")
+#! Field("$(Sys)$(Dev)I:4-I.VAL",16777215,1,"$(Sys)$(Dev)I:4-I.VAL")
+#! Record("$(Sys)$(Dev)Cmd:GetCS2-Cmd",3880,735,0,0,"$(Sys)$(Dev)Cmd:GetCS2-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:GetCS2-Cmd.FLNK",16777215,1,"$(Sys)$(Dev)Cmd:GetCS2-Cmd.FLNK")
+#! Link("$(Sys)$(Dev)Cmd:GetCS2-Cmd.FLNK","$(Sys)$(Dev)DB:Fan3-FOut_")
+#! Field("$(Sys)$(Dev)Cmd:GetCS2-Cmd.DISA",16777215,0,"$(Sys)$(Dev)Cmd:GetCS2-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Enbl:ICUpdate-Cmd",3920,558,0,0,"$(Sys)$(Dev)Enbl:ICUpdate-Cmd")
+#! Field("$(Sys)$(Dev)Enbl:ICUpdate-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Enbl:ICUpdate-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Enbl:ICUpdate-Cmd.OUT","$(Sys)$(Dev)Cmd:GetCS2-Cmd.DISA")
+#! Record("$(Sys)$(Dev)DB:Fan3-FOut_",4140,780,0,0,"$(Sys)$(Dev)DB:Fan3-FOut_")
+#! Field("$(Sys)$(Dev)DB:Fan3-FOut_.LNK1",16777215,0,"$(Sys)$(Dev)DB:Fan3-FOut_.LNK1")
+#! Link("$(Sys)$(Dev)DB:Fan3-FOut_.LNK1","$(Sys)$(Dev)I:R1-I")
+#! Field("$(Sys)$(Dev)DB:Fan3-FOut_.LNK2",16777215,1,"$(Sys)$(Dev)DB:Fan3-FOut_.LNK2")
+#! Link("$(Sys)$(Dev)DB:Fan3-FOut_.LNK2","$(Sys)$(Dev)DB:IncrX2-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Fan3-FOut_.LNK3",16777215,0,"$(Sys)$(Dev)DB:Fan3-FOut_.LNK3")
+#! Link("$(Sys)$(Dev)DB:Fan3-FOut_.LNK3","$(Sys)$(Dev)Cmd:Osc2-Cmd")
+#! Record("$(Sys)$(Dev)DB:IncrX2-Calcout_",4400,846,0,0,"$(Sys)$(Dev)DB:IncrX2-Calcout_")
+#! Field("$(Sys)$(Dev)DB:IncrX2-Calcout_.OUT",16777215,1,"$(Sys)$(Dev)DB:IncrX2-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:IncrX2-Calcout_.OUT","$(Sys)$(Dev)Val:XAxis2-SP.VAL")
+#! Field("$(Sys)$(Dev)DB:IncrX2-Calcout_.A",16777215,0,"$(Sys)$(Dev)DB:IncrX2-Calcout_.A")
+#! Field("$(Sys)$(Dev)DB:IncrX2-Calcout_.B",16777215,1,"$(Sys)$(Dev)DB:IncrX2-Calcout_.B")
+#! Record("$(Sys)$(Dev)Val:XAxis2-SP",4640,832,0,0,"$(Sys)$(Dev)Val:XAxis2-SP")
+#! Field("$(Sys)$(Dev)Val:XAxis2-SP.VAL",16777215,1,"$(Sys)$(Dev)Val:XAxis2-SP.VAL")
+#! Field("$(Sys)$(Dev)Val:XAxis2-SP.OUT",16777215,0,"$(Sys)$(Dev)Val:XAxis2-SP.OUT")
+#! Link("$(Sys)$(Dev)Val:XAxis2-SP.OUT","$(Sys)$(Dev)DB:IncrX2-Calcout_.A")
+#! Record("$(Sys)$(Dev)Rst:Plot2-Cmd",4360,1055,0,0,"$(Sys)$(Dev)Rst:Plot2-Cmd")
+#! Field("$(Sys)$(Dev)Rst:Plot2-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Rst:Plot2-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Rst:Plot2-Cmd.OUT","$(Sys)$(Dev)DB:IncrX2-Calcout_.B")
+#! Record("$(Sys)$(Dev)Trig:2-Cmd",4100,1155,0,0,"$(Sys)$(Dev)Trig:2-Cmd")
+#! Field("$(Sys)$(Dev)Trig:2-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Trig:2-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Trig:2-Cmd.OUT","$(Sys)$(Dev)Cmd:Osc2-Cmd.A")
+#! Field("$(Sys)$(Dev)Trig:2-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Trig:2-Cmd.VAL")
+#! Record("$(Sys)$(Dev)Cmd:Osc2-Cmd",4080,972,0,0,"$(Sys)$(Dev)Cmd:Osc2-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Osc2-Cmd.A",16777215,0,"$(Sys)$(Dev)Cmd:Osc2-Cmd.A")
+#! Field("$(Sys)$(Dev)Cmd:Osc2-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Cmd:Osc2-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Cmd:Osc2-Cmd.OUT","$(Sys)$(Dev)Trig:2-Cmd.VAL")
+#! Record("$(Sys)$(Dev)E:HV1-SP",2860,1855,0,0,"$(Sys)$(Dev)E:HV1-SP")
+#! Field("$(Sys)$(Dev)E:HV1-SP.FLNK",16777215,0,"$(Sys)$(Dev)E:HV1-SP.FLNK")
+#! Link("$(Sys)$(Dev)E:HV1-SP.FLNK","$(Sys)$(Dev)DB:HV1-Seq_")
+#! Field("$(Sys)$(Dev)E:HV1-SP.OUT",16777215,0,"$(Sys)$(Dev)E:HV1-SP.OUT")
+#! Link("$(Sys)$(Dev)E:HV1-SP.OUT","$(Sys)$(Dev)E:HV2-SP.VAL")
+#! Record("$(Sys)$(Dev)E:HV2-SP",2860,1995,0,0,"$(Sys)$(Dev)E:HV2-SP")
+#! Field("$(Sys)$(Dev)E:HV2-SP.VAL",16777215,0,"$(Sys)$(Dev)E:HV2-SP.VAL")
+#! Field("$(Sys)$(Dev)E:HV2-SP.PROC",16777215,1,"$(Sys)$(Dev)E:HV2-SP.PROC")
+#! Record("$(Sys)$(Dev)E:HVIn-I",3620,1980,0,0,"$(Sys)$(Dev)E:HVIn-I")
+#! Field("$(Sys)$(Dev)E:HVIn-I.PROC",16777215,0,"$(Sys)$(Dev)E:HVIn-I.PROC")
+#! Record("$(Sys)$(Dev)E:HVMax1-SP",320,2575,0,0,"$(Sys)$(Dev)E:HVMax1-SP")
+#! Field("$(Sys)$(Dev)E:HVMax1-SP.FLNK",16777215,0,"$(Sys)$(Dev)E:HVMax1-SP.FLNK")
+#! Link("$(Sys)$(Dev)E:HVMax1-SP.FLNK","$(Sys)$(Dev)E:HVMax-Seq")
+#! Field("$(Sys)$(Dev)E:HVMax1-SP.OUT",16777215,1,"$(Sys)$(Dev)E:HVMax1-SP.OUT")
+#! Link("$(Sys)$(Dev)E:HVMax1-SP.OUT","$(Sys)$(Dev)E:HVMax2-SP.VAL")
+#! Record("$(Sys)$(Dev)E:HVMax-Seq",100,2712,0,0,"$(Sys)$(Dev)E:HVMax-Seq")
+#! Field("$(Sys)$(Dev)E:HVMax-Seq.LNK1",16777215,1,"$(Sys)$(Dev)E:HVMax-Seq.LNK1")
+#! Link("$(Sys)$(Dev)E:HVMax-Seq.LNK1","$(Sys)$(Dev)E:HVMax2-SP.PROC")
+#! Field("$(Sys)$(Dev)E:HVMax-Seq.LNK2",16777215,0,"$(Sys)$(Dev)E:HVMax-Seq.LNK2")
+#! Link("$(Sys)$(Dev)E:HVMax-Seq.LNK2","$(Sys)$(Dev)E:HVMax-I.PROC")
+#! Record("$(Sys)$(Dev)E:HVMax2-SP",340,2715,0,0,"$(Sys)$(Dev)E:HVMax2-SP")
+#! Field("$(Sys)$(Dev)E:HVMax2-SP.VAL",16777215,1,"$(Sys)$(Dev)E:HVMax2-SP.VAL")
+#! Field("$(Sys)$(Dev)E:HVMax2-SP.PROC",16777215,1,"$(Sys)$(Dev)E:HVMax2-SP.PROC")
+#! Record("$(Sys)$(Dev)E:HVMax-I",100,2940,0,0,"$(Sys)$(Dev)E:HVMax-I")
+#! Field("$(Sys)$(Dev)E:HVMax-I.PROC",16777215,0,"$(Sys)$(Dev)E:HVMax-I.PROC")
+#! Record("$(Sys)$(Dev)Cmd:HV-Cmd",4080,1732,0,0,"$(Sys)$(Dev)Cmd:HV-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:HV-Cmd.VAL",16777215,1,"$(Sys)$(Dev)Cmd:HV-Cmd.VAL")
+#! Record("$(Sys)$(Dev)DB:HV1-Seq_",2840,2158,0,0,"$(Sys)$(Dev)DB:HV1-Seq_")
+#! Field("$(Sys)$(Dev)DB:HV1-Seq_.LNK2",16777215,1,"$(Sys)$(Dev)DB:HV1-Seq_.LNK2")
+#! Link("$(Sys)$(Dev)DB:HV1-Seq_.LNK2","$(Sys)$(Dev)Enbl:HVChk-Cmd.PROC")
+#! Field("$(Sys)$(Dev)DB:HV1-Seq_.LNK1",16777215,1,"$(Sys)$(Dev)DB:HV1-Seq_.LNK1")
+#! Link("$(Sys)$(Dev)DB:HV1-Seq_.LNK1","$(Sys)$(Dev)Dsbl:Err-Cmd.PROC")
+#! Field("$(Sys)$(Dev)DB:HV1-Seq_.LNK3",16777215,1,"$(Sys)$(Dev)DB:HV1-Seq_.LNK3")
+#! Link("$(Sys)$(Dev)DB:HV1-Seq_.LNK3","$(Sys)$(Dev)E:HV2-SP.PROC")
+#! Field("$(Sys)$(Dev)DB:HV1-Seq_.LNK4",16777215,0,"$(Sys)$(Dev)DB:HV1-Seq_.LNK4")
+#! Link("$(Sys)$(Dev)DB:HV1-Seq_.LNK4","$(Sys)$(Dev)Err-I.PROC")
+#! Record("$(Sys)$(Dev)Cmd:Clr-Cmd",3640,1600,0,0,"$(Sys)$(Dev)Cmd:Clr-Cmd")
+#! Field("$(Sys)$(Dev)Cmd:Clr-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Cmd:Clr-Cmd.PROC")
+#! Record("$(Sys)$(Dev)DB:Fan3-DFOut_",4400,1660,0,0,"$(Sys)$(Dev)DB:Fan3-DFOut_")
+#! Field("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA",16777215,0,"$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA")
+#! Link("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA","$(Sys)$(Dev)Sts:HVChk-Sts.DISA")
+#! Field("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTB",16777215,0,"$(Sys)$(Dev)DB:Fan3-DFOut_.OUTB")
+#! Link("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTB","$(Sys)$(Dev)Cmd:HV-Cmd.VAL")
+#! Field("$(Sys)$(Dev)DB:Fan3-DFOut_.VAL",16777215,0,"$(Sys)$(Dev)DB:Fan3-DFOut_.VAL")
+#! Record("$(Sys)$(Dev)Dsbl:Err-Cmd",2880,1655,0,0,"$(Sys)$(Dev)Dsbl:Err-Cmd")
+#! Field("$(Sys)$(Dev)Dsbl:Err-Cmd.PROC",16777215,1,"$(Sys)$(Dev)Dsbl:Err-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Dsbl:Err-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Dsbl:Err-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Dsbl:Err-Cmd.OUT","$(Sys)$(Dev)Err:Scan-Cmd.DISA")
+#! Record("$(Sys)$(Dev)Enbl:Err1-Cmd",3620,1455,0,0,"$(Sys)$(Dev)Enbl:Err1-Cmd")
+#! Field("$(Sys)$(Dev)Enbl:Err1-Cmd.OUT",16777215,0,"$(Sys)$(Dev)Enbl:Err1-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Enbl:Err1-Cmd.OUT","$(Sys)$(Dev)Err:Scan-Cmd.DISA")
+#! Field("$(Sys)$(Dev)Enbl:Err1-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Enbl:Err1-Cmd.PROC")
+#! Record("$(Sys)$(Dev)DB:HV2-Seq_",3660,1746,0,0,"$(Sys)$(Dev)DB:HV2-Seq_")
+#! Field("$(Sys)$(Dev)DB:HV2-Seq_.LNK1",16777215,1,"$(Sys)$(Dev)DB:HV2-Seq_.LNK1")
+#! Link("$(Sys)$(Dev)DB:HV2-Seq_.LNK1","$(Sys)$(Dev)Dsbl:HVChk-Cmd.PROC")
+#! Field("$(Sys)$(Dev)DB:HV2-Seq_.LNK2",16777215,0,"$(Sys)$(Dev)DB:HV2-Seq_.LNK2")
+#! Link("$(Sys)$(Dev)DB:HV2-Seq_.LNK2","$(Sys)$(Dev)Cmd:Clr-Cmd.PROC")
+#! Field("$(Sys)$(Dev)DB:HV2-Seq_.LNK3",16777215,0,"$(Sys)$(Dev)DB:HV2-Seq_.LNK3")
+#! Link("$(Sys)$(Dev)DB:HV2-Seq_.LNK3","$(Sys)$(Dev)Enbl:Err1-Cmd.PROC")
+#! Field("$(Sys)$(Dev)DB:HV2-Seq_.LNK4",16777215,0,"$(Sys)$(Dev)DB:HV2-Seq_.LNK4")
+#! Link("$(Sys)$(Dev)DB:HV2-Seq_.LNK4","$(Sys)$(Dev)E:HVIn-I.PROC")
+#! Field("$(Sys)$(Dev)DB:HV2-Seq_.PROC",16777215,1,"$(Sys)$(Dev)DB:HV2-Seq_.PROC")
+#! Record("$(Sys)$(Dev)DB:HVWait-Calcout_",4100,1532,0,0,"$(Sys)$(Dev)DB:HVWait-Calcout_")
+#! Field("$(Sys)$(Dev)DB:HVWait-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)DB:HVWait-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:HVWait-Calcout_.INPA","$(Sys)$(Dev)Sts:HVChk-Sts.VAL")
+#! Field("$(Sys)$(Dev)DB:HVWait-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:HVWait-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:HVWait-Calcout_.OUT","$(Sys)$(Dev)DB:HV2-Seq_.PROC")
+#! Record("$(Sys)$(Dev)Sts:HVChk-Sts",4100,1318,0,0,"$(Sys)$(Dev)Sts:HVChk-Sts")
+#! Field("$(Sys)$(Dev)Sts:HVChk-Sts.DISA",16777215,1,"$(Sys)$(Dev)Sts:HVChk-Sts.DISA")
+#! Field("$(Sys)$(Dev)Sts:HVChk-Sts.VAL",16777215,0,"$(Sys)$(Dev)Sts:HVChk-Sts.VAL")
+#! Field("$(Sys)$(Dev)Sts:HVChk-Sts.FLNK",16777215,0,"$(Sys)$(Dev)Sts:HVChk-Sts.FLNK")
+#! Link("$(Sys)$(Dev)Sts:HVChk-Sts.FLNK","$(Sys)$(Dev)DB:HVWait-Calcout_")
+#! Record("$(Sys)$(Dev)Dsbl:HVChk-Cmd",4080,1906,0,0,"$(Sys)$(Dev)Dsbl:HVChk-Cmd")
+#! Field("$(Sys)$(Dev)Dsbl:HVChk-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Dsbl:HVChk-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Dsbl:HVChk-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Dsbl:HVChk-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Dsbl:HVChk-Cmd.OUT","$(Sys)$(Dev)DB:Fan3-DFOut_.VAL")
+#! Record("$(Sys)$(Dev)Enbl:HVChk-Cmd",3180,2215,0,0,"$(Sys)$(Dev)Enbl:HVChk-Cmd")
+#! Field("$(Sys)$(Dev)Enbl:HVChk-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Enbl:HVChk-Cmd.PROC")
+#! Field("$(Sys)$(Dev)Enbl:HVChk-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Enbl:HVChk-Cmd.OUT")
+#! Link("$(Sys)$(Dev)Enbl:HVChk-Cmd.OUT","$(Sys)$(Dev)DB:Fan3-DFOut_.VAL")
+#! Record("$(Sys)$(Dev)Time:Intg-SP",300,123,0,0,"$(Sys)$(Dev)Time:Intg-SP")
+#! Field("$(Sys)$(Dev)Time:Intg-SP.FLNK",16777215,1,"$(Sys)$(Dev)Time:Intg-SP.FLNK")
+#! Link("$(Sys)$(Dev)Time:Intg-SP.FLNK","$(Sys)$(Dev)Time:Intg-RB")
+#! Record("$(Sys)$(Dev)Time:Intg-RB",660,103,0,0,"$(Sys)$(Dev)Time:Intg-RB")
+#! Record("$(Sys)$(Dev)Freq:Suppress-SP",1180,1312,0,0,"$(Sys)$(Dev)Freq:Suppress-SP")
+#! Field("$(Sys)$(Dev)Freq:Suppress-SP.FLNK",16777215,1,"$(Sys)$(Dev)Freq:Suppress-SP.FLNK")
+#! Link("$(Sys)$(Dev)Freq:Suppress-SP.FLNK","$(Sys)$(Dev)Freq:Suppress-RB")
+#! Record("$(Sys)$(Dev)Freq:Suppress-RB",1200,1472,0,1,"$(Sys)$(Dev)Freq:Suppress-RB")
+#! Field("$(Sys)$(Dev)Freq:Suppress-RB.VAL",16777215,0,"$(Sys)$(Dev)Freq:Suppress-RB.VAL")
+#! Record("$(Sys)$(Dev)ID-I",1240,1638,0,0,"$(Sys)$(Dev)ID-I")
+#! Field("$(Sys)$(Dev)ID-I.VAL",16777215,0,"$(Sys)$(Dev)ID-I.VAL")
+#! Record("$(Sys)$(Dev)Res-SP",1300,523,0,0,"$(Sys)$(Dev)Res-SP")
+#! Field("$(Sys)$(Dev)Res-SP.FLNK",16777215,0,"$(Sys)$(Dev)Res-SP.FLNK")
+#! Link("$(Sys)$(Dev)Res-SP.FLNK","$(Sys)$(Dev)Res-RB")
+#! Record("$(Sys)$(Dev)Res-RB",1300,363,0,0,"$(Sys)$(Dev)Res-RB")
+#! Record("$(Sys)$(Dev)Val:Pwd-I",4520,2795,0,0,"$(Sys)$(Dev)Val:Pwd-I")
+#! Record("$(Sys)$(Dev)Val:Pwd-SP",1600,1972,0,0,"$(Sys)$(Dev)Val:Pwd-SP")
+#! Field("$(Sys)$(Dev)Val:Pwd-SP.PROC",16777215,1,"$(Sys)$(Dev)Val:Pwd-SP.PROC")
+#! Record("$(Sys)$(Dev)DB:OF-I_",2700,3243,0,0,"$(Sys)$(Dev)DB:OF-I_")
+#! Field("$(Sys)$(Dev)DB:OF-I_.VAL",16777215,1,"$(Sys)$(Dev)DB:OF-I_.VAL")
+#! Record("$(Sys)$(Dev)DB:Ovrflw1-Calcout_",2980,3186,0,0,"$(Sys)$(Dev)DB:Ovrflw1-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Ovrflw1-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)DB:Ovrflw1-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:Ovrflw1-Calcout_.INPA","$(Sys)$(Dev)DB:OF-I_.VAL")
+#! Field("$(Sys)$(Dev)DB:Ovrflw1-Calcout_.OUT",16777215,1,"$(Sys)$(Dev)DB:Ovrflw1-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Ovrflw1-Calcout_.OUT","$(Sys)$(Dev)Sts:Ovrflw1-Sts.VAL")
+#! Record("$(Sys)$(Dev)DB:Ovrflw2-Calcout_",2980,3366,0,0,"$(Sys)$(Dev)DB:Ovrflw2-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Ovrflw2-Calcout_.INPA",16777215,0,"$(Sys)$(Dev)DB:Ovrflw2-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:Ovrflw2-Calcout_.INPA","$(Sys)$(Dev)DB:OF-I_.VAL")
+#! Field("$(Sys)$(Dev)DB:Ovrflw2-Calcout_.OUT",16777215,1,"$(Sys)$(Dev)DB:Ovrflw2-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Ovrflw2-Calcout_.OUT","$(Sys)$(Dev)Sts:Ovrflw2-Sts.VAL")
+#! Record("$(Sys)$(Dev)DB:Ovrflw3-Calcout_",2420,3186,0,0,"$(Sys)$(Dev)DB:Ovrflw3-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Ovrflw3-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)DB:Ovrflw3-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:Ovrflw3-Calcout_.INPA","$(Sys)$(Dev)DB:OF-I_.VAL")
+#! Field("$(Sys)$(Dev)DB:Ovrflw3-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:Ovrflw3-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Ovrflw3-Calcout_.OUT","$(Sys)$(Dev)Sts:Ovrflw3-Sts.VAL")
+#! Record("$(Sys)$(Dev)DB:Ovrflw4-Calcout_",2420,3366,0,0,"$(Sys)$(Dev)DB:Ovrflw4-Calcout_")
+#! Field("$(Sys)$(Dev)DB:Ovrflw4-Calcout_.INPA",16777215,1,"$(Sys)$(Dev)DB:Ovrflw4-Calcout_.INPA")
+#! Link("$(Sys)$(Dev)DB:Ovrflw4-Calcout_.INPA","$(Sys)$(Dev)DB:OF-I_.VAL")
+#! Field("$(Sys)$(Dev)DB:Ovrflw4-Calcout_.OUT",16777215,0,"$(Sys)$(Dev)DB:Ovrflw4-Calcout_.OUT")
+#! Link("$(Sys)$(Dev)DB:Ovrflw4-Calcout_.OUT","$(Sys)$(Dev)Sts:Ovrflw4-Sts.VAL")
+#! Record("$(Sys)$(Dev)Sts:Ovrflw1-Sts",3240,3206,0,0,"$(Sys)$(Dev)Sts:Ovrflw1-Sts")
+#! Field("$(Sys)$(Dev)Sts:Ovrflw1-Sts.VAL",16777215,1,"$(Sys)$(Dev)Sts:Ovrflw1-Sts.VAL")
+#! Record("$(Sys)$(Dev)Sts:Ovrflw2-Sts",3240,3386,0,0,"$(Sys)$(Dev)Sts:Ovrflw2-Sts")
+#! Field("$(Sys)$(Dev)Sts:Ovrflw2-Sts.VAL",16777215,1,"$(Sys)$(Dev)Sts:Ovrflw2-Sts.VAL")
+#! Record("$(Sys)$(Dev)Sts:Ovrflw3-Sts",2160,3206,0,0,"$(Sys)$(Dev)Sts:Ovrflw3-Sts")
+#! Field("$(Sys)$(Dev)Sts:Ovrflw3-Sts.VAL",16777215,0,"$(Sys)$(Dev)Sts:Ovrflw3-Sts.VAL")
+#! Record("$(Sys)$(Dev)Sts:Ovrflw4-Sts",2160,3386,0,0,"$(Sys)$(Dev)Sts:Ovrflw4-Sts")
+#! Field("$(Sys)$(Dev)Sts:Ovrflw4-Sts.VAL",16777215,0,"$(Sys)$(Dev)Sts:Ovrflw4-Sts.VAL")
