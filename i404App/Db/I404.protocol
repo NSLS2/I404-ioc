@@ -17,7 +17,10 @@
 # FPGA code: 4.1R
 # Application code: 14.0.22
 # Device: I404Rev2, SN:1251, 1248
-# The device sends "OK", but does not send "ACK" anymore.
+# The device sends "OK" for SYST:COMM:TERM 1, or sends "ACK" ('\6') for SYST:COMM:TERM 1.
+# The "ACK" communication seems more reliable
+# Significant inconsistencies in the termination string.
+# Several responses end in '\6', and have no \r\n.
 
 
 InTerminator = CR LF;
