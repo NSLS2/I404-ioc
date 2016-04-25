@@ -94,7 +94,8 @@ getCs { replytimeout = 4000; readtimeout  = 65001; locktimeout = 65001; out "FET
 # Query the beam position
 #
 #getPos {out "READ:POS?"; in "READ:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
-getPos {out "READ:POS?"; in "READ:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
+#getPos {out "READ:POS?"; in "READ:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
+getPos {out "FETC:POS?"; in "FETC:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
 #
 # Set/Query Current Compensation Factors
 #
