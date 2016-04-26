@@ -48,8 +48,8 @@ init {out "INIT"; in "INIT\10"; InTerminator = '\6';}
 #
 # I404 Calibration
 #
-# Initiate calibration
-doCalib {out "CALIB:GAI"; in "CALIB:GAI\10"; InTerminator = '\6';}
+# Initiate calibration: CALIB:GAI 0/1 {0=internal calibration, 1=set gains to 1}
+doCalib {out "CALIB:GAI {0|1}"; in "CALIB:GAI {0|1}\10"; InTerminator = '\6';}
 # Save calibration
 saveCalib {out "CALIB:SAV"; in "CALIB:SAV\10"; InTerminator = '\6';}
 # Recall calibration (needed after reset)
@@ -97,11 +97,12 @@ getCs { replytimeout = 4000; readtimeout  = 65001; locktimeout = 65001; out "FET
 #getPos {out "READ:POS?"; in "READ:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
 getPos {out "FETC:POS?"; in "FETC:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
 #
-# Set/Query Current Compensation Factors
+# Set/Query Current Compensation Factors; CALIB:GAI 0/1 {0=internal calibration, 1=set gains to 1}
 #
 #setKs {out "CALIB:GAIN %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:COMP %*f %*f %*f %*f\10\06";}
 #getKs {out "CALIB:GAIN?"; in "CALIB:GAIN?\10\06%*d,%e,%(\$1\$2.VAL)e,%(\$1\$3.VAL)e,%(\$1\$4.VAL)e"; InTerminator = CR LF; extraInput=Ignore;}
-setKs {out "CALIB:GAI %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:GAI %*f %*f %*f %*f\10"; InTerminator = '\6'; }
+#setKs {out "CALIB:GAI %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:GAI %*f %*f %*f %*f\10"; InTerminator = '\6'; }
+setKs {out "CALIB:GAI {0|1}"; in "CALIB:GAI {0|1}\10"; InTerminator = '\6';}
 getKs {out "CALIB:GAI?"; in "CALIB:GAI?\10\06%*d,%e,%(\$1\$2.VAL)e,%(\$1\$3.VAL)e,%(\$1\$4.VAL)e"; InTerminator = CR LF; extraInput=Ignore;}
 #
 # Set/Query current Range
