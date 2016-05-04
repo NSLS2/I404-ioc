@@ -1093,7 +1093,7 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 }
 
 #! Further lines contain data used by VisualDCT
-#! View(1515,2187,0.9)
+#! View(938,1419,0.9)
 #! Record("$(Sys)$(Dev)Val:Cap-SP",1700,2119,0,0,"$(Sys)$(Dev)Val:Cap-SP")
 #! Field("$(Sys)$(Dev)Val:Cap-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:Cap-SP.FLNK")
 #! Link("$(Sys)$(Dev)Val:Cap-SP.FLNK","$(Sys)$(Dev)Val:Cap-Seq")
@@ -1380,7 +1380,7 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 #! Field("$(Sys)$(Dev)E:HV-Sts.PROC",16777215,0,"$(Sys)$(Dev)E:HV-Sts.PROC")
 #! Record("$(Sys)$(Dev)Err:HV-Sts",2600,3067,0,0,"$(Sys)$(Dev)Err:HV-Sts")
 #! Field("$(Sys)$(Dev)Err:HV-Sts.PROC",16777215,0,"$(Sys)$(Dev)Err:HV-Sts.PROC")
-#! Record("$(Sys)$(Dev)Out:1-Cmd",2280,2727,0,0,"$(Sys)$(Dev)Out:1-Cmd")
+#! Record("$(Sys)$(Dev)Out:1-Cmd",2260,2727,0,0,"$(Sys)$(Dev)Out:1-Cmd")
 #! Field("$(Sys)$(Dev)Out:1-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Out:1-Cmd.PROC")
 #! Field("$(Sys)$(Dev)Out:1-Cmd.OUT",16777215,1,"$(Sys)$(Dev)Out:1-Cmd.OUT")
 #! Link("$(Sys)$(Dev)Out:1-Cmd.OUT","$(Sys)$(Dev)Err:Scan-Cmd.DISA")
