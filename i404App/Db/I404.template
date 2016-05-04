@@ -903,7 +903,7 @@ record(bi, "$(Sys)$(Dev)Sts:HVChk-Sts") {
   field(SCAN, "1 second")
   field(DTYP, "stream")
   field(FLNK, "$(Sys)$(Dev)DB:HVWait-Calcout_")
-  field(INP, "@I404.protocol checkHVR() $(PORT) 0")
+  field(INP, "@I404.protocol checkHV() $(PORT) 0")
   field(ZNAM, "SETTING HIVO")
   field(ONAM, "HIVO IDLE")
 }
@@ -1093,7 +1093,7 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 }
 
 #! Further lines contain data used by VisualDCT
-#! View(0,0,0.9)
+#! View(1515,2187,0.9)
 #! Record("$(Sys)$(Dev)Val:Cap-SP",1700,2119,0,0,"$(Sys)$(Dev)Val:Cap-SP")
 #! Field("$(Sys)$(Dev)Val:Cap-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:Cap-SP.FLNK")
 #! Link("$(Sys)$(Dev)Val:Cap-SP.FLNK","$(Sys)$(Dev)Val:Cap-Seq")

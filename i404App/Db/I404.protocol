@@ -86,11 +86,9 @@ getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10\6%d"; InTerminator = CR LF; 
 #
 setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10\06"; InTerminator = CR LF; }
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
-#getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10\06%d"; InTerminator = CR LF;}
-getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10\06%d"; InTerminator = CR LF;}
-#getHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?%*1c%d";}
+getHV {out "FETC:HIVO?"; in "FETC:HIVO?\10\06%d V"; InTerminator = CR LF;}
 checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10\06%d"; @init { getHV; }; InTerminator = CR LF;}
-checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}%d"; InTerminator = CR LF;}
+#checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}%d"; InTerminator = CR LF;}
 #
 # Query the last measured current data in amps. Sample currents and overflow 
 # bits, ignore the timestamp.
