@@ -821,22 +821,24 @@ record(ai, "$(Sys)$(Dev)E:HVIn-I") {
   field(INP, "@I404.protocol getHV() $(PORT) 0")
 }
 
-record(ao, "$(Sys)$(Dev)E:HVMax1-SP") {
-  field(FLNK, "$(Sys)$(Dev)E:HVMax-Seq")
-  field(OUT, "$(Sys)$(Dev)E:HVMax2-SP.VAL")
-}
-
+#record(ao, "$(Sys)$(Dev)E:HVMax1-SP") {
+#  field(FLNK, "$(Sys)$(Dev)E:HVMax-Seq")
+#  field(OUT, "$(Sys)$(Dev)E:HVMax2-SP.VAL PP NMS")
+#  field(FLNK, "$(Sys)$(Dev)E:HVMax2-SP")
+#}
 record(seq, "$(Sys)$(Dev)E:HVMax-Seq") {
   field(DESC, "NEED TO WAIT FOR HIVO")
   field(SCAN, "Passive")
-  field(LNK1, "$(Sys)$(Dev)E:HVMax2-SP.PROC")
-  field(LNK2, "$(Sys)$(Dev)E:HVMax-I.PROC")
-  field(DLY2, "2")
+#  field(LNK2, "$(Sys)$(Dev)E:HVMax2-SP.PROC")
+  field(LNK1, "$(Sys)$(Dev)E:HVMax-I.PROC")
+  field(DLY1, "2")
 }
 
-record(ao, "$(Sys)$(Dev)E:HVMax2-SP") {
+record(ao, "$(Sys)$(Dev)E:HVMax-SP") {
+  field(SCAN, "Passive")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol setHVM() $(PORT) 0")
+  field(FLNK, "$(Sys)$(Dev)E:HVMax-Seq")
 }
 
 record(ai, "$(Sys)$(Dev)E:HVMax-I") {
@@ -866,6 +868,12 @@ record(bo, "$(Sys)$(Dev)Cmd:Clr-Cmd") {
   field(DESC, "CLEAR REGISTERS AND MESSAGES")
   field(DTYP, "stream")
   field(OUT, "@I404.protocol clear() $(PORT) 0")
+}
+
+record(bo, "$(Sys)$(Dev)Cmd:Rst-Cmd") {
+  field(DESC, "CLEAR REGISTERS AND MESSAGES")
+  field(DTYP, "stream")
+  field(OUT, "@I404.protocol reset() $(PORT) 0")
 }
 
 record(dfanout, "$(Sys)$(Dev)DB:Fan3-DFOut_") {
@@ -1093,7 +1101,7 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 }
 
 #! Further lines contain data used by VisualDCT
-#! View(938,1419,0.9)
+#! View(0,0,0.9)
 #! Record("$(Sys)$(Dev)Val:Cap-SP",1700,2119,0,0,"$(Sys)$(Dev)Val:Cap-SP")
 #! Field("$(Sys)$(Dev)Val:Cap-SP.FLNK",16777215,0,"$(Sys)$(Dev)Val:Cap-SP.FLNK")
 #! Link("$(Sys)$(Dev)Val:Cap-SP.FLNK","$(Sys)$(Dev)Val:Cap-Seq")
@@ -1462,20 +1470,13 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 #! Field("$(Sys)$(Dev)E:HV2-SP.PROC",16777215,1,"$(Sys)$(Dev)E:HV2-SP.PROC")
 #! Record("$(Sys)$(Dev)E:HVIn-I",3120,3302,0,0,"$(Sys)$(Dev)E:HVIn-I")
 #! Field("$(Sys)$(Dev)E:HVIn-I.PROC",16777215,0,"$(Sys)$(Dev)E:HVIn-I.PROC")
-#! Record("$(Sys)$(Dev)E:HVMax1-SP",160,76,0,0,"$(Sys)$(Dev)E:HVMax1-SP")
-#! Field("$(Sys)$(Dev)E:HVMax1-SP.FLNK",16777215,0,"$(Sys)$(Dev)E:HVMax1-SP.FLNK")
-#! Link("$(Sys)$(Dev)E:HVMax1-SP.FLNK","$(Sys)$(Dev)E:HVMax-Seq")
-#! Field("$(Sys)$(Dev)E:HVMax1-SP.OUT",16777215,1,"$(Sys)$(Dev)E:HVMax1-SP.OUT")
-#! Link("$(Sys)$(Dev)E:HVMax1-SP.OUT","$(Sys)$(Dev)E:HVMax2-SP.VAL")
-#! Record("$(Sys)$(Dev)E:HVMax-Seq",120,414,0,0,"$(Sys)$(Dev)E:HVMax-Seq")
-#! Field("$(Sys)$(Dev)E:HVMax-Seq.LNK1",16777215,1,"$(Sys)$(Dev)E:HVMax-Seq.LNK1")
-#! Link("$(Sys)$(Dev)E:HVMax-Seq.LNK1","$(Sys)$(Dev)E:HVMax2-SP.PROC")
-#! Field("$(Sys)$(Dev)E:HVMax-Seq.LNK2",16777215,0,"$(Sys)$(Dev)E:HVMax-Seq.LNK2")
-#! Link("$(Sys)$(Dev)E:HVMax-Seq.LNK2","$(Sys)$(Dev)E:HVMax-I.PROC")
-#! Record("$(Sys)$(Dev)E:HVMax2-SP",180,216,0,0,"$(Sys)$(Dev)E:HVMax2-SP")
-#! Field("$(Sys)$(Dev)E:HVMax2-SP.VAL",16777215,1,"$(Sys)$(Dev)E:HVMax2-SP.VAL")
-#! Field("$(Sys)$(Dev)E:HVMax2-SP.PROC",16777215,1,"$(Sys)$(Dev)E:HVMax2-SP.PROC")
-#! Record("$(Sys)$(Dev)E:HVMax-I",100,602,0,0,"$(Sys)$(Dev)E:HVMax-I")
+#! Record("$(Sys)$(Dev)E:HVMax-Seq",160,327,0,1,"$(Sys)$(Dev)E:HVMax-Seq")
+#! Field("$(Sys)$(Dev)E:HVMax-Seq.LNK1",16777215,0,"$(Sys)$(Dev)E:HVMax-Seq.LNK1")
+#! Link("$(Sys)$(Dev)E:HVMax-Seq.LNK1","$(Sys)$(Dev)E:HVMax-I.PROC")
+#! Record("$(Sys)$(Dev)E:HVMax-SP",140,167,0,0,"$(Sys)$(Dev)E:HVMax-SP")
+#! Field("$(Sys)$(Dev)E:HVMax-SP.FLNK",16777215,1,"$(Sys)$(Dev)E:HVMax-SP.FLNK")
+#! Link("$(Sys)$(Dev)E:HVMax-SP.FLNK","$(Sys)$(Dev)E:HVMax-Seq")
+#! Record("$(Sys)$(Dev)E:HVMax-I",140,482,0,0,"$(Sys)$(Dev)E:HVMax-I")
 #! Field("$(Sys)$(Dev)E:HVMax-I.PROC",16777215,0,"$(Sys)$(Dev)E:HVMax-I.PROC")
 #! Record("$(Sys)$(Dev)Cmd:HV-Cmd",3540,3474,0,0,"$(Sys)$(Dev)Cmd:HV-Cmd")
 #! Field("$(Sys)$(Dev)Cmd:HV-Cmd.VAL",16777215,0,"$(Sys)$(Dev)Cmd:HV-Cmd.VAL")
@@ -1490,6 +1491,7 @@ record(seq, "$(Sys)$(Dev)Val:Rng-Seq") {
 #! Link("$(Sys)$(Dev)DB:HV1-Seq_.LNK4","$(Sys)$(Dev)Err-I.PROC")
 #! Record("$(Sys)$(Dev)Cmd:Clr-Cmd",3140,2922,0,0,"$(Sys)$(Dev)Cmd:Clr-Cmd")
 #! Field("$(Sys)$(Dev)Cmd:Clr-Cmd.PROC",16777215,0,"$(Sys)$(Dev)Cmd:Clr-Cmd.PROC")
+#! Record("$(Sys)$(Dev)Cmd:Rst-Cmd",1980,962,0,0,"$(Sys)$(Dev)Cmd:Rst-Cmd")
 #! Record("$(Sys)$(Dev)DB:Fan3-DFOut_",3540,3262,0,0,"$(Sys)$(Dev)DB:Fan3-DFOut_")
 #! Field("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA",16777215,0,"$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA")
 #! Link("$(Sys)$(Dev)DB:Fan3-DFOut_.OUTA","$(Sys)$(Dev)Sts:HVChk-Sts.DISA")

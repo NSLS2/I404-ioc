@@ -84,7 +84,7 @@ getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10\6%d"; InTerminator = CR LF; 
 #
 # Set/Query External High Voltage in Volts
 #
-setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10\06"; InTerminator = CR LF; }
+setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10"; InTerminator = '\06'; }
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
 getHV {out "FETC:HIVO?"; in "FETC:HIVO?\10\06%d V"; InTerminator = CR LF;}
 checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10\06%d"; @init { getHV; }; InTerminator = CR LF;}
