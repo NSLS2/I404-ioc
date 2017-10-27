@@ -1,4 +1,4 @@
-NAME=i404-1
+NAME=i404
 USER=softioc
-PORT=4506
-HOST=xf10idb-ioc1
+PORT=4501
+HOST=xf18idb-ioc1
