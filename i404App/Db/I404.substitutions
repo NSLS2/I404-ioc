@@ -8,5 +8,5 @@ file db/I404.template
 {
 pattern 
 {    Sys,         Dev    ,    PORT, CAP0 , CAP1   }
-{ "XF:10IDC-BI", "{i404:1}",   COM1, 100pF, 3300pF }
+{ "XF:18IDB-BI", "{i404:1}",   COM1, 100pF, 3300pF }
 }
