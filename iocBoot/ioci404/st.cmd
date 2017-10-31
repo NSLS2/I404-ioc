@@ -18,6 +18,9 @@ epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "NO")
 epicsEnvSet("EPICS_CA_ADDR_LIST", "10.18.0.255")
 
 # Initialise connection
+# Using 10.18.2.55 small MOXA, because the RS-232 cable to 10.18.2.54 MOXA does not work.
+# The RS232 cable requires that mini-DIN 6 pin 3 and 5 are connected.
+# This seems to switch connection from fiber to RS232 on the i404 Rev.2 hardware
 drvAsynIPPortConfigure("COM1", "10.18.2.54:4001")
 asynOctetSetInputEos("COM1",0,"\r\n")
 asynOctetSetOutputEos("COM1",0,"\r\n")
