@@ -269,7 +269,7 @@ record(bo, "$(Sys)$(Dev)Cmd:Init-Cmd") {
 }
 
 record(mbbo, "$(Sys)$(Dev)Cmd:Rng-Sel") {
-  field(VAL, "1.0e-9")
+  field(VAL, "0")
   field(ZRST, "1.0e-9")
   field(ONST, "8.0e-9")
   field(TWST, "1.0e-8")
