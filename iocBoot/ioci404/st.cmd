@@ -16,6 +16,8 @@ epicsEnvSet("LOCATION", "XF18IDB{RG:B3}")
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
 epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "NO")
 epicsEnvSet("EPICS_CA_ADDR_LIST", "10.18.0.255")
+epicsEnvSet("SYS", "XF:18IDB-CT")
+epicsEnvSet("IOC_PREFIX", "$(SYS){IOC:i404}")
 
 # Initialise connection
 # Using 10.18.2.55 small MOXA, because the RS-232 cable to 10.18.2.54 MOXA does not work.
@@ -31,6 +33,7 @@ asynOctetSetOutputEos("COM1",0,"\r\n")
 dbLoadRecords("db/I404.db")
 #dbLoadRecords("db/dsp.db", "Sys=XF:28IDA-BI:1,Dev={BPM:2}")
 dbLoadRecords("db/asyn.db","Sys=XF:18IDB-BI,Dev={i404:1},PORT=COM1,ADDR=0")
+dbLoadRecords("$(EPICS_BASE)/db/iocAdminSoft.db","IOC=$(IOC_PREFIX)")
 
 # autosave/restore mechanisms
 save_restoreSet_Debug(0)
