@@ -17,15 +17,16 @@ i404_DBD += base.dbd
 
 # Include dbd files from all support applications:
 i404_DBD += asyn.dbd
+i404_DBD += calcSupport.dbd
 i404_DBD += stream.dbd
 i404_DBD += drvAsynIPPort.dbd
 i404_DBD += drvAsynSerialPort.dbd
-i404_DBD += calcSupport.dbd
 i404_DBD += asSupport.dbd
 i404_DBD += system.dbd
+#i404_DBD += devIocStats.dbd
 
 # Add all the support libraries needed by this IOC
-i404_LIBS += calc sscan stream asyn autosave
+i404_LIBS += calc sscan stream asyn autosave #devIocStats
 
 # i404_registerRecordDeviceDriver.cpp derives from i404.dbd
 i404_SRCS += i404_registerRecordDeviceDriver.cpp
