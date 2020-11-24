@@ -4,6 +4,7 @@
 ## everywhere it appears in this file
 
 < envPaths
+< /epics/common/xf18idb-ioc1-netsetup.cmd
 
 cd ${TOP}
 
@@ -14,8 +15,6 @@ i404_registerRecordDeviceDriver(pdbbase)
 epicsEnvSet("ENGINEER",  "kgofron x5283")
 epicsEnvSet("LOCATION", "XF18IDB{RG:B3}")
 epicsEnvSet("STREAM_PROTOCOL_PATH", "i404App/Db")
-epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "NO")
-epicsEnvSet("EPICS_CA_ADDR_LIST", "10.18.0.255")
 epicsEnvSet("SYS", "XF:18IDB-CT")
 epicsEnvSet("IOC_PREFIX", "$(SYS){IOC:i404}")
 
@@ -23,7 +22,7 @@ epicsEnvSet("IOC_PREFIX", "$(SYS){IOC:i404}")
 # Using 10.18.2.55 small MOXA, because the RS-232 cable to 10.18.2.54 MOXA does not work.
 # The RS232 cable requires that mini-DIN 6 pin 3 and 5 are connected.
 # This seems to switch connection from fiber to RS232 on the i404 Rev.2 hardware
-drvAsynIPPortConfigure("COM1", "10.18.2.54:4001")
+drvAsynIPPortConfigure("COM1", "xf18idb-tsrv2.nsls2.bnl.local:4001")
 asynOctetSetInputEos("COM1",0,"\r\n")
 asynOctetSetOutputEos("COM1",0,"\r\n")
 #asynSetTraceMask("COM1",0,"0x9")
