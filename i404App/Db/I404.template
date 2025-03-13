@@ -303,6 +303,7 @@ record(ao, "$(Sys)$(Dev)Val:Rng-SP") {
   field(OIF, "Full")
   field(DOL, "$(Sys)$(Dev)Cmd:Rng-Calc.VAL")
   field(EGU, "A")
+  info(autosaveFields, "VAL")  
 }
 
 record(ai, "$(Sys)$(Dev)Val:Rng-I") {
@@ -460,6 +461,7 @@ record(bo, "$(Sys)$(Dev)Err:Scan-Cmd") {
 #  field(SCAN, "2 second")
   field(FLNK, "$(Sys)$(Dev)Err-I")
   field(DESC, "SCAN FOR ERROR MESSAGES")
+  info(autosaveFields, "SCAN")  
 }
 
 record(bo, "$(Sys)$(Dev)Err:Ovrd-Cmd") {
@@ -496,6 +498,7 @@ record(mbbo, "$(Sys)$(Dev)Mode:Init-Sel") {
   field(FLNK, "$(Sys)$(Dev)Mode:Init-Seq")
   field(VAL, "1")
   field(OMSL, "supervisory")
+  info(autosaveFields, "VAL")  
 }
 
 record(seq, "$(Sys)$(Dev)Mode:Init-Seq") {
@@ -520,6 +523,7 @@ record(mbbo, "$(Sys)$(Dev)Val:I2F-SP") {
   field(ONST, "Normal")
   field(OUT, "@I404.protocol setFreq() $(PORT) 0")
   field(FLNK, "$(Sys)$(Dev)Val:I2F-Seq")
+  info(autosaveFields, "VAL")  
 }
 
 record(seq, "$(Sys)$(Dev)Val:I2F-Seq") {
@@ -568,6 +572,7 @@ record(bi, "$(Sys)$(Dev)Cmd:GetCS-Cmd") {
   field(PINI, "1")
   field(SCAN, "1 second")
   field(FLNK, "$(Sys)$(Dev)I:R1-I")
+  info(autosaveFields, "SCAN")  
 }
 
 record(ai, "$(Sys)$(Dev)I:R1-I") {
@@ -969,6 +974,7 @@ record(ao, "$(Sys)$(Dev)Freq:Suppress-SP") {
   field(OUT, "@I404.protocol setSuppressFreq() $(PORT) 0")
   field(EGU, "Hz")
   field(FLNK, "$(Sys)$(Dev)Freq:Suppress-RB")
+  info(autosaveFields, "VAL")  
 }
 
 record(ai, "$(Sys)$(Dev)Freq:Suppress-RB") {
@@ -998,6 +1004,7 @@ record(longout, "$(Sys)$(Dev)Res-SP") {
   field(DRVL, "16")
 #  field(FLNK, "$(Sys)$(Dev)Res-RB")
   field(FLNK, "$(Sys)$(Dev)Res-Seq")
+  info(autosaveFields, "VAL")  
 }
 
 record(seq, "$(Sys)$(Dev)Res-Seq") {

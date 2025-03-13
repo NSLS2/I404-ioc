@@ -25,6 +25,11 @@ i404_DBD += asSupport.dbd
 i404_DBD += system.dbd
 i404_DBD += devIocStats.dbd
 
+ifneq ($(RECCASTER),)
+i404_DBD += reccaster.dbd
+i404_LIBS += reccaster
+endif
+
 # Add all the support libraries needed by this IOC
 i404_LIBS += calc sscan stream asyn autosave devIocStats
 

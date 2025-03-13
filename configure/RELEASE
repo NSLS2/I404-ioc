@@ -24,6 +24,12 @@ TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 # EPICS_BASE usually appears last so other apps can override stuff:
 EPICS_BASE=/usr/lib/epics
 
+AUTOSAVE=/usr/lib/epics
+DEVIOCSTATS=/usr/lib/epics
+
+# RecSync support
+RECCASTER=$(EPICS_BASE)
+
 #Capfast users may need the following definitions
 #CAPFAST_TEMPLATES=
 #SCH2EDIF_PATH=
