@@ -1,9 +1,0 @@
-# autosave R5.3	Automatically generated - DO NOT MODIFY - 210802-092604
-XF:18IDB-BI{i404:1}Mode:Init-Sel 1
-XF:18IDB-BI{i404:1}Val:Rng-SP 1e-06
-XF:18IDB-BI{i404:1}Err:Scan-Cmd.SCAN 0
-XF:18IDB-BI{i404:1}Val:I2F-SP 1
-XF:18IDB-BI{i404:1}Cmd:GetCS-Cmd.SCAN 7
-XF:18IDB-BI{i404:1}Res-SP 16
-XF:18IDB-BI{i404:1}Freq:Suppress-SP 60
-<END>

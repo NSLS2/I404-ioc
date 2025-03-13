@@ -519,7 +519,6 @@ record(mbbo, "$(Sys)$(Dev)Val:I2F-SP") {
   field(ZRST, "Absolute")
   field(ONST, "Normal")
   field(OUT, "@I404.protocol setFreq() $(PORT) 0")
-#  field(FLNK, "$(Sys)$(Dev)Val:I2F-RB")
   field(FLNK, "$(Sys)$(Dev)Val:I2F-Seq")
 }
 

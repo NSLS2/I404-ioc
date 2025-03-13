@@ -1,6 +1,11 @@
 #
 # StreamDevice protocol for the I404.
 #
+# NOTE: Changes made on 2024-03-13
+#       The protocol was updated to use CR/LF separators at the end of 
+#       each response. The \06 separator are not returned by i404 anymore.
+#       The ASCII protocol itself was not changed.
+#
 # A full command from the host to the I404 comprises as many characters
 # as needed to form the message, terminated by a LF character.
 # The LF is required for the I404 to commence processing.
