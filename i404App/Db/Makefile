@@ -14,6 +14,10 @@ DB += I404.db
 DB += dsp.db
 DB += asyn.db
 
+ifneq ($(RECCASTER),)
+DB_INSTALLS += $(RECCASTER)/db/reccaster.db
+endif
+
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>
