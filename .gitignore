@@ -1,13 +1,17 @@
-syntax: glob
+as/
+autosave/
 bin/
-*.orig
-O.linux-x86_64/
 db/
 dbd/
-O.Common
-envPaths
-as/req/
-as/save/
+lib/
+^pmc/
+iocBoot/*/envPaths
+O.*/
+\#*#
+*~
 records.dbl
-*.sw?
-.hg*
+.bzr/
+.bzrignore
+.hg/
+.hgignore
+.vscode/

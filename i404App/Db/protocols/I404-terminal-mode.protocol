@@ -1,0 +1,183 @@
+#
+# StreamDevice protocol for the I404.
+#
+# NOTE: Changes made on 2024-03-13
+#       The protocol was updated to use CR/LF separators at the end of 
+#       each response. The \06 separator are not returned by i404 anymore.
+#       The ASCII protocol itself was not changed.
+#
+# A full command from the host to the I404 comprises as many characters
+# as needed to form the message, terminated by a LF character.
+# The LF is required for the I404 to commence processing.
+#
+# The I404 generates a reply to every message from the host when it is
+# the listener. First the I404 echos the command as sent icluding the LF.
+# Following that the first character is ACK (0x6) when the command has
+# been successfully executed without error. Responses to commands with
+# a "?" will the have required data, terminated by CR, LF. If no data
+# is required nothing will be transmitted after the ACK. If the I404
+# generates an error then it transmits a BELL (0x7) instead of the ACK.
+#
+# K. Gofron, 2016-04-21: Changes to the protocol
+# FPGA code: 4.1S
+# Application code: 14.0.22
+# Device: I404Rev2, SN:1251, 1248
+# The device sends "OK" for SYST:COMM:TERM 1, or sends "ACK" ('\6') for SYST:COMM:TERM 0.
+# The "ACK" communication seems more reliable
+# Significant inconsistencies in the termination string.
+# Several responses end in '\6', and have no \r\n.
+# i404 freezes if READ:CURR? and READ:POS? are qureing  with 1s interfal or faster
+
+
+InTerminator = LF;
+OutTerminator = LF;
+replytimeout = 499;
+readtimeout  = 900;
+locktimeout = 5000;
+# The cap=3300pF requires readtimeout=4000; recommend:reply=1000,lock=5000
+#extraInput = Ignore;
+
+#
+# State commands
+#
+# Save current state in EEPROM
+save {out "*SAV"; in "*SAV\10OK"; InTerminator = CR LF;}
+# Recall state from EEPROM
+recall {out "*RCL"; in "*RCL\10OK"; InTerminator = CR LF;}
+# Return I404 to default conditions
+reset {out "*RST"; in "*RST\10OK"; InTerminator = CR LF;}
+# Clear I404 event registers and error queue
+clear {out "*CLS"; in "*CLS\10OK"; InTerminator = CR LF;}
+#
+# Initiate readings on valid trigger
+#
+#init {out "INIT"; in "INIT\10"; InTerminator = '\6';}
+init {out "INIT"; in "INIT\10OK"; InTerminator = CR LF;}
+
+#
+# I404 Gain Calibration
+#
+# Initiate gains calibration: CALIB:GAI {internal calibration}, CALIBrate:GAIn:RESet {set gains to 1}
+setGains {out "CALIB:GAI"; in "CALIB:GAI\10OK"; InTerminator = CR LF;}
+# Set all gains to 1
+resetGains {out "CALIB:GAI:RES"; in "CALIB:GAI:RES\10OK"; InTerminator = CR LF;}
+# Save gains calibration
+saveGains {out "CALIB:SAV"; in "CALIB:SAV\10OK"; InTerminator = CR LF;}
+# Recall gains calibration (needed after reset)
+recallCalib { out "CALIB:RCL"; in "CALIB:RCL\10OK"; InTerminator = CR LF;}
+# Query calibration gains
+getGains {out "CALIB:GAI?"; in "CALIB:GAI?"
+	 "%(\$1Gain:Sts-RB)d,"
+	 "%e,"
+	 "%(\$1Gain:2-RB.VAL)e,"
+	 "%(\$1Gain:3-RB.VAL)e,"
+	 "%(\$1Gain:4-RB.VAL)e,"
+	 "%(\$1Gain:5-RB.VAL)e,"
+	 "%(\$1Gain:6-RB.VAL)e,"
+	 "%(\$1Gain:7-RB.VAL)e,"
+	 "%(\$1Gain:8-RB.VAL)e";	
+	 InTerminator = CR LF; }
+#
+# Set/Query capacitor, by default 0 = 100pF and 1 = 3300pF
+#
+setCap {out "CONF:CAP %{0|1}"; in "CONF:CAP %*d\10OK"; InTerminator = CR LF;}
+getCap {out "CONF:CAP?"; in "CONF:CAP?\10%*c,%(\$1.VAL)e F"; InTerminator = CR LF;}
+#
+# Set/Query Maximum External High Voltage in Volts (Password Protected)
+#
+setHVM {out "CONF:HIVO:MAX %d"; in "CONF:HIVO:MAX %*d\10OK"; InTerminator = CR LF; }
+getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?%d"; InTerminator = CR LF; }
+#
+# Set/Query External High Voltage in Volts
+#
+setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10OK"; InTerminator = CR LF; }
+# Don't use InTerminator on GetHV, causes failure during init handler for checkHV
+getHV {out "FETC:HIVO?"; in "FETC:HIVO?%d V"; InTerminator = CR LF;}
+checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%d"; @init { getHV; }; InTerminator = CR LF;}
+#checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}%d"; InTerminator = CR LF;}
+#
+# Query the last measured current data in amps. Sample currents and overflow 
+# bits, ignore the timestamp.
+#
+getCs { replytimeout = 4000; readtimeout  = 65001; locktimeout = 65001; 
+      out "FETC:CURR?"; 
+      in "FETC:CURR?"
+      "%(\$1Time:Intg-I.VAL)e S,"
+      "%e A,"
+      "%(\$1\$2.VAL)e A,"
+      "%(\$1\$3.VAL)e A,"
+      "%(\$1\$4.VAL)e A,"
+      "%(\$1\$5.VAL)d"; 
+      InTerminator = CR LF; }
+#
+# Query the beam position
+#
+getPos {out "FETC:POS?"; in "FETC:POS?\10%f,%(\$1.VAL)f"; InTerminator = CR LF;}
+#
+# Set/Query Current Compensation Factors; 
+#
+#setKs {out "CALIB:GAIN %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:COMP %*f %*f %*f %*f\10\06";}
+#getKs {out "CALIB:GAIN?"; in "CALIB:GAIN?\10\06%*d,%e,%(\$1\$2.VAL)e,%(\$1\$3.VAL)e,%(\$1\$4.VAL)e"; InTerminator = CR LF; extraInput=Ignore;}
+#setKs {out "CALIB:GAI %(A).2f %(B).2f %(C).2f %(D).2f";in "CALIB:GAI %*f %*f %*f %*f\10"; InTerminator = '\6'; }
+#getKs {out "CALIB:GAI?"; in "CALIB:GAI?\10\06%*d,%e,%(\$1\$2.VAL)e,%(\$1\$3.VAL)e,%(\$1\$4.VAL)e"; InTerminator = CR LF; }
+#
+# Set/Query current Range
+#
+setRange {out "CONF:RANGE %e A"; in "CONF:RANGE %*e A\10OK"; InTerminator = CR LF; }
+getRange {out "CONF:RANGE?"; in "CONF:RANGE?%e A"; InTerminator = CR LF;}
+#
+# Set/Query Position Function; 1 = None, 2 = Quadrant, 3 = Split Mode
+#
+setMode {out "CONF:MON %d"; in "CONF:MON %*d\10OK"; InTerminator = CR LF; }
+getMode {out "CONF:MON?"; in "CONF:MON?\10%d"; InTerminator = CR LF;}
+#
+# Get Error Message, returns a quoted string.
+#
+getErr {out "SYST:ERR?"; in "SYST:ERR?%*d,\34%[^,\34]\34"; InTerminator = CR LF;}
+
+#
+# Set/Query Current-to-Frequency Mapping
+#
+#setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %d\10%{\06|\07}";}
+#getFreq {out "CONF:FREQ?"; in "CONF:FREQ?\10\06%d"; InTerminator = CR LF;}
+#setFreq {
+#out "CONF:FREQ %d"; 
+#in "CONF:FREQ %*d"; 
+#in "OK\r";
+#}
+#\10%{\06|\07}";}
+#getFreq {out "CONF:FREQ?"; in "CONF:FREQ?\10%d"; InTerminator = CR LF;}
+getFreq {out "CONF:FREQ?"; in "CONF:FREQ?%d"; InTerminator = CR LF;}
+#setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %*d\10OK"; InTerminator = CR LF;}
+setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %*d\nOK"; InTerminator = CR LF;}
+
+#
+# Set/Query Integration Period [seconds]
+#
+setPeriod {out "CONF:PER %e S"; in "CONF:PER %*e S\10OK"; InTerminator = CR LF; }
+getPeriod {out "CONF:PER?"; in "CONF:PER?%e S"; InTerminator = CR LF;}
+
+#
+# Set/Query Resolution (# of bits in [16-20])
+#
+getRes {out "CONF:RES?"; in "CONF:RES?%d"; InTerminator = CR LF; }
+setRes {out "CONF:RES %d"; in "CONF:RES %*d\10OK"; InTerminator = CR LF; }
+
+#
+# Set/Query Suppression Frequency [Hz]
+#
+getSuppressFreq {out "SYST:FREQ?"; in "SYST:FREQ?%f"; InTerminator = CR LF; }
+setSuppressFreq {out "SYST:FREQ %d"; in "SYST:FREQ %*f\10OK"; InTerminator = CR LF; }
+
+#
+# Query Identification string (*IDN)
+#
+getId {out "*IDN?"; in "*IDN?\n%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
+ 
+#
+# Set/Query Admin password (unlocks certain functionality)
+#
+getPassword {out "SYST:PASS?"; in "SYST:PASS?%s"; InTerminator = CR LF;}
+#setPassword {out "SYST:PASS %s"; in "SYST:PASS %*s\10"; InTerminator = LF'\6';}
+setPassword {out "SYST:PASS %s"; in "SYST:PASS %*s\10OK"; InTerminator = CR LF;}
+

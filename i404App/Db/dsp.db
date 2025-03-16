@@ -15,12 +15,14 @@ record(compress,"$(DEVICE):MovAvg-ChA") {
   field(ALG,"N to 1 Average")
   field(NSAM,"10")
   field(N,"10")
+  info(autosaveFields, "NSAM N")  
 }
 
 record(calc,"$(DEVICE):Gain-ChA") {
   field(INPA, "$(DEVICE):MovAvg-ChA CP")
   field(INPB, "1.0") # the "gain"
   field(CALC, "A*B")
+  info(autosaveFields, "INPA B")  
 }
 
 record(compress,"$(DEVICE):CircBuf-ChB_") {
@@ -36,12 +38,14 @@ record(compress,"$(DEVICE):MovAvg-ChB") {
   field(ALG,"N to 1 Average")
   field(NSAM,"10")
   field(N,"10")
+  info(autosaveFields, "NSAM N")  
 }
 
 record(calc,"$(DEVICE):Gain-ChB") {
   field(INPA, "$(DEVICE):MovAvg-ChB CP")
   field(INPB, "1.0") # the "gain"
   field(CALC, "A*B")
+  info(autosaveFields, "INPA B")  
 }
 
 record(compress,"$(DEVICE):CircBuf-ChC_") {
@@ -57,12 +61,14 @@ record(compress,"$(DEVICE):MovAvg-ChC") {
   field(ALG,"N to 1 Average")
   field(NSAM,"10")
   field(N,"10")
+  info(autosaveFields, "NSAM N")  
 }
 
 record(calc,"$(DEVICE):Gain-ChC") {
   field(INPA, "$(DEVICE):MovAvg-ChC CP")
   field(INPB, "1.0") # the "gain"
   field(CALC, "A*B")
+  info(autosaveFields, "INPA B")  
 }
 
 record(compress,"$(DEVICE):CircBuf-ChD_") {
@@ -79,11 +85,13 @@ record(compress,"$(DEVICE):MovAvg-ChD") {
   field(ALG,"N to 1 Average")
   field(NSAM,"10")
   field(N,"10")
+  info(autosaveFields, "NSAM N")  
 }
 
 record(calc,"$(DEVICE):Gain-ChD") {
   field(INPA, "$(DEVICE):MovAvg-ChD CP")
   field(INPB, "1.0") # the "gain"
   field(CALC, "A*B")
+  info(autosaveFields, "INPA B")  
 }
 

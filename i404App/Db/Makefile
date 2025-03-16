@@ -14,8 +14,10 @@ DB += I404.db
 DB += dsp.db
 DB += asyn.db
 
-REQ += I404.req
-REQ += modules_I404.req
+ifneq ($(RECCASTER),)
+DB_INSTALLS += $(RECCASTER)/db/reccaster.db
+endif
+
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add
 # <anyname>_template = <templatename>

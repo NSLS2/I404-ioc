@@ -1,3 +1,8 @@
+IOC for I404 electrometer
+=========================
+
+NOTE: The terminal mode in I404 must be disabled, otherwise the IOC will not work. Check if the terminal mode is disabled by sending ``SYST:COMM:TERM?`` command (must return 0). Disable terminal mode by sending ``SYST:COMM:TERM 0``.
+
 Have a look at the vendor-provided material in $(TOP)/doc.
 
 If you are NOT using the EPICS debian packages 
