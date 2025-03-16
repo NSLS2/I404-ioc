@@ -24,7 +24,7 @@
 # i404 freezes if READ:CURR? and READ:POS? are qureing  with 1s interfal or faster
 
 
-InTerminator = LF;
+InTerminator = CR LF;
 OutTerminator = LF;
 replytimeout = 499;
 readtimeout  = 900;
@@ -36,32 +36,31 @@ locktimeout = 5000;
 # State commands
 #
 # Save current state in EEPROM
-save {out "*SAV"; in "*SAV\10OK"; InTerminator = CR LF;}
+save {out "*SAV"; in "*SAV\10"; InTerminator = '\6';}
 # Recall state from EEPROM
-recall {out "*RCL"; in "*RCL\10OK"; InTerminator = CR LF;}
+recall {out "*RCL"; in "*RCL\10"; InTerminator = '\6';}
 # Return I404 to default conditions
-reset {out "*RST"; in "*RST\10OK"; InTerminator = CR LF;}
+reset {out "*RST"; in "*RST\10"; InTerminator = '\6';}
 # Clear I404 event registers and error queue
-clear {out "*CLS"; in "*CLS\10OK"; InTerminator = CR LF;}
+clear {out "*CLS"; in "*CLS\10"; InTerminator = '\6';}
 #
 # Initiate readings on valid trigger
 #
-#init {out "INIT"; in "INIT\10"; InTerminator = '\6';}
-init {out "INIT"; in "INIT\10OK"; InTerminator = CR LF;}
+init {out "INIT"; in "INIT\10"; InTerminator = '\6';}
 
 #
 # I404 Gain Calibration
 #
 # Initiate gains calibration: CALIB:GAI {internal calibration}, CALIBrate:GAIn:RESet {set gains to 1}
-setGains {out "CALIB:GAI"; in "CALIB:GAI\10OK"; InTerminator = CR LF;}
+setGains {out "CALIB:GAI"; in "CALIB:GAI\10"; InTerminator = '\6';}
 # Set all gains to 1
-resetGains {out "CALIB:GAI:RES"; in "CALIB:GAI:RES\10OK"; InTerminator = CR LF;}
+resetGains {out "CALIB:GAI:RES"; in "CALIB:GAI:RES\10"; InTerminator = '\6';}
 # Save gains calibration
-saveGains {out "CALIB:SAV"; in "CALIB:SAV\10OK"; InTerminator = CR LF;}
+saveGains {out "CALIB:SAV"; in "CALIB:SAV\10"; InTerminator = '\6';}
 # Recall gains calibration (needed after reset)
-recallCalib { out "CALIB:RCL"; in "CALIB:RCL\10OK"; InTerminator = CR LF;}
+recallCalib { out "CALIB:RCL"; in "CALIB:RCL\10"; InTerminator = '\6';}
 # Query calibration gains
-getGains {out "CALIB:GAI?"; in "CALIB:GAI?"
+getGains {out "CALIB:GAI?"; in "CALIB:GAI?\10\06"
 	 "%(\$1Gain:Sts-RB)d,"
 	 "%e,"
 	 "%(\$1Gain:2-RB.VAL)e,"
@@ -75,20 +74,20 @@ getGains {out "CALIB:GAI?"; in "CALIB:GAI?"
 #
 # Set/Query capacitor, by default 0 = 100pF and 1 = 3300pF
 #
-setCap {out "CONF:CAP %{0|1}"; in "CONF:CAP %*d\10OK"; InTerminator = CR LF;}
-getCap {out "CONF:CAP?"; in "CONF:CAP?\10%*c,%(\$1.VAL)e F"; InTerminator = CR LF;}
+setCap {out "CONF:CAP %{0|1}"; in "CONF:CAP %*d\10"; InTerminator = '\6';}
+getCap {out "CONF:CAP?"; in "CONF:CAP?\10\06%*c,%(\$1.VAL)e F"; InTerminator = CR LF;}
 #
 # Set/Query Maximum External High Voltage in Volts (Password Protected)
 #
-setHVM {out "CONF:HIVO:MAX %d"; in "CONF:HIVO:MAX %*d\10OK"; InTerminator = CR LF; }
-getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?%d"; InTerminator = CR LF; }
+setHVM {out "CONF:HIVO:MAX %d"; in "CONF:HIVO:MAX %*d\10"; InTerminator = '\06'; }
+getHVM {out "CONF:HIVO:MAX?"; in "CONF:HIVO:MAX?\10\6%d"; InTerminator = CR LF; }
 #
 # Set/Query External High Voltage in Volts
 #
-setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10OK"; InTerminator = CR LF; }
+setHV {out "CONF:HIVO:SET %d"; in "CONF:HIVO:SET %*d\10"; InTerminator = '\06'; }
 # Don't use InTerminator on GetHV, causes failure during init handler for checkHV
-getHV {out "FETC:HIVO?"; in "FETC:HIVO?%d V"; InTerminator = CR LF;}
-checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%d"; @init { getHV; }; InTerminator = CR LF;}
+getHV {out "FETC:HIVO?"; in "FETC:HIVO?\10\06%d V"; InTerminator = CR LF;}
+checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10\06%d"; @init { getHV; }; InTerminator = CR LF;}
 #checkHVR {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%{\7|\6}%d"; InTerminator = CR LF;}
 #
 # Query the last measured current data in amps. Sample currents and overflow 
@@ -96,7 +95,7 @@ checkHV {out "CONF:HIVO:SET?"; in "CONF:HIVO:SET?\10%d"; @init { getHV; }; InTer
 #
 getCs { replytimeout = 4000; readtimeout  = 65001; locktimeout = 65001; 
       out "FETC:CURR?"; 
-      in "FETC:CURR?"
+      in "FETC:CURR?\10\6"
       "%(\$1Time:Intg-I.VAL)e S,"
       "%e A,"
       "%(\$1\$2.VAL)e A,"
@@ -107,7 +106,7 @@ getCs { replytimeout = 4000; readtimeout  = 65001; locktimeout = 65001;
 #
 # Query the beam position
 #
-getPos {out "FETC:POS?"; in "FETC:POS?\10%f,%(\$1.VAL)f"; InTerminator = CR LF;}
+getPos {out "FETC:POS?"; in "FETC:POS?\10\06%f,%(\$1.VAL)f"; InTerminator = CR LF;}
 #
 # Set/Query Current Compensation Factors; 
 #
@@ -118,17 +117,17 @@ getPos {out "FETC:POS?"; in "FETC:POS?\10%f,%(\$1.VAL)f"; InTerminator = CR LF;}
 #
 # Set/Query current Range
 #
-setRange {out "CONF:RANGE %e A"; in "CONF:RANGE %*e A\10OK"; InTerminator = CR LF; }
-getRange {out "CONF:RANGE?"; in "CONF:RANGE?%e A"; InTerminator = CR LF;}
+setRange {out "CONF:RANGE %e A"; in "CONF:RANGE %*e A\10"; InTerminator = '\6'; }
+getRange {out "CONF:RANGE?"; in "CONF:RANGE?\10\06%e A"; InTerminator = CR LF;}
 #
 # Set/Query Position Function; 1 = None, 2 = Quadrant, 3 = Split Mode
 #
-setMode {out "CONF:MON %d"; in "CONF:MON %*d\10OK"; InTerminator = CR LF; }
-getMode {out "CONF:MON?"; in "CONF:MON?\10%d"; InTerminator = CR LF;}
+setMode {out "CONF:MON %d"; in "CONF:MON %*d\10"; InTerminator = '\6'; }
+getMode {out "CONF:MON?"; in "CONF:MON?\10\06%d"; InTerminator = CR LF;}
 #
 # Get Error Message, returns a quoted string.
 #
-getErr {out "SYST:ERR?"; in "SYST:ERR?%*d,\34%[^,\34]\34"; InTerminator = CR LF;}
+getErr {out "SYST:ERR?"; in "SYST:ERR?\10\06%*d,\34%[^,\34]\34"; InTerminator = CR LF;}
 
 #
 # Set/Query Current-to-Frequency Mapping
@@ -142,37 +141,35 @@ getErr {out "SYST:ERR?"; in "SYST:ERR?%*d,\34%[^,\34]\34"; InTerminator = CR LF;
 #}
 #\10%{\06|\07}";}
 #getFreq {out "CONF:FREQ?"; in "CONF:FREQ?\10%d"; InTerminator = CR LF;}
-getFreq {out "CONF:FREQ?"; in "CONF:FREQ?%d"; InTerminator = CR LF;}
-#setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %*d\10OK"; InTerminator = CR LF;}
-setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %*d\nOK"; InTerminator = CR LF;}
+getFreq {out "CONF:FREQ?"; in "CONF:FREQ?\10\06%d"; InTerminator = CR LF;}
+setFreq {out "CONF:FREQ %d"; in "CONF:FREQ %*d\10"; InTerminator = '\6';}
 
 #
 # Set/Query Integration Period [seconds]
 #
-setPeriod {out "CONF:PER %e S"; in "CONF:PER %*e S\10OK"; InTerminator = CR LF; }
-getPeriod {out "CONF:PER?"; in "CONF:PER?%e S"; InTerminator = CR LF;}
+setPeriod {out "CONF:PER %e S"; in "CONF:PER %*e S\10"; InTerminator = '\6'; }
+getPeriod {out "CONF:PER?"; in "CONF:PER?\10\06%e S"; InTerminator = CR LF;}
 
 #
 # Set/Query Resolution (# of bits in [16-20])
 #
-getRes {out "CONF:RES?"; in "CONF:RES?%d"; InTerminator = CR LF; }
-setRes {out "CONF:RES %d"; in "CONF:RES %*d\10OK"; InTerminator = CR LF; }
+getRes {out "CONF:RES?"; in "CONF:RES?\10\6%d"; InTerminator = CR LF; }
+setRes {out "CONF:RES %d"; in "CONF:RES %*d\10"; InTerminator = '\6'; }
 
 #
 # Set/Query Suppression Frequency [Hz]
 #
-getSuppressFreq {out "SYST:FREQ?"; in "SYST:FREQ?%f"; InTerminator = CR LF; }
-setSuppressFreq {out "SYST:FREQ %d"; in "SYST:FREQ %*f\10OK"; InTerminator = CR LF; }
+getSuppressFreq {out "SYST:FREQ?"; in "SYST:FREQ?\10\06%f"; InTerminator = CR LF; }
+setSuppressFreq {out "SYST:FREQ %d"; in "SYST:FREQ %*f\10"; InTerminator = '\6'; }
 
 #
 # Query Identification string (*IDN)
 #
-getId {out "*IDN?"; in "*IDN?\n%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
+getId {out "*IDN?"; in "*IDN?\10\06%[a-zA-Z0-9\ \.\,\-\/]"; InTerminator = CR LF;}
  
 #
 # Set/Query Admin password (unlocks certain functionality)
 #
-getPassword {out "SYST:PASS?"; in "SYST:PASS?%s"; InTerminator = CR LF;}
-#setPassword {out "SYST:PASS %s"; in "SYST:PASS %*s\10"; InTerminator = LF'\6';}
-setPassword {out "SYST:PASS %s"; in "SYST:PASS %*s\10OK"; InTerminator = CR LF;}
+getPassword {out "SYST:PASS?"; in "SYST:PASS?\10\06%s"; InTerminator = CR LF;}
+setPassword {out "SYST:PASS %s"; in "SYST:PASS %*s\10"; InTerminator = '\6';}
 
